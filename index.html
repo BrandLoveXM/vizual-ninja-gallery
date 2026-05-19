@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vizual Ninja Studios — Gallery Room 1</title>
+  <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+  <style>
+    html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #111; font-family: 'Helvetica Neue', Arial, sans-serif; }
+
+    /* On-screen hint */
+    #hint {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      background: rgba(20, 20, 20, 0.72);
+      color: #f3f3f3;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      letter-spacing: 0.02em;
+      pointer-events: none;
+      transition: opacity 0.6s ease;
+    }
+    #hint.fade { opacity: 0; }
+
+    /* Gallery wordmark */
+    #brand {
+      position: fixed;
+      top: 18px;
+      left: 20px;
+      z-index: 10;
+      color: #f3f3f3;
+      font-size: 14px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      pointer-events: none;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+    }
+  </style>
+</head>
+<body>
+  <div id="brand">Vizual Ninja Studios</div>
+  <div id="hint">WASD / arrow keys to walk &nbsp;·&nbsp; drag to look around</div>
+
+  <a-scene background="color: #0d0d0f" renderer="colorManagement: true; antialias: true" cursor="rayOrigin: mouse" raycaster="objects: .clickable">
+
+    <a-assets>
+      <img id="painting" src="painting.jpg" crossorigin="anonymous" />
+    </a-assets>
+
+    <!-- ===================== LIGHTING ===================== -->
+    <!-- Soft ambient fill so the room reads as bright and clean -->
+    <a-entity light="type: ambient; color: #ffffff; intensity: 0.55"></a-entity>
+
+    <!-- General room light from above -->
+    <a-entity light="type: directional; color: #fff7ec; intensity: 0.45"
+              position="3 6 4"></a-entity>
+    <a-entity light="type: point; color: #fff7ec; intensity: 0.35; distance: 22; decay: 2"
+              position="0 3.6 2"></a-entity>
+
+    <!-- Spotlight aimed at the painting -->
+    <a-entity id="art-spot"
+              light="type: spot; color: #fff4e0; intensity: 1.8; angle: 32; penumbra: 0.35; distance: 14; decay: 1.4; target: #painting-plane"
+              position="0 3.7 -4.3"></a-entity>
+
+    <!-- ===================== ROOM SHELL ===================== -->
+    <!-- Room interior: 12 (x) wide, 4 (y) tall, 12 (z) deep -->
+
+    <!-- Wooden floor (procedural plank texture) -->
+    <a-plane procedural-wood rotation="-90 0 0" position="0 0 0"
+             width="12" height="12"
+             material="roughness: 0.7; metalness: 0.05"></a-plane>
+
+    <!-- Ceiling -->
+    <a-plane rotation="90 0 0" position="0 4 0" width="12" height="12"
+             material="color: #fbfbfb; roughness: 1"></a-plane>
+
+    <!-- Far wall (where the painting hangs), z = -6 -->
+    <a-plane position="0 2 -6" width="12" height="4"
+             material="color: #f4f4f2; roughness: 1"></a-plane>
+
+    <!-- Back wall, z = 6 -->
+    <a-plane rotation="0 180 0" position="0 2 6" width="12" height="4"
+             material="color: #f4f4f2; roughness: 1"></a-plane>
+
+    <!-- Left wall, x = -6 -->
+    <a-plane rotation="0 90 0" position="-6 2 0" width="12" height="4"
+             material="color: #efefed; roughness: 1"></a-plane>
+
+    <!-- Right wall, x = 6 -->
+    <a-plane rotation="0 -90 0" position="6 2 0" width="12" height="4"
+             material="color: #efefed; roughness: 1"></a-plane>
+
+    <!-- Baseboards for a finished look -->
+    <a-box position="0 0.06 -5.96" width="12" height="0.12" depth="0.05"
+           material="color: #e3e3e0; roughness: 1"></a-box>
+    <a-box position="0 0.06 5.96" width="12" height="0.12" depth="0.05"
+           material="color: #e3e3e0; roughness: 1"></a-box>
+    <a-box position="-5.96 0.06 0" width="0.05" height="0.12" depth="12"
+           material="color: #e3e3e0; roughness: 1"></a-box>
+    <a-box position="5.96 0.06 0" width="0.05" height="0.12" depth="12"
+           material="color: #e3e3e0; roughness: 1"></a-box>
+
+    <!-- ===================== ARTWORK ===================== -->
+    <!-- Square painting in a dark wooden frame, mounted on far wall -->
+    <a-entity id="artwork" position="0 1.7 -5.9">
+
+      <!-- Dark wooden frame (four members) -->
+      <!-- painting is 2 x 2; frame border 0.14 thick, 0.12 deep -->
+      <a-box class="frame" position="0  1.07 -0.01" width="2.28" height="0.14" depth="0.13"
+             material="color: #2c1d10; roughness: 0.55; metalness: 0.1"></a-box>
+      <a-box class="frame" position="0 -1.07 -0.01" width="2.28" height="0.14" depth="0.13"
+             material="color: #2c1d10; roughness: 0.55; metalness: 0.1"></a-box>
+      <a-box class="frame" position="-1.07 0 -0.01" width="0.14" height="2.00" depth="0.13"
+             material="color: #2c1d10; roughness: 0.55; metalness: 0.1"></a-box>
+      <a-box class="frame" position="1.07 0 -0.01" width="0.14" height="2.00" depth="0.13"
+             material="color: #2c1d10; roughness: 0.55; metalness: 0.1"></a-box>
+
+      <!-- Inner bevel / matte edge -->
+      <a-box position="0 0 -0.05" width="2.06" height="2.06" depth="0.06"
+             material="color: #1a1109; roughness: 0.6"></a-box>
+
+      <!-- The painting itself -->
+      <a-plane id="painting-plane" class="clickable" position="0 0 0.02"
+               width="2" height="2"
+               material="src: #painting; roughness: 0.9; metalness: 0"></a-plane>
+    </a-entity>
+
+    <!-- Caption plaque beside the painting -->
+    <a-entity position="1.55 1.2 -5.93">
+      <a-plane width="0.62" height="0.22" material="color: #ffffff; roughness: 1"></a-plane>
+      <a-text value="TARA McILROY\nUntitled — Toronto"
+              align="center" color="#222" width="1.2"
+              position="0 0 0.01"></a-text>
+    </a-entity>
+
+    <!-- ===================== VISITOR ===================== -->
+    <a-entity id="rig" position="0 0 4.5" room-bounds>
+      <a-entity id="camera" camera position="0 1.6 0"
+                look-controls="pointerLockEnabled: false"
+                wasd-controls="acceleration: 28"></a-entity>
+    </a-entity>
+
+  </a-scene>
+
+  <script>
+    /* ---- Procedural wooden floor texture (self-contained, no asset files) ---- */
+    AFRAME.registerComponent('procedural-wood', {
+      init: function () {
+        var c = document.createElement('canvas');
+        c.width = 512; c.height = 512;
+        var ctx = c.getContext('2d');
+        var planks = 6;
+        var ph = c.height / planks;
+        var base = ['#b98c5a', '#b3854f', '#c0915f', '#ad7e48', '#bb8a55', '#b58652'];
+        for (var i = 0; i < planks; i++) {
+          ctx.fillStyle = base[i % base.length];
+          ctx.fillRect(0, i * ph, c.width, ph);
+          // subtle grain streaks
+          for (var g = 0; g < 26; g++) {
+            ctx.strokeStyle = 'rgba(80,55,30,' + (0.04 + Math.random() * 0.07) + ')';
+            ctx.lineWidth = 0.5 + Math.random() * 1.4;
+            var y = i * ph + Math.random() * ph;
+            ctx.beginPath();
+            ctx.moveTo(0, y);
+            ctx.bezierCurveTo(c.width * 0.33, y + (Math.random() - 0.5) * 8,
+                              c.width * 0.66, y + (Math.random() - 0.5) * 8,
+                              c.width, y + (Math.random() - 0.5) * 6);
+            ctx.stroke();
+          }
+          // plank seam
+          ctx.fillStyle = 'rgba(40,25,12,0.5)';
+          ctx.fillRect(0, i * ph, c.width, 1.5);
+        }
+        var url = c.toDataURL();
+        this.el.setAttribute('material', 'src', url);
+        this.el.setAttribute('material', 'repeat', '4 4');
+      }
+    });
+
+    /* ---- Keep the visitor inside the room ---- */
+    AFRAME.registerComponent('room-bounds', {
+      schema: { min: { default: -5.5 }, max: { default: 5.5 } },
+      tick: function () {
+        var p = this.el.object3D.position;
+        if (p.x < this.data.min) p.x = this.data.min;
+        if (p.x > this.data.max) p.x = this.data.max;
+        if (p.z < this.data.min) p.z = this.data.min;
+        if (p.z > this.data.max) p.z = this.data.max;
+      }
+    });
+
+    /* ---- Fade the hint after a few seconds ---- */
+    window.addEventListener('load', function () {
+      setTimeout(function () {
+        var h = document.getElementById('hint');
+        if (h) h.classList.add('fade');
+      }, 7000);
+    });
+
+    /* ---- Painting click (chat panel arrives in the next step) ---- */
+    window.addEventListener('load', function () {
+      var painting = document.getElementById('painting-plane');
+      if (painting) {
+        painting.addEventListener('click', function () {
+          console.log('Painting clicked — chat panel coming in the next step.');
+        });
+      }
+    });
+  </script>
+</body>
+</html>
