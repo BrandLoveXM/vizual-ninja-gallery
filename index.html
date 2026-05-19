@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Vizual Ninja Studios — Gallery Room 1</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet">
   <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
   <style>
     html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #111; font-family: 'Helvetica Neue', Arial, sans-serif; }
@@ -158,11 +161,116 @@
     }
     #chat-send:hover { background: #43301d; }
     #chat-send:disabled { opacity: 0.5; cursor: default; }
+
+    /* ===================== ENTRY SCREEN ===================== */
+    #entry-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 40;
+      background: radial-gradient(circle at 50% 38%, #1a1a1d 0%, #0a0a0b 72%);
+      color: #ece7df;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      animation: entryFadeIn 1.6s ease-out 0.15s forwards;
+      transition: opacity 1.2s ease;
+    }
+    #entry-screen.fade-out {
+      opacity: 0 !important;
+      pointer-events: none;
+      animation: none;
+    }
+    @keyframes entryFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    .entry-content {
+      text-align: center;
+      padding: 0 32px;
+      transform: translateY(0);
+      animation: entryRise 1.8s cubic-bezier(0.22, 0.61, 0.36, 1) 0.25s both;
+    }
+    @keyframes entryRise {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .entry-eyebrow {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.5em;
+      color: #a99e8a;
+      text-transform: uppercase;
+      margin-bottom: 30px;
+      padding-left: 0.5em;
+    }
+
+    .entry-title {
+      font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+      font-size: clamp(36px, 6.2vw, 68px);
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      margin: 0;
+      line-height: 1.1;
+      color: #f3eee5;
+      padding-left: 0.18em;
+    }
+
+    .entry-rule {
+      width: 60px;
+      height: 1px;
+      background: #8a7e6a;
+      margin: 38px auto 42px;
+    }
+
+    #enter-btn {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      background: transparent;
+      border: 1px solid #b9a884;
+      color: #ece7df;
+      padding: 14px 38px;
+      font-size: 12px;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.35s ease, color 0.35s ease, letter-spacing 0.35s ease;
+    }
+    #enter-btn:hover {
+      background: #b9a884;
+      color: #0a0a0b;
+      letter-spacing: 0.38em;
+    }
+
+    /* ===================== MUTE BUTTON ===================== */
+    #mute-btn {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      z-index: 15;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(20, 20, 20, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #f3f3f3;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.8s ease, background 0.2s ease;
+      padding: 0;
+    }
+    #mute-btn.visible { display: flex; opacity: 1; }
+    #mute-btn:hover { background: rgba(40, 40, 40, 0.85); }
+    #mute-btn svg { width: 18px; height: 18px; display: block; }
+    #mute-btn .icon-muted { display: none; }
+    #mute-btn.muted .icon-on { display: none; }
+    #mute-btn.muted .icon-muted { display: block; }
   </style>
 </head>
 <body>
   <div id="brand">Vizual Ninja Studios</div>
-  <div id="hint">WASD / arrow keys to walk &nbsp;·&nbsp; drag to look around &nbsp;·&nbsp; click the painting to chat</div>
+  <div id="hint">WASD / arrow keys to walk &nbsp;·&nbsp; drag to look around &nbsp;·&nbsp; click the painting to chat &nbsp;·&nbsp; double-click anywhere to glide there</div>
 
   <!-- ===================== CHAT PANEL ===================== -->
   <div id="chat-panel" aria-hidden="true">
@@ -181,10 +289,43 @@
     </form>
   </div>
 
+  <!-- ===================== AMBIENT AUDIO ===================== -->
+  <audio id="ambient-audio" src="ambient.mp3" loop preload="auto"></audio>
+
+  <!-- ===================== ENTRY SCREEN ===================== -->
+  <div id="entry-screen">
+    <div class="entry-content">
+      <div class="entry-eyebrow">Current Exhibition</div>
+      <h1 class="entry-title">VIZUAL&nbsp;NINJA&nbsp;STUDIOS</h1>
+      <div class="entry-rule"></div>
+      <button id="enter-btn" type="button">Enter Gallery&nbsp;&rarr;</button>
+    </div>
+  </div>
+
+  <!-- ===================== MUTE BUTTON ===================== -->
+  <button id="mute-btn" aria-label="Toggle music" type="button">
+    <svg class="icon-on" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+      <path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"></path>
+    </svg>
+    <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+      <line x1="23" y1="9" x2="17" y2="15"></line>
+      <line x1="17" y1="9" x2="23" y2="15"></line>
+    </svg>
+  </button>
+
   <a-scene background="color: #0d0d0f" renderer="colorManagement: true; antialias: true" cursor="rayOrigin: mouse" raycaster="objects: .clickable">
 
-    <a-assets>
+    <a-assets timeout="800">
       <img id="painting" src="painting.jpg" crossorigin="anonymous" />
+      <img id="img-venice" src="Venice_web.jpg" crossorigin="anonymous" />
+      <img id="img-kerry" src="Kerry_web.jpg" crossorigin="anonymous" />
+      <img id="img-ringofkerry" src="RingofKerry_web.jpg" crossorigin="anonymous" />
+      <img id="img-positano" src="Positano_web.jpg" crossorigin="anonymous" />
+      <img id="img-roma" src="TreviFountain_web.jpg" crossorigin="anonymous" />
     </a-assets>
 
     <!-- ===================== LIGHTING ===================== -->
@@ -193,56 +334,63 @@
 
     <!-- General room light from above -->
     <a-entity light="type: directional; color: #fff7ec; intensity: 0.45"
-              position="3 6 4"></a-entity>
-    <a-entity light="type: point; color: #fff7ec; intensity: 0.35; distance: 22; decay: 2"
-              position="0 3.6 2"></a-entity>
+              position="3 7 4"></a-entity>
+    <a-entity light="type: point; color: #fff7ec; intensity: 0.4; distance: 26; decay: 2"
+              position="0 4.6 0"></a-entity>
 
-    <!-- Spotlight aimed at the painting -->
+    <!-- Hero spotlight aimed at the main painting -->
     <a-entity id="art-spot"
-              light="type: spot; color: #fff4e0; intensity: 1.8; angle: 32; penumbra: 0.35; distance: 14; decay: 1.4; target: #painting-plane"
-              position="0 3.7 -4.3"></a-entity>
+              light="type: spot; color: #fff4e0; intensity: 1.4; angle: 26; penumbra: 0.4; distance: 14; decay: 1.4; target: #painting-plane"
+              position="0 4.7 -3.4"></a-entity>
 
     <!-- ===================== ROOM SHELL ===================== -->
-    <!-- Room interior: 12 (x) wide, 4 (y) tall, 12 (z) deep -->
+    <!-- Room interior: 16 (x) wide, 5 (y) tall, 12 (z) deep -->
 
     <!-- Wooden floor (procedural plank texture) -->
-    <a-plane procedural-wood rotation="-90 0 0" position="0 0 0"
-             width="12" height="12"
+    <a-plane id="floor" class="clickable" procedural-wood
+             rotation="-90 0 0" position="0 0 0"
+             width="16" height="12"
              material="roughness: 0.7; metalness: 0.05"></a-plane>
 
+    <!-- Landing pin shown briefly where the visitor double-clicks -->
+    <a-ring id="nav-pin"
+            radius-inner="0.18" radius-outer="0.3"
+            rotation="-90 0 0" position="0 -10 0"
+            material="color: #fff4e0; shader: flat; transparent: true; opacity: 0; side: double"></a-ring>
+
     <!-- Ceiling -->
-    <a-plane rotation="90 0 0" position="0 4 0" width="12" height="12"
+    <a-plane rotation="90 0 0" position="0 5 0" width="16" height="12"
              material="color: #fbfbfb; roughness: 1"></a-plane>
 
     <!-- Far wall (where the painting hangs), z = -6 -->
-    <a-plane position="0 2 -6" width="12" height="4"
+    <a-plane position="0 2.5 -6" width="16" height="5"
              material="color: #f4f4f2; roughness: 1"></a-plane>
 
     <!-- Back wall, z = 6 -->
-    <a-plane rotation="0 180 0" position="0 2 6" width="12" height="4"
+    <a-plane rotation="0 180 0" position="0 2.5 6" width="16" height="5"
              material="color: #f4f4f2; roughness: 1"></a-plane>
 
-    <!-- Left wall, x = -6 -->
-    <a-plane rotation="0 90 0" position="-6 2 0" width="12" height="4"
+    <!-- Left wall (European Series hangs here), x = -8 -->
+    <a-plane rotation="0 90 0" position="-8 2.5 0" width="12" height="5"
              material="color: #efefed; roughness: 1"></a-plane>
 
-    <!-- Right wall, x = 6 -->
-    <a-plane rotation="0 -90 0" position="6 2 0" width="12" height="4"
+    <!-- Right wall, x = 8 -->
+    <a-plane rotation="0 -90 0" position="8 2.5 0" width="12" height="5"
              material="color: #efefed; roughness: 1"></a-plane>
 
     <!-- Baseboards for a finished look -->
-    <a-box position="0 0.06 -5.96" width="12" height="0.12" depth="0.05"
+    <a-box position="0 0.06 -5.96" width="16" height="0.12" depth="0.05"
            material="color: #e3e3e0; roughness: 1"></a-box>
-    <a-box position="0 0.06 5.96" width="12" height="0.12" depth="0.05"
+    <a-box position="0 0.06 5.96" width="16" height="0.12" depth="0.05"
            material="color: #e3e3e0; roughness: 1"></a-box>
-    <a-box position="-5.96 0.06 0" width="0.05" height="0.12" depth="12"
+    <a-box position="-7.96 0.06 0" width="0.05" height="0.12" depth="12"
            material="color: #e3e3e0; roughness: 1"></a-box>
-    <a-box position="5.96 0.06 0" width="0.05" height="0.12" depth="12"
+    <a-box position="7.96 0.06 0" width="0.05" height="0.12" depth="12"
            material="color: #e3e3e0; roughness: 1"></a-box>
 
     <!-- ===================== ARTWORK ===================== -->
     <!-- Square painting in a dark wooden frame, mounted on far wall -->
-    <a-entity id="artwork" position="0 1.7 -5.9">
+    <a-entity id="artwork" position="0 2.0 -5.9">
 
       <!-- Dark wooden frame (four members) -->
       <!-- painting is 2 x 2; frame border 0.14 thick, 0.12 deep -->
@@ -266,17 +414,139 @@
     </a-entity>
 
     <!-- Caption plaque beside the painting -->
-    <a-entity position="1.55 1.2 -5.93">
-      <a-plane width="0.62" height="0.22" material="color: #ffffff; roughness: 1"></a-plane>
-      <a-text value="TARA McILROY\nUntitled — Toronto"
-              align="center" color="#222" width="1.2"
-              position="0 0 0.01"></a-text>
+    <a-entity position="1.65 1.5 -5.93">
+      <!-- soft drop shadow -->
+      <a-plane width="0.74" height="0.30" position="0.005 -0.008 -0.003"
+               material="color: #b8b3a6; roughness: 1; opacity: 0.5; transparent: true"></a-plane>
+      <!-- card -->
+      <a-plane width="0.72" height="0.28"
+               material="color: #ffffff; roughness: 0.95"></a-plane>
+      <!-- artist name -->
+      <a-text value="TARA McILROY"
+              align="center" color="#1a1a1a"
+              width="0.85" letter-spacing="2"
+              position="0 0.075 0.003"></a-text>
+      <!-- divider line -->
+      <a-plane width="0.18" height="0.004" position="0 0.018 0.003"
+               material="color: #8a8a8a; roughness: 1"></a-plane>
+      <!-- title -->
+      <a-text value="Untitled"
+              align="center" color="#3a3a3a"
+              width="1.0" font-style="italic"
+              position="0 -0.025 0.003"></a-text>
+      <!-- city / year -->
+      <a-text value="TORONTO  ·  2024"
+              align="center" color="#787878"
+              width="1.5" letter-spacing="5"
+              position="0 -0.095 0.003"></a-text>
     </a-entity>
+
+    <!-- ===================== EUROPEAN SERIES ===================== -->
+    <!-- Five framed photographs hung along the left wall (x = -8).
+         Four landscape frames flank a single portrait frame in the
+         centre, so the row reads as a balanced composition. -->
+
+    <!-- Series title, centered above the row -->
+    <a-entity position="-7.93 3.25 0" rotation="0 90 0">
+      <a-text value="EUROPEAN SERIES"
+              align="center" color="#1a1a1a"
+              width="3.6" letter-spacing="8"
+              position="0 0 0.005"></a-text>
+      <a-plane width="1.5" height="0.012" position="0 -0.13 0.003"
+               material="color: #1a1a1a; roughness: 1"></a-plane>
+    </a-entity>
+
+    <!-- Photo 1: Venice (landscape, 1500x1124) -->
+    <a-entity id="photo-venice" position="-7.94 1.65 -4.25" rotation="0 90 0">
+      <a-box position="0 0 -0.028" width="0.85" height="0.65" depth="0.06"
+             material="color: #2c1d10; roughness: 0.55; metalness: 0.1"></a-box>
+      <a-plane position="0 0 0.006" width="0.78" height="0.58"
+               material="color: #f7f4ee; roughness: 0.95"></a-plane>
+      <a-image src="#img-venice" position="0 0 0.012"
+               width="0.694" height="0.52"></a-image>
+      <a-text value="VENICE" align="center" color="#555"
+              width="1.4" letter-spacing="3"
+              position="0 -0.4 0.012"></a-text>
+    </a-entity>
+
+    <!-- Photo 2: Kerry — white horse (landscape, 1500x1142) -->
+    <a-entity id="photo-kerry" position="-7.94 1.65 -2.075" rotation="0 90 0">
+      <a-box position="0 0 -0.028" width="0.85" height="0.65" depth="0.06"
+             material="color: #2c1d10; roughness: 0.55; metalness: 0.1"></a-box>
+      <a-plane position="0 0 0.006" width="0.78" height="0.58"
+               material="color: #f7f4ee; roughness: 0.95"></a-plane>
+      <a-image src="#img-kerry" position="0 0 0.012"
+               width="0.683" height="0.52"></a-image>
+      <a-text value="KERRY" align="center" color="#555"
+              width="1.4" letter-spacing="3"
+              position="0 -0.4 0.012"></a-text>
+    </a-entity>
+
+    <!-- Photo 3 (centre): Trevi Fountain — PORTRAIT frame (2862x3739) -->
+    <a-entity id="photo-roma" position="-7.94 1.65 0" rotation="0 90 0">
+      <a-box position="0 0 -0.028" width="0.65" height="0.85" depth="0.06"
+             material="color: #2c1d10; roughness: 0.55; metalness: 0.1"></a-box>
+      <a-plane position="0 0 0.006" width="0.58" height="0.78"
+               material="color: #f7f4ee; roughness: 0.95"></a-plane>
+      <a-image src="#img-roma" position="0 0 0.012"
+               width="0.460" height="0.60"></a-image>
+      <a-text value="ROMA" align="center" color="#555"
+              width="1.4" letter-spacing="3"
+              position="0 -0.49 0.012"></a-text>
+    </a-entity>
+
+    <!-- Photo 4: Positano (landscape, 1500x1090) -->
+    <a-entity id="photo-positano" position="-7.94 1.65 2.075" rotation="0 90 0">
+      <a-box position="0 0 -0.028" width="0.85" height="0.65" depth="0.06"
+             material="color: #2c1d10; roughness: 0.55; metalness: 0.1"></a-box>
+      <a-plane position="0 0 0.006" width="0.78" height="0.58"
+               material="color: #f7f4ee; roughness: 0.95"></a-plane>
+      <a-image src="#img-positano" position="0 0 0.012"
+               width="0.716" height="0.52"></a-image>
+      <a-text value="POSITANO" align="center" color="#555"
+              width="1.4" letter-spacing="3"
+              position="0 -0.4 0.012"></a-text>
+    </a-entity>
+
+    <!-- Photo 5: Ring of Kerry (landscape, 1500x1056) -->
+    <a-entity id="photo-ringofkerry" position="-7.94 1.65 4.25" rotation="0 90 0">
+      <a-box position="0 0 -0.028" width="0.85" height="0.65" depth="0.06"
+             material="color: #2c1d10; roughness: 0.55; metalness: 0.1"></a-box>
+      <a-plane position="0 0 0.006" width="0.78" height="0.58"
+               material="color: #f7f4ee; roughness: 0.95"></a-plane>
+      <a-image src="#img-ringofkerry" position="0 0 0.012"
+               width="0.720" height="0.507"></a-image>
+      <a-text value="RING OF KERRY" align="center" color="#555"
+              width="1.4" letter-spacing="3"
+              position="0 -0.4 0.012"></a-text>
+    </a-entity>
+
+    <!-- Individual warm spotlights above each photograph -->
+    <a-entity light="type: spot; color: #fff2dc; intensity: 0.85; angle: 24;
+                     penumbra: 0.55; distance: 6; decay: 1.6;
+                     target: #photo-venice"
+              position="-7.05 4.6 -4.25"></a-entity>
+    <a-entity light="type: spot; color: #fff2dc; intensity: 0.85; angle: 24;
+                     penumbra: 0.55; distance: 6; decay: 1.6;
+                     target: #photo-kerry"
+              position="-7.05 4.6 -2.075"></a-entity>
+    <a-entity light="type: spot; color: #fff2dc; intensity: 0.9; angle: 26;
+                     penumbra: 0.55; distance: 6; decay: 1.6;
+                     target: #photo-roma"
+              position="-7.05 4.7 0"></a-entity>
+    <a-entity light="type: spot; color: #fff2dc; intensity: 0.85; angle: 24;
+                     penumbra: 0.55; distance: 6; decay: 1.6;
+                     target: #photo-positano"
+              position="-7.05 4.6 2.075"></a-entity>
+    <a-entity light="type: spot; color: #fff2dc; intensity: 0.85; angle: 24;
+                     penumbra: 0.55; distance: 6; decay: 1.6;
+                     target: #photo-ringofkerry"
+              position="-7.05 4.6 4.25"></a-entity>
 
     <!-- ===================== VISITOR ===================== -->
     <a-entity id="rig" position="0 0 4.5" room-bounds>
       <a-entity id="camera" camera position="0 1.6 0"
-                look-controls="pointerLockEnabled: false"
+                look-controls="pointerLockEnabled: false; reverseMouseDrag: true; reverseTouchDrag: true"
                 wasd-controls="acceleration: 28"></a-entity>
     </a-entity>
 
@@ -319,22 +589,72 @@
 
     /* ---- Keep the visitor inside the room ---- */
     AFRAME.registerComponent('room-bounds', {
-      schema: { min: { default: -5.5 }, max: { default: 5.5 } },
+      schema: {
+        xMin: { default: -7.4 }, xMax: { default: 7.4 },
+        zMin: { default: -5.4 }, zMax: { default: 5.4 }
+      },
       tick: function () {
         var p = this.el.object3D.position;
-        if (p.x < this.data.min) p.x = this.data.min;
-        if (p.x > this.data.max) p.x = this.data.max;
-        if (p.z < this.data.min) p.z = this.data.min;
-        if (p.z > this.data.max) p.z = this.data.max;
+        if (p.x < this.data.xMin) p.x = this.data.xMin;
+        if (p.x > this.data.xMax) p.x = this.data.xMax;
+        if (p.z < this.data.zMin) p.z = this.data.zMin;
+        if (p.z > this.data.zMax) p.z = this.data.zMax;
       }
     });
 
-    /* ---- Fade the hint after a few seconds ---- */
+    /* ---- Entry screen, ambient music, and mute toggle ---- */
     window.addEventListener('load', function () {
-      setTimeout(function () {
-        var h = document.getElementById('hint');
-        if (h) h.classList.add('fade');
-      }, 7000);
+      var entry = document.getElementById('entry-screen');
+      var enterBtn = document.getElementById('enter-btn');
+      var muteBtn = document.getElementById('mute-btn');
+      var audio = document.getElementById('ambient-audio');
+      var camera = document.getElementById('camera');
+
+      if (audio) audio.volume = 0.25;
+
+      // The gallery renders behind the overlay, but input is suspended
+      // until the visitor enters so stray keystrokes don't drift the camera.
+      function setSceneControls(enabled) {
+        if (!camera) return;
+        camera.setAttribute('wasd-controls', 'enabled', enabled);
+        camera.setAttribute('look-controls', 'enabled', enabled);
+      }
+      setSceneControls(false);
+
+      if (enterBtn) {
+        enterBtn.addEventListener('click', function () {
+          // User gesture — safe to start audio.
+          if (audio) audio.play().catch(function () { /* the mute button can recover this */ });
+
+          entry.classList.add('fade-out');
+          muteBtn.classList.add('visible');
+          setSceneControls(true);
+
+          // Begin the hint fade now that the visitor is actually in the room.
+          setTimeout(function () {
+            var h = document.getElementById('hint');
+            if (h) h.classList.add('fade');
+          }, 7000);
+
+          // Drop the overlay from the DOM after the fade finishes.
+          setTimeout(function () {
+            if (entry && entry.parentNode) entry.parentNode.removeChild(entry);
+          }, 1400);
+        });
+      }
+
+      if (muteBtn) {
+        muteBtn.addEventListener('click', function () {
+          if (!audio) return;
+          if (audio.paused) {
+            audio.play().catch(function () {});
+            muteBtn.classList.remove('muted');
+          } else {
+            audio.pause();
+            muteBtn.classList.add('muted');
+          }
+        });
+      }
     });
 
     /* ---- Chat panel: talk to an AI version of the artist ---- */
@@ -348,6 +668,7 @@
       var messagesEl = document.getElementById('chat-messages');
       var typingEl = document.getElementById('chat-typing');
       var camera = document.getElementById('camera');
+      var rig = document.getElementById('rig');
 
       var GREETING = "Hi — I'm Tara, or rather an AI version of me. Welcome to my room at Vizual Ninja Studios. That piece in front of you came out of a long Toronto winter. Ask me anything about it, or about how I work.";
 
@@ -387,7 +708,118 @@
         setControls(true);
       }
 
-      if (painting) painting.addEventListener('click', openChat);
+      /* Google-Earth-style navigation: double-click the floor to glide
+         to that spot. Double-click the painting for a centered close-up;
+         double-click again to step back. */
+      var floor = document.getElementById('floor');
+      var navPin = document.getElementById('nav-pin');
+      var zoomed = false;
+      var savedRigPos = null;
+      var paintingClickTimer = null;
+      var floorClickTimer = null;
+
+      var ROOM_X_MIN = -7.3, ROOM_X_MAX = 7.3;
+      var ROOM_Z_MIN = -5.3, ROOM_Z_MAX = 5.3;
+
+      function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+
+      function animateRig(toX, toY, toZ, dur) {
+        if (!rig) return;
+        rig.setAttribute('animation__move', {
+          property: 'position',
+          to: toX + ' ' + toY + ' ' + toZ,
+          dur: dur || 1100,
+          easing: 'easeInOutQuad'
+        });
+      }
+
+      function flashPin(x, z) {
+        if (!navPin) return;
+        navPin.setAttribute('position', x + ' 0.02 ' + z);
+        navPin.removeAttribute('animation__pin');
+        navPin.setAttribute('material', 'opacity', 0.95);
+        navPin.setAttribute('animation__pin', {
+          property: 'material.opacity',
+          from: 0.95,
+          to: 0,
+          dur: 1100,
+          easing: 'easeOutQuad'
+        });
+      }
+
+      function moveToFloorPoint(pt) {
+        if (!rig || !camera) return;
+        // Keep the visitor a touch inside the walls.
+        var targetWorldX = clamp(pt.x, ROOM_X_MIN, ROOM_X_MAX);
+        var targetWorldZ = clamp(pt.z, ROOM_Z_MIN, ROOM_Z_MAX);
+
+        // Rig position is offset so the camera (which WASD walks within
+        // the rig) ends up at the requested world point.
+        var cam = camera.object3D.position;
+        var rigTargetX = clamp(targetWorldX - cam.x, ROOM_X_MIN, ROOM_X_MAX);
+        var rigTargetZ = clamp(targetWorldZ - cam.z, ROOM_Z_MIN, ROOM_Z_MAX);
+
+        // Duration scales gently with distance so close moves feel snappy.
+        var rp = rig.object3D.position;
+        var dx = rigTargetX - rp.x;
+        var dz = rigTargetZ - rp.z;
+        var dist = Math.sqrt(dx * dx + dz * dz);
+        var dur = clamp(450 + dist * 140, 500, 1500);
+
+        animateRig(rigTargetX, 0, rigTargetZ, dur);
+        flashPin(targetWorldX, targetWorldZ);
+
+        // Manual navigation invalidates the painting close-up "home".
+        zoomed = false;
+        savedRigPos = null;
+      }
+
+      function toggleCloseUp() {
+        if (!rig || !camera) return;
+        if (!zoomed) {
+          var rp = rig.object3D.position;
+          savedRigPos = { x: rp.x, y: rp.y, z: rp.z };
+          var cam = camera.object3D.position;
+          animateRig(-cam.x, 0, -2.8 - cam.z, 1100);
+          zoomed = true;
+        } else {
+          animateRig(savedRigPos.x, savedRigPos.y, savedRigPos.z, 1100);
+          zoomed = false;
+          savedRigPos = null;
+        }
+      }
+
+      // A-Frame only emits 'click', so we debounce to tell single vs double.
+      function onPaintingClick() {
+        if (paintingClickTimer) {
+          clearTimeout(paintingClickTimer);
+          paintingClickTimer = null;
+          toggleCloseUp();
+        } else {
+          paintingClickTimer = setTimeout(function () {
+            paintingClickTimer = null;
+            openChat();
+          }, 260);
+        }
+      }
+
+      function onFloorClick(e) {
+        var hit = e.detail && e.detail.intersection;
+        if (!hit || !hit.point) return;
+        var pt = hit.point;
+        if (floorClickTimer) {
+          clearTimeout(floorClickTimer);
+          floorClickTimer = null;
+          moveToFloorPoint(pt);
+        } else {
+          floorClickTimer = setTimeout(function () {
+            floorClickTimer = null;
+          }, 280);
+        }
+      }
+
+      if (painting) painting.addEventListener('click', onPaintingClick);
+      if (floor) floor.addEventListener('click', onFloorClick);
       if (closeBtn) closeBtn.addEventListener('click', closeChat);
       document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && panel.classList.contains('open')) closeChat();
