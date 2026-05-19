@@ -280,6 +280,120 @@
               position="0 0 0.01"></a-text>
     </a-entity>
 
+    <!-- ===================== BACK-CORNER LOUNGE ===================== -->
+    <!-- Patterned kilim rug -->
+    <a-plane procedural-rug
+             rotation="-90 0 0" position="-3 0.011 3.6"
+             width="4.4" height="3.2"
+             material="roughness: 0.95; metalness: 0"></a-plane>
+
+    <!-- Left mustard barrel armchair -->
+    <a-entity class="armchair" position="-3.95 0 3.85" rotation="0 12 0">
+      <!-- lower body / base -->
+      <a-cylinder position="0 0.28 0" radius="0.55" height="0.56" segments-radial="40"
+                  material="color: #d39a2a; roughness: 0.9; metalness: 0.02"></a-cylinder>
+      <!-- seat cushion (slightly lighter) -->
+      <a-cylinder position="0 0.61 0" radius="0.5" height="0.14" segments-radial="40"
+                  material="color: #dca837; roughness: 0.9"></a-cylinder>
+      <!-- curved wrap-around backrest (open at front, facing -Z) -->
+      <a-cylinder position="0 0.95 0" radius="0.55" height="0.85"
+                  open-ended="true" theta-start="0" theta-length="180"
+                  segments-radial="40"
+                  material="color: #d39a2a; roughness: 0.9; side: double"></a-cylinder>
+      <!-- backrest top lip -->
+      <a-torus position="0 1.37 0" radius="0.55" radius-tubular="0.04"
+               theta-start="0" arc="180" rotation="90 0 0"
+               material="color: #c98e22; roughness: 0.85"></a-torus>
+      <!-- magenta accent pillow -->
+      <a-box position="0 0.85 -0.12" width="0.62" height="0.5" depth="0.22"
+             rotation="-12 0 0"
+             material="color: #c1268d; roughness: 0.75"></a-box>
+    </a-entity>
+
+    <!-- Right mustard barrel armchair (with a "patterned" pillow) -->
+    <a-entity class="armchair" position="-2.05 0 3.85" rotation="0 -12 0">
+      <a-cylinder position="0 0.28 0" radius="0.55" height="0.56" segments-radial="40"
+                  material="color: #d39a2a; roughness: 0.9; metalness: 0.02"></a-cylinder>
+      <a-cylinder position="0 0.61 0" radius="0.5" height="0.14" segments-radial="40"
+                  material="color: #dca837; roughness: 0.9"></a-cylinder>
+      <a-cylinder position="0 0.95 0" radius="0.55" height="0.85"
+                  open-ended="true" theta-start="0" theta-length="180"
+                  segments-radial="40"
+                  material="color: #d39a2a; roughness: 0.9; side: double"></a-cylinder>
+      <a-torus position="0 1.37 0" radius="0.55" radius-tubular="0.04"
+               theta-start="0" arc="180" rotation="90 0 0"
+               material="color: #c98e22; roughness: 0.85"></a-torus>
+      <!-- patchwork-style accent pillow -->
+      <a-entity position="0 0.85 -0.12" rotation="-12 0 0">
+        <a-box position="0 0 0" width="0.62" height="0.5" depth="0.22"
+               material="color: #6a55a8; roughness: 0.75"></a-box>
+        <a-box position="-0.15 0.12 -0.12" width="0.22" height="0.16" depth="0.005"
+               material="color: #c1268d; roughness: 0.75"></a-box>
+        <a-box position="0.12 0.08 -0.12" width="0.18" height="0.12" depth="0.005"
+               material="color: #d49228; roughness: 0.75"></a-box>
+        <a-box position="-0.05 -0.12 -0.12" width="0.2" height="0.14" depth="0.005"
+               material="color: #3a5b6b; roughness: 0.75"></a-box>
+        <a-box position="0.16 -0.13 -0.12" width="0.16" height="0.14" depth="0.005"
+               material="color: #b73a2a; roughness: 0.75"></a-box>
+      </a-entity>
+    </a-entity>
+
+    <!-- Round glass coffee table with sculptural chrome base -->
+    <a-entity position="-3 0 2.95">
+      <!-- chrome figural base (stacked abstract form) -->
+      <a-cylinder position="0 0.04 0" radius="0.22" height="0.08" segments-radial="32"
+                  material="color: #b8b8b8; roughness: 0.18; metalness: 0.95"></a-cylinder>
+      <a-sphere position="-0.07 0.18 0" radius="0.13"
+                material="color: #c6c6c6; roughness: 0.18; metalness: 0.95"></a-sphere>
+      <a-sphere position="0.07 0.18 0" radius="0.13"
+                material="color: #c6c6c6; roughness: 0.18; metalness: 0.95"></a-sphere>
+      <a-cylinder position="0 0.34 0" radius="0.09" height="0.22" segments-radial="32"
+                  material="color: #c6c6c6; roughness: 0.18; metalness: 0.95"></a-cylinder>
+      <a-sphere position="0 0.48 0" radius="0.12"
+                material="color: #c6c6c6; roughness: 0.18; metalness: 0.95"></a-sphere>
+      <!-- glass top -->
+      <a-cylinder position="0 0.555 0" radius="0.6" height="0.025" segments-radial="48"
+                  material="color: #d4ecf0; opacity: 0.4; transparent: true;
+                            roughness: 0.05; metalness: 0.1; side: double"></a-cylinder>
+      <!-- a small purple glass orb sitting on the table -->
+      <a-sphere position="-0.25 0.62 0.1" radius="0.07"
+                material="color: #6a2a8a; opacity: 0.7; transparent: true;
+                          roughness: 0.15; metalness: 0.1"></a-sphere>
+      <a-cylinder position="0.18 0.6 -0.1" radius="0.05" height="0.09"
+                  material="color: #e8e8e8; roughness: 0.1; metalness: 0.05;
+                            opacity: 0.6; transparent: true"></a-cylinder>
+    </a-entity>
+
+    <!-- Small dark pedestal with vase + flowers between the chairs -->
+    <a-entity position="-3 0 4.7">
+      <a-box position="0 0.42 0" width="0.42" height="0.84" depth="0.38"
+             material="color: #1f3a32; roughness: 0.85"></a-box>
+      <!-- glass vase -->
+      <a-cylinder position="0 0.97 0" radius="0.085" height="0.26"
+                  material="color: #b5d6e0; opacity: 0.45; transparent: true;
+                            roughness: 0.1; metalness: 0.1; side: double"></a-cylinder>
+      <!-- stems -->
+      <a-cylinder position="-0.02 1.18 0.01" radius="0.005" height="0.32"
+                  rotation="6 0 -4" material="color: #2c5236; roughness: 1"></a-cylinder>
+      <a-cylinder position="0.025 1.2 -0.02" radius="0.005" height="0.36"
+                  rotation="-4 0 8" material="color: #2c5236; roughness: 1"></a-cylinder>
+      <a-cylinder position="0 1.16 0.03" radius="0.005" height="0.28"
+                  rotation="2 0 0" material="color: #2c5236; roughness: 1"></a-cylinder>
+      <!-- flower heads -->
+      <a-sphere position="-0.04 1.34 0.02" radius="0.05"
+                material="color: #c1268d; roughness: 0.85"></a-sphere>
+      <a-sphere position="0.05 1.37 -0.03" radius="0.045"
+                material="color: #b73a2a; roughness: 0.85"></a-sphere>
+      <a-sphere position="0.01 1.30 0.05" radius="0.04"
+                material="color: #6a55a8; roughness: 0.85"></a-sphere>
+      <a-sphere position="-0.02 1.39 -0.01" radius="0.038"
+                material="color: #3a5b6b; roughness: 0.85"></a-sphere>
+    </a-entity>
+
+    <!-- Soft warm fill light for the lounge corner -->
+    <a-entity light="type: point; color: #ffd9a3; intensity: 0.55; distance: 6; decay: 1.6"
+              position="-3 2.4 3.6"></a-entity>
+
     <!-- ===================== VISITOR ===================== -->
     <a-entity id="rig" position="0 0 4.5" room-bounds>
       <a-entity id="camera" camera position="0 1.6 0"
@@ -321,6 +435,85 @@
         var url = c.toDataURL();
         this.el.setAttribute('material', 'src', url);
         this.el.setAttribute('material', 'repeat', '4 4');
+      }
+    });
+
+    /* ---- Procedural kilim-style rug texture ---- */
+    AFRAME.registerComponent('procedural-rug', {
+      init: function () {
+        var c = document.createElement('canvas');
+        c.width = 1024; c.height = 768;
+        var ctx = c.getContext('2d');
+        var W = c.width, H = c.height;
+
+        // Sand/cream field
+        ctx.fillStyle = '#d6bb8b';
+        ctx.fillRect(0, 0, W, H);
+
+        // Dark outer border
+        ctx.strokeStyle = '#3e2014';
+        ctx.lineWidth = 18;
+        ctx.strokeRect(9, 9, W - 18, H - 18);
+
+        // "Toothed" inner band on all four sides
+        var teeth = ['#b73a2a', '#3a5b6b', '#cf8a3a', '#5e7a3a', '#7a3a6a'];
+        var t = 36;
+        function tooth(x1, y1, x2, y2, x3, y3, color) {
+          ctx.fillStyle = color;
+          ctx.beginPath();
+          ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.lineTo(x3, y3);
+          ctx.closePath(); ctx.fill();
+        }
+        for (var x = 32; x < W - 32 - t; x += t) {
+          var col = teeth[((x / t) | 0) % teeth.length];
+          tooth(x, 32, x + t, 32, x + t / 2, 32 + 26, col);
+          tooth(x, H - 32, x + t, H - 32, x + t / 2, H - 32 - 26, col);
+        }
+        for (var y = 32; y < H - 32 - t; y += t) {
+          var col2 = teeth[((y / t) | 0) % teeth.length];
+          tooth(32, y, 32, y + t, 32 + 26, y + t / 2, col2);
+          tooth(W - 32, y, W - 32, y + t, W - 32 - 26, y + t / 2, col2);
+        }
+
+        // Central row of stepped diamonds
+        var cy = H / 2;
+        var diaColors = ['#b73a2a', '#3a5b6b', '#d49228', '#5e7a3a', '#7a3a6a', '#3a5b6b', '#b73a2a'];
+        var step = 130;
+        var startX = (W - step * 6) / 2;
+        function diamond(cx, cyy, s, color) {
+          ctx.fillStyle = color;
+          ctx.beginPath();
+          ctx.moveTo(cx, cyy - s);
+          ctx.lineTo(cx + s, cyy);
+          ctx.lineTo(cx, cyy + s);
+          ctx.lineTo(cx - s, cyy);
+          ctx.closePath();
+          ctx.fill();
+        }
+        for (var d = 0; d < 7; d++) {
+          var cx = startX + d * step;
+          diamond(cx, cy, 60, diaColors[d]);
+          diamond(cx, cy, 38, '#d6bb8b');
+          diamond(cx, cy, 18, diaColors[(d + 3) % diaColors.length]);
+        }
+
+        // Horizontal accent stripes framing the diamond row
+        ctx.fillStyle = '#9a3a2a';
+        ctx.fillRect(110, cy - 118, W - 220, 6);
+        ctx.fillRect(110, cy + 112, W - 220, 6);
+        ctx.fillStyle = '#3a5b6b';
+        ctx.fillRect(110, cy - 102, W - 220, 3);
+        ctx.fillRect(110, cy + 99, W - 220, 3);
+
+        // Subtle worn-in noise so it doesn't look CG-perfect
+        for (var n = 0; n < 1400; n++) {
+          ctx.fillStyle = 'rgba(60,40,20,' + (Math.random() * 0.08) + ')';
+          ctx.fillRect(Math.random() * W, Math.random() * H, 2, 1);
+        }
+
+        var url = c.toDataURL();
+        this.el.setAttribute('material', 'src', url);
+        this.el.setAttribute('material', 'repeat', '1 1');
       }
     });
 
