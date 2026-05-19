@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Vizual Ninja Studios — Gallery Room 1</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet">
   <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
   <style>
     html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #111; font-family: 'Helvetica Neue', Arial, sans-serif; }
@@ -158,6 +161,111 @@
     }
     #chat-send:hover { background: #43301d; }
     #chat-send:disabled { opacity: 0.5; cursor: default; }
+
+    /* ===================== ENTRY SCREEN ===================== */
+    #entry-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 40;
+      background: radial-gradient(circle at 50% 38%, #1a1a1d 0%, #0a0a0b 72%);
+      color: #ece7df;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      animation: entryFadeIn 1.6s ease-out 0.15s forwards;
+      transition: opacity 1.2s ease;
+    }
+    #entry-screen.fade-out {
+      opacity: 0 !important;
+      pointer-events: none;
+      animation: none;
+    }
+    @keyframes entryFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    .entry-content {
+      text-align: center;
+      padding: 0 32px;
+      transform: translateY(0);
+      animation: entryRise 1.8s cubic-bezier(0.22, 0.61, 0.36, 1) 0.25s both;
+    }
+    @keyframes entryRise {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .entry-eyebrow {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.5em;
+      color: #a99e8a;
+      text-transform: uppercase;
+      margin-bottom: 30px;
+      padding-left: 0.5em;
+    }
+
+    .entry-title {
+      font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+      font-size: clamp(36px, 6.2vw, 68px);
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      margin: 0;
+      line-height: 1.1;
+      color: #f3eee5;
+      padding-left: 0.18em;
+    }
+
+    .entry-rule {
+      width: 60px;
+      height: 1px;
+      background: #8a7e6a;
+      margin: 38px auto 42px;
+    }
+
+    #enter-btn {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      background: transparent;
+      border: 1px solid #b9a884;
+      color: #ece7df;
+      padding: 14px 38px;
+      font-size: 12px;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.35s ease, color 0.35s ease, letter-spacing 0.35s ease;
+    }
+    #enter-btn:hover {
+      background: #b9a884;
+      color: #0a0a0b;
+      letter-spacing: 0.38em;
+    }
+
+    /* ===================== MUTE BUTTON ===================== */
+    #mute-btn {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      z-index: 15;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(20, 20, 20, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #f3f3f3;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.8s ease, background 0.2s ease;
+      padding: 0;
+    }
+    #mute-btn.visible { display: flex; opacity: 1; }
+    #mute-btn:hover { background: rgba(40, 40, 40, 0.85); }
+    #mute-btn svg { width: 18px; height: 18px; display: block; }
+    #mute-btn .icon-muted { display: none; }
+    #mute-btn.muted .icon-on { display: none; }
+    #mute-btn.muted .icon-muted { display: block; }
   </style>
 </head>
 <body>
@@ -180,6 +288,34 @@
       <button id="chat-send" type="submit">Send</button>
     </form>
   </div>
+
+  <!-- ===================== AMBIENT AUDIO ===================== -->
+  <audio id="ambient-audio" src="ambient.mp3" loop preload="auto"></audio>
+
+  <!-- ===================== ENTRY SCREEN ===================== -->
+  <div id="entry-screen">
+    <div class="entry-content">
+      <div class="entry-eyebrow">Current Exhibition</div>
+      <h1 class="entry-title">VIZUAL&nbsp;NINJA&nbsp;STUDIOS</h1>
+      <div class="entry-rule"></div>
+      <button id="enter-btn" type="button">Enter Gallery&nbsp;&rarr;</button>
+    </div>
+  </div>
+
+  <!-- ===================== MUTE BUTTON ===================== -->
+  <button id="mute-btn" aria-label="Toggle music" type="button">
+    <svg class="icon-on" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+      <path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"></path>
+    </svg>
+    <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+      <line x1="23" y1="9" x2="17" y2="15"></line>
+      <line x1="17" y1="9" x2="23" y2="15"></line>
+    </svg>
+  </button>
 
   <a-scene background="color: #0d0d0f" renderer="colorManagement: true; antialias: true" cursor="rayOrigin: mouse" raycaster="objects: .clickable">
 
@@ -466,12 +602,59 @@
       }
     });
 
-    /* ---- Fade the hint after a few seconds ---- */
+    /* ---- Entry screen, ambient music, and mute toggle ---- */
     window.addEventListener('load', function () {
-      setTimeout(function () {
-        var h = document.getElementById('hint');
-        if (h) h.classList.add('fade');
-      }, 7000);
+      var entry = document.getElementById('entry-screen');
+      var enterBtn = document.getElementById('enter-btn');
+      var muteBtn = document.getElementById('mute-btn');
+      var audio = document.getElementById('ambient-audio');
+      var camera = document.getElementById('camera');
+
+      if (audio) audio.volume = 0.25;
+
+      // The gallery renders behind the overlay, but input is suspended
+      // until the visitor enters so stray keystrokes don't drift the camera.
+      function setSceneControls(enabled) {
+        if (!camera) return;
+        camera.setAttribute('wasd-controls', 'enabled', enabled);
+        camera.setAttribute('look-controls', 'enabled', enabled);
+      }
+      setSceneControls(false);
+
+      if (enterBtn) {
+        enterBtn.addEventListener('click', function () {
+          // User gesture — safe to start audio.
+          if (audio) audio.play().catch(function () { /* the mute button can recover this */ });
+
+          entry.classList.add('fade-out');
+          muteBtn.classList.add('visible');
+          setSceneControls(true);
+
+          // Begin the hint fade now that the visitor is actually in the room.
+          setTimeout(function () {
+            var h = document.getElementById('hint');
+            if (h) h.classList.add('fade');
+          }, 7000);
+
+          // Drop the overlay from the DOM after the fade finishes.
+          setTimeout(function () {
+            if (entry && entry.parentNode) entry.parentNode.removeChild(entry);
+          }, 1400);
+        });
+      }
+
+      if (muteBtn) {
+        muteBtn.addEventListener('click', function () {
+          if (!audio) return;
+          if (audio.paused) {
+            audio.play().catch(function () {});
+            muteBtn.classList.remove('muted');
+          } else {
+            audio.pause();
+            muteBtn.classList.add('muted');
+          }
+        });
+      }
     });
 
     /* ---- Chat panel: talk to an AI version of the artist ---- */
