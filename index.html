@@ -162,7 +162,7 @@
 </head>
 <body>
   <div id="brand">Vizual Ninja Studios</div>
-  <div id="hint">WASD / arrow keys to walk &nbsp;·&nbsp; drag to look around &nbsp;·&nbsp; click the painting to chat</div>
+  <div id="hint">WASD / arrow keys to walk &nbsp;·&nbsp; drag to look around &nbsp;·&nbsp; click the painting to chat &nbsp;·&nbsp; double-click for a closer look</div>
 
   <!-- ===================== CHAT PANEL ===================== -->
   <div id="chat-panel" aria-hidden="true">
@@ -348,6 +348,7 @@
       var messagesEl = document.getElementById('chat-messages');
       var typingEl = document.getElementById('chat-typing');
       var camera = document.getElementById('camera');
+      var rig = document.getElementById('rig');
 
       var GREETING = "Hi — I'm Tara, or rather an AI version of me. Welcome to my room at Vizual Ninja Studios. That piece in front of you came out of a long Toronto winter. Ask me anything about it, or about how I work.";
 
@@ -387,7 +388,54 @@
         setControls(true);
       }
 
-      if (painting) painting.addEventListener('click', openChat);
+      /* Double-click the painting to glide in for a closer look,
+         double-click again to step back to where you were. */
+      var zoomed = false;
+      var savedRigPos = null;
+      var clickTimer = null;
+
+      function animateRig(toX, toY, toZ) {
+        if (!rig) return;
+        rig.setAttribute('animation__move', {
+          property: 'position',
+          to: toX + ' ' + toY + ' ' + toZ,
+          dur: 1100,
+          easing: 'easeInOutQuad'
+        });
+      }
+
+      function toggleCloseUp() {
+        if (!rig || !camera) return;
+        if (!zoomed) {
+          var rp = rig.object3D.position;
+          savedRigPos = { x: rp.x, y: rp.y, z: rp.z };
+          // Offset the rig so the camera's world position lands in
+          // front of the painting, regardless of where the visitor walked.
+          var cam = camera.object3D.position;
+          animateRig(-cam.x, 0, -2.8 - cam.z);
+          zoomed = true;
+        } else {
+          animateRig(savedRigPos.x, savedRigPos.y, savedRigPos.z);
+          zoomed = false;
+        }
+      }
+
+      // A single click opens the chat; a double-click zooms. The timer
+      // lets us tell them apart since A-Frame only emits 'click'.
+      function onPaintingClick() {
+        if (clickTimer) {
+          clearTimeout(clickTimer);
+          clickTimer = null;
+          toggleCloseUp();
+        } else {
+          clickTimer = setTimeout(function () {
+            clickTimer = null;
+            openChat();
+          }, 260);
+        }
+      }
+
+      if (painting) painting.addEventListener('click', onPaintingClick);
       if (closeBtn) closeBtn.addEventListener('click', closeChat);
       document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && panel.classList.contains('open')) closeChat();
