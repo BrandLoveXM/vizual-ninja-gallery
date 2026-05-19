@@ -193,22 +193,22 @@
 
     <!-- General room light from above -->
     <a-entity light="type: directional; color: #fff7ec; intensity: 0.45"
-              position="3 6 4"></a-entity>
-    <a-entity light="type: point; color: #fff7ec; intensity: 0.35; distance: 22; decay: 2"
-              position="0 3.6 2"></a-entity>
+              position="3 7 4"></a-entity>
+    <a-entity light="type: point; color: #fff7ec; intensity: 0.4; distance: 26; decay: 2"
+              position="0 4.6 0"></a-entity>
 
-    <!-- Spotlight aimed at the painting -->
+    <!-- Hero spotlight aimed at the main painting -->
     <a-entity id="art-spot"
-              light="type: spot; color: #fff4e0; intensity: 1.8; angle: 32; penumbra: 0.35; distance: 14; decay: 1.4; target: #painting-plane"
-              position="0 3.7 -4.3"></a-entity>
+              light="type: spot; color: #fff4e0; intensity: 1.4; angle: 26; penumbra: 0.4; distance: 14; decay: 1.4; target: #painting-plane"
+              position="0 4.7 -3.4"></a-entity>
 
     <!-- ===================== ROOM SHELL ===================== -->
-    <!-- Room interior: 12 (x) wide, 4 (y) tall, 12 (z) deep -->
+    <!-- Room interior: 16 (x) wide, 5 (y) tall, 12 (z) deep -->
 
     <!-- Wooden floor (procedural plank texture) -->
     <a-plane id="floor" class="clickable" procedural-wood
              rotation="-90 0 0" position="0 0 0"
-             width="12" height="12"
+             width="16" height="12"
              material="roughness: 0.7; metalness: 0.05"></a-plane>
 
     <!-- Landing pin shown briefly where the visitor double-clicks -->
@@ -218,38 +218,38 @@
             material="color: #fff4e0; shader: flat; transparent: true; opacity: 0; side: double"></a-ring>
 
     <!-- Ceiling -->
-    <a-plane rotation="90 0 0" position="0 4 0" width="12" height="12"
+    <a-plane rotation="90 0 0" position="0 5 0" width="16" height="12"
              material="color: #fbfbfb; roughness: 1"></a-plane>
 
     <!-- Far wall (where the painting hangs), z = -6 -->
-    <a-plane position="0 2 -6" width="12" height="4"
+    <a-plane position="0 2.5 -6" width="16" height="5"
              material="color: #f4f4f2; roughness: 1"></a-plane>
 
     <!-- Back wall, z = 6 -->
-    <a-plane rotation="0 180 0" position="0 2 6" width="12" height="4"
+    <a-plane rotation="0 180 0" position="0 2.5 6" width="16" height="5"
              material="color: #f4f4f2; roughness: 1"></a-plane>
 
-    <!-- Left wall, x = -6 -->
-    <a-plane rotation="0 90 0" position="-6 2 0" width="12" height="4"
+    <!-- Left wall (European Series hangs here), x = -8 -->
+    <a-plane rotation="0 90 0" position="-8 2.5 0" width="12" height="5"
              material="color: #efefed; roughness: 1"></a-plane>
 
-    <!-- Right wall, x = 6 -->
-    <a-plane rotation="0 -90 0" position="6 2 0" width="12" height="4"
+    <!-- Right wall, x = 8 -->
+    <a-plane rotation="0 -90 0" position="8 2.5 0" width="12" height="5"
              material="color: #efefed; roughness: 1"></a-plane>
 
     <!-- Baseboards for a finished look -->
-    <a-box position="0 0.06 -5.96" width="12" height="0.12" depth="0.05"
+    <a-box position="0 0.06 -5.96" width="16" height="0.12" depth="0.05"
            material="color: #e3e3e0; roughness: 1"></a-box>
-    <a-box position="0 0.06 5.96" width="12" height="0.12" depth="0.05"
+    <a-box position="0 0.06 5.96" width="16" height="0.12" depth="0.05"
            material="color: #e3e3e0; roughness: 1"></a-box>
-    <a-box position="-5.96 0.06 0" width="0.05" height="0.12" depth="12"
+    <a-box position="-7.96 0.06 0" width="0.05" height="0.12" depth="12"
            material="color: #e3e3e0; roughness: 1"></a-box>
-    <a-box position="5.96 0.06 0" width="0.05" height="0.12" depth="12"
+    <a-box position="7.96 0.06 0" width="0.05" height="0.12" depth="12"
            material="color: #e3e3e0; roughness: 1"></a-box>
 
     <!-- ===================== ARTWORK ===================== -->
     <!-- Square painting in a dark wooden frame, mounted on far wall -->
-    <a-entity id="artwork" position="0 1.7 -5.9">
+    <a-entity id="artwork" position="0 2.0 -5.9">
 
       <!-- Dark wooden frame (four members) -->
       <!-- painting is 2 x 2; frame border 0.14 thick, 0.12 deep -->
@@ -273,87 +273,140 @@
     </a-entity>
 
     <!-- Caption plaque beside the painting -->
-    <a-entity position="1.55 1.2 -5.93">
-      <a-plane width="0.62" height="0.22" material="color: #ffffff; roughness: 1"></a-plane>
-      <a-text value="TARA McILROY\nUntitled — Toronto"
-              align="center" color="#222" width="1.2"
-              position="0 0 0.01"></a-text>
+    <a-entity position="1.65 1.5 -5.93">
+      <!-- soft drop shadow -->
+      <a-plane width="0.74" height="0.30" position="0.005 -0.008 -0.003"
+               material="color: #b8b3a6; roughness: 1; opacity: 0.5; transparent: true"></a-plane>
+      <!-- card -->
+      <a-plane width="0.72" height="0.28"
+               material="color: #ffffff; roughness: 0.95"></a-plane>
+      <!-- artist name -->
+      <a-text value="TARA McILROY"
+              align="center" color="#1a1a1a"
+              width="0.85" letter-spacing="2"
+              position="0 0.075 0.003"></a-text>
+      <!-- divider line -->
+      <a-plane width="0.18" height="0.004" position="0 0.018 0.003"
+               material="color: #8a8a8a; roughness: 1"></a-plane>
+      <!-- title -->
+      <a-text value="Untitled"
+              align="center" color="#3a3a3a"
+              width="1.0" font-style="italic"
+              position="0 -0.025 0.003"></a-text>
+      <!-- city / year -->
+      <a-text value="TORONTO  ·  2024"
+              align="center" color="#787878"
+              width="1.5" letter-spacing="5"
+              position="0 -0.095 0.003"></a-text>
     </a-entity>
 
     <!-- ===================== EUROPEAN SERIES ===================== -->
-    <!-- Five framed photographs on the far wall, left of the main painting. -->
+    <!-- Five framed photographs hung along the left wall (x = -8).
+         All frames share identical outer dimensions for a curated, unified
+         feel; each photo is sized to preserve its native aspect ratio
+         inside a cream matte. -->
 
-    <!-- Series title -->
-    <a-entity position="-3.3 2.5 -5.91">
+    <!-- Series title, centered above the row -->
+    <a-entity position="-7.93 3.15 0" rotation="0 90 0">
       <a-text value="EUROPEAN SERIES"
               align="center" color="#1a1a1a"
-              width="3.4" letter-spacing="6"
-              position="0 0 0.01"></a-text>
-      <a-plane width="1.4" height="0.012" position="0 -0.1 0.005"
+              width="3.6" letter-spacing="8"
+              position="0 0 0.005"></a-text>
+      <a-plane width="1.5" height="0.012" position="0 -0.13 0.003"
                material="color: #1a1a1a; roughness: 1"></a-plane>
     </a-entity>
 
-    <!-- Spotlight grazing the photo wall -->
-    <a-entity light="type: spot; color: #fff4e0; intensity: 1.1; angle: 60;
-                     penumbra: 0.5; distance: 12; decay: 1.5;
-                     target: #series-anchor"
-              position="-3.3 3.8 -3.4"></a-entity>
-    <a-entity id="series-anchor" position="-3.3 1.65 -5.9"></a-entity>
-
     <!-- Photo 1: Venice (landscape, 1500x1124) -->
-    <a-entity position="-5.02 1.65 -5.92">
-      <a-box position="0 0 -0.025" width="0.737" height="0.57" depth="0.06"
+    <a-entity id="photo-venice" position="-7.94 1.65 -4.28" rotation="0 90 0">
+      <a-box position="0 0 -0.028" width="0.85" height="0.65" depth="0.06"
              material="color: #2c1d10; roughness: 0.55; metalness: 0.1"></a-box>
+      <a-plane position="0 0 0.006" width="0.78" height="0.58"
+               material="color: #f7f4ee; roughness: 0.95"></a-plane>
       <a-image src="Venice.png" position="0 0 0.012"
-               width="0.667" height="0.5"
-               material="color: #d6cdb8; roughness: 0.85"></a-image>
-      <a-text value="VENICE" align="center" color="#444"
-              width="1.0" position="0 -0.36 0.02"></a-text>
+               width="0.694" height="0.52"
+               material="color: #ffffff; roughness: 0.85"></a-image>
+      <a-text value="VENICE" align="center" color="#555"
+              width="1.4" letter-spacing="3"
+              position="0 -0.4 0.012"></a-text>
     </a-entity>
 
     <!-- Photo 2: Kerry — white horse (landscape, 1500x1142) -->
-    <a-entity position="-4.11 1.65 -5.92">
-      <a-box position="0 0 -0.025" width="0.727" height="0.57" depth="0.06"
+    <a-entity id="photo-kerry" position="-7.94 1.65 -2.14" rotation="0 90 0">
+      <a-box position="0 0 -0.028" width="0.85" height="0.65" depth="0.06"
              material="color: #2c1d10; roughness: 0.55; metalness: 0.1"></a-box>
+      <a-plane position="0 0 0.006" width="0.78" height="0.58"
+               material="color: #f7f4ee; roughness: 0.95"></a-plane>
       <a-image src="Kerry.png" position="0 0 0.012"
-               width="0.657" height="0.5"
-               material="color: #d6cdb8; roughness: 0.85"></a-image>
-      <a-text value="KERRY" align="center" color="#444"
-              width="1.0" position="0 -0.36 0.02"></a-text>
+               width="0.683" height="0.52"
+               material="color: #ffffff; roughness: 0.85"></a-image>
+      <a-text value="KERRY" align="center" color="#555"
+              width="1.4" letter-spacing="3"
+              position="0 -0.4 0.012"></a-text>
     </a-entity>
 
     <!-- Photo 3: Ring of Kerry road (landscape, 1500x1056) -->
-    <a-entity position="-3.17 1.65 -5.92">
-      <a-box position="0 0 -0.025" width="0.780" height="0.57" depth="0.06"
+    <a-entity id="photo-ringofkerry" position="-7.94 1.65 0" rotation="0 90 0">
+      <a-box position="0 0 -0.028" width="0.85" height="0.65" depth="0.06"
              material="color: #2c1d10; roughness: 0.55; metalness: 0.1"></a-box>
+      <a-plane position="0 0 0.006" width="0.78" height="0.58"
+               material="color: #f7f4ee; roughness: 0.95"></a-plane>
       <a-image src="RingofKerry.png" position="0 0 0.012"
-               width="0.710" height="0.5"
-               material="color: #d6cdb8; roughness: 0.85"></a-image>
-      <a-text value="RING OF KERRY" align="center" color="#444"
-              width="1.0" position="0 -0.36 0.02"></a-text>
+               width="0.720" height="0.507"
+               material="color: #ffffff; roughness: 0.85"></a-image>
+      <a-text value="RING OF KERRY" align="center" color="#555"
+              width="1.4" letter-spacing="3"
+              position="0 -0.4 0.012"></a-text>
     </a-entity>
 
     <!-- Photo 4: Positano (landscape, 1500x1090) -->
-    <a-entity position="-2.23 1.65 -5.92">
-      <a-box position="0 0 -0.025" width="0.758" height="0.57" depth="0.06"
+    <a-entity id="photo-positano" position="-7.94 1.65 2.14" rotation="0 90 0">
+      <a-box position="0 0 -0.028" width="0.85" height="0.65" depth="0.06"
              material="color: #2c1d10; roughness: 0.55; metalness: 0.1"></a-box>
+      <a-plane position="0 0 0.006" width="0.78" height="0.58"
+               material="color: #f7f4ee; roughness: 0.95"></a-plane>
       <a-image src="Positano.png" position="0 0 0.012"
-               width="0.688" height="0.5"
-               material="color: #d6cdb8; roughness: 0.85"></a-image>
-      <a-text value="POSITANO" align="center" color="#444"
-              width="1.0" position="0 -0.36 0.02"></a-text>
+               width="0.716" height="0.52"
+               material="color: #ffffff; roughness: 0.85"></a-image>
+      <a-text value="POSITANO" align="center" color="#555"
+              width="1.4" letter-spacing="3"
+              position="0 -0.4 0.012"></a-text>
     </a-entity>
 
     <!-- Photo 5: Trevi Fountain (portrait, 2862x3739) -->
-    <a-entity position="-1.44 1.65 -5.92">
-      <a-box position="0 0 -0.025" width="0.453" height="0.57" depth="0.06"
+    <a-entity id="photo-roma" position="-7.94 1.65 4.28" rotation="0 90 0">
+      <a-box position="0 0 -0.028" width="0.85" height="0.65" depth="0.06"
              material="color: #2c1d10; roughness: 0.55; metalness: 0.1"></a-box>
+      <a-plane position="0 0 0.006" width="0.78" height="0.58"
+               material="color: #f7f4ee; roughness: 0.95"></a-plane>
       <a-image src="TreviFountain.jpg" position="0 0 0.012"
-               width="0.383" height="0.5"
-               material="color: #d6cdb8; roughness: 0.85"></a-image>
-      <a-text value="ROMA" align="center" color="#444"
-              width="1.0" position="0 -0.36 0.02"></a-text>
+               width="0.398" height="0.52"
+               material="color: #ffffff; roughness: 0.85"></a-image>
+      <a-text value="ROMA" align="center" color="#555"
+              width="1.4" letter-spacing="3"
+              position="0 -0.4 0.012"></a-text>
     </a-entity>
+
+    <!-- Individual warm spotlights above each photograph -->
+    <a-entity light="type: spot; color: #fff2dc; intensity: 0.85; angle: 24;
+                     penumbra: 0.55; distance: 6; decay: 1.6;
+                     target: #photo-venice"
+              position="-7.05 4.6 -4.28"></a-entity>
+    <a-entity light="type: spot; color: #fff2dc; intensity: 0.85; angle: 24;
+                     penumbra: 0.55; distance: 6; decay: 1.6;
+                     target: #photo-kerry"
+              position="-7.05 4.6 -2.14"></a-entity>
+    <a-entity light="type: spot; color: #fff2dc; intensity: 0.85; angle: 24;
+                     penumbra: 0.55; distance: 6; decay: 1.6;
+                     target: #photo-ringofkerry"
+              position="-7.05 4.6 0"></a-entity>
+    <a-entity light="type: spot; color: #fff2dc; intensity: 0.85; angle: 24;
+                     penumbra: 0.55; distance: 6; decay: 1.6;
+                     target: #photo-positano"
+              position="-7.05 4.6 2.14"></a-entity>
+    <a-entity light="type: spot; color: #fff2dc; intensity: 0.85; angle: 24;
+                     penumbra: 0.55; distance: 6; decay: 1.6;
+                     target: #photo-roma"
+              position="-7.05 4.6 4.28"></a-entity>
 
     <!-- ===================== VISITOR ===================== -->
     <a-entity id="rig" position="0 0 4.5" room-bounds>
@@ -401,13 +454,16 @@
 
     /* ---- Keep the visitor inside the room ---- */
     AFRAME.registerComponent('room-bounds', {
-      schema: { min: { default: -5.5 }, max: { default: 5.5 } },
+      schema: {
+        xMin: { default: -7.4 }, xMax: { default: 7.4 },
+        zMin: { default: -5.4 }, zMax: { default: 5.4 }
+      },
       tick: function () {
         var p = this.el.object3D.position;
-        if (p.x < this.data.min) p.x = this.data.min;
-        if (p.x > this.data.max) p.x = this.data.max;
-        if (p.z < this.data.min) p.z = this.data.min;
-        if (p.z > this.data.max) p.z = this.data.max;
+        if (p.x < this.data.xMin) p.x = this.data.xMin;
+        if (p.x > this.data.xMax) p.x = this.data.xMax;
+        if (p.z < this.data.zMin) p.z = this.data.zMin;
+        if (p.z > this.data.zMax) p.z = this.data.zMax;
       }
     });
 
@@ -480,8 +536,8 @@
       var paintingClickTimer = null;
       var floorClickTimer = null;
 
-      var ROOM_MIN = -5.4;
-      var ROOM_MAX = 5.4;
+      var ROOM_X_MIN = -7.3, ROOM_X_MAX = 7.3;
+      var ROOM_Z_MIN = -5.3, ROOM_Z_MAX = 5.3;
 
       function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
 
@@ -512,14 +568,14 @@
       function moveToFloorPoint(pt) {
         if (!rig || !camera) return;
         // Keep the visitor a touch inside the walls.
-        var targetWorldX = clamp(pt.x, ROOM_MIN, ROOM_MAX);
-        var targetWorldZ = clamp(pt.z, ROOM_MIN, ROOM_MAX);
+        var targetWorldX = clamp(pt.x, ROOM_X_MIN, ROOM_X_MAX);
+        var targetWorldZ = clamp(pt.z, ROOM_Z_MIN, ROOM_Z_MAX);
 
         // Rig position is offset so the camera (which WASD walks within
         // the rig) ends up at the requested world point.
         var cam = camera.object3D.position;
-        var rigTargetX = clamp(targetWorldX - cam.x, ROOM_MIN, ROOM_MAX);
-        var rigTargetZ = clamp(targetWorldZ - cam.z, ROOM_MIN, ROOM_MAX);
+        var rigTargetX = clamp(targetWorldX - cam.x, ROOM_X_MIN, ROOM_X_MAX);
+        var rigTargetZ = clamp(targetWorldZ - cam.z, ROOM_Z_MIN, ROOM_Z_MAX);
 
         // Duration scales gently with distance so close moves feel snappy.
         var rp = rig.object3D.position;
