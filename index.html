@@ -162,7 +162,7 @@
 </head>
 <body>
   <div id="brand">Vizual Ninja Studios</div>
-  <div id="hint">WASD / arrow keys to walk &nbsp;·&nbsp; drag to look around &nbsp;·&nbsp; click the painting to chat &nbsp;·&nbsp; double-click for a closer look</div>
+  <div id="hint">WASD / arrow keys to walk &nbsp;·&nbsp; drag to look around &nbsp;·&nbsp; click the painting to chat &nbsp;·&nbsp; double-click anywhere to glide there</div>
 
   <!-- ===================== CHAT PANEL ===================== -->
   <div id="chat-panel" aria-hidden="true">
@@ -206,9 +206,16 @@
     <!-- Room interior: 12 (x) wide, 4 (y) tall, 12 (z) deep -->
 
     <!-- Wooden floor (procedural plank texture) -->
-    <a-plane procedural-wood rotation="-90 0 0" position="0 0 0"
+    <a-plane id="floor" class="clickable" procedural-wood
+             rotation="-90 0 0" position="0 0 0"
              width="12" height="12"
              material="roughness: 0.7; metalness: 0.05"></a-plane>
+
+    <!-- Landing pin shown briefly where the visitor double-clicks -->
+    <a-ring id="nav-pin"
+            radius-inner="0.18" radius-outer="0.3"
+            rotation="-90 0 0" position="0 -10 0"
+            material="color: #fff4e0; shader: flat; transparent: true; opacity: 0; side: double"></a-ring>
 
     <!-- Ceiling -->
     <a-plane rotation="90 0 0" position="0 4 0" width="12" height="12"
@@ -388,20 +395,70 @@
         setControls(true);
       }
 
-      /* Double-click the painting to glide in for a closer look,
-         double-click again to step back to where you were. */
+      /* Google-Earth-style navigation: double-click the floor to glide
+         to that spot. Double-click the painting for a centered close-up;
+         double-click again to step back. */
+      var floor = document.getElementById('floor');
+      var navPin = document.getElementById('nav-pin');
       var zoomed = false;
       var savedRigPos = null;
-      var clickTimer = null;
+      var paintingClickTimer = null;
+      var floorClickTimer = null;
 
-      function animateRig(toX, toY, toZ) {
+      var ROOM_MIN = -5.4;
+      var ROOM_MAX = 5.4;
+
+      function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+
+      function animateRig(toX, toY, toZ, dur) {
         if (!rig) return;
         rig.setAttribute('animation__move', {
           property: 'position',
           to: toX + ' ' + toY + ' ' + toZ,
-          dur: 1100,
+          dur: dur || 1100,
           easing: 'easeInOutQuad'
         });
+      }
+
+      function flashPin(x, z) {
+        if (!navPin) return;
+        navPin.setAttribute('position', x + ' 0.02 ' + z);
+        navPin.removeAttribute('animation__pin');
+        navPin.setAttribute('material', 'opacity', 0.95);
+        navPin.setAttribute('animation__pin', {
+          property: 'material.opacity',
+          from: 0.95,
+          to: 0,
+          dur: 1100,
+          easing: 'easeOutQuad'
+        });
+      }
+
+      function moveToFloorPoint(pt) {
+        if (!rig || !camera) return;
+        // Keep the visitor a touch inside the walls.
+        var targetWorldX = clamp(pt.x, ROOM_MIN, ROOM_MAX);
+        var targetWorldZ = clamp(pt.z, ROOM_MIN, ROOM_MAX);
+
+        // Rig position is offset so the camera (which WASD walks within
+        // the rig) ends up at the requested world point.
+        var cam = camera.object3D.position;
+        var rigTargetX = clamp(targetWorldX - cam.x, ROOM_MIN, ROOM_MAX);
+        var rigTargetZ = clamp(targetWorldZ - cam.z, ROOM_MIN, ROOM_MAX);
+
+        // Duration scales gently with distance so close moves feel snappy.
+        var rp = rig.object3D.position;
+        var dx = rigTargetX - rp.x;
+        var dz = rigTargetZ - rp.z;
+        var dist = Math.sqrt(dx * dx + dz * dz);
+        var dur = clamp(450 + dist * 140, 500, 1500);
+
+        animateRig(rigTargetX, 0, rigTargetZ, dur);
+        flashPin(targetWorldX, targetWorldZ);
+
+        // Manual navigation invalidates the painting close-up "home".
+        zoomed = false;
+        savedRigPos = null;
       }
 
       function toggleCloseUp() {
@@ -409,33 +466,47 @@
         if (!zoomed) {
           var rp = rig.object3D.position;
           savedRigPos = { x: rp.x, y: rp.y, z: rp.z };
-          // Offset the rig so the camera's world position lands in
-          // front of the painting, regardless of where the visitor walked.
           var cam = camera.object3D.position;
-          animateRig(-cam.x, 0, -2.8 - cam.z);
+          animateRig(-cam.x, 0, -2.8 - cam.z, 1100);
           zoomed = true;
         } else {
-          animateRig(savedRigPos.x, savedRigPos.y, savedRigPos.z);
+          animateRig(savedRigPos.x, savedRigPos.y, savedRigPos.z, 1100);
           zoomed = false;
+          savedRigPos = null;
         }
       }
 
-      // A single click opens the chat; a double-click zooms. The timer
-      // lets us tell them apart since A-Frame only emits 'click'.
+      // A-Frame only emits 'click', so we debounce to tell single vs double.
       function onPaintingClick() {
-        if (clickTimer) {
-          clearTimeout(clickTimer);
-          clickTimer = null;
+        if (paintingClickTimer) {
+          clearTimeout(paintingClickTimer);
+          paintingClickTimer = null;
           toggleCloseUp();
         } else {
-          clickTimer = setTimeout(function () {
-            clickTimer = null;
+          paintingClickTimer = setTimeout(function () {
+            paintingClickTimer = null;
             openChat();
           }, 260);
         }
       }
 
+      function onFloorClick(e) {
+        var hit = e.detail && e.detail.intersection;
+        if (!hit || !hit.point) return;
+        var pt = hit.point;
+        if (floorClickTimer) {
+          clearTimeout(floorClickTimer);
+          floorClickTimer = null;
+          moveToFloorPoint(pt);
+        } else {
+          floorClickTimer = setTimeout(function () {
+            floorClickTimer = null;
+          }, 280);
+        }
+      }
+
       if (painting) painting.addEventListener('click', onPaintingClick);
+      if (floor) floor.addEventListener('click', onFloorClick);
       if (closeBtn) closeBtn.addEventListener('click', closeChat);
       document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && panel.classList.contains('open')) closeChat();
