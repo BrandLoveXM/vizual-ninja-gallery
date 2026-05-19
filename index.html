@@ -39,11 +39,147 @@
       pointer-events: none;
       text-shadow: 0 1px 4px rgba(0,0,0,0.6);
     }
+
+    /* ===================== CHAT PANEL ===================== */
+    #chat-panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      z-index: 20;
+      width: 380px;
+      max-width: 92vw;
+      height: 100%;
+      background: #fbfbf9;
+      box-shadow: -12px 0 40px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.42s cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+    #chat-panel.open { transform: translateX(0); }
+
+    #chat-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 20px;
+      background: #1c1c1e;
+      color: #fff;
+    }
+    .chat-name { font-size: 16px; font-weight: 600; letter-spacing: 0.01em; }
+    .chat-sub {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #b9b9b9;
+      margin-top: 3px;
+    }
+    #chat-close {
+      background: none;
+      border: none;
+      color: #ddd;
+      font-size: 26px;
+      line-height: 1;
+      cursor: pointer;
+      padding: 0 4px;
+    }
+    #chat-close:hover { color: #fff; }
+
+    #chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 18px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .msg {
+      max-width: 84%;
+      padding: 10px 14px;
+      border-radius: 16px;
+      font-size: 14px;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    .msg.assistant {
+      align-self: flex-start;
+      background: #eceae5;
+      color: #1f1f1f;
+      border-bottom-left-radius: 4px;
+    }
+    .msg.user {
+      align-self: flex-end;
+      background: #2c1d10;
+      color: #f6f1ea;
+      border-bottom-right-radius: 4px;
+    }
+    .msg.error {
+      align-self: flex-start;
+      background: #f6dede;
+      color: #7a2020;
+      border-bottom-left-radius: 4px;
+    }
+
+    #chat-typing {
+      padding: 0 20px 6px;
+      font-size: 12px;
+      font-style: italic;
+      color: #8a8a8a;
+      display: none;
+    }
+    #chat-typing.show { display: block; }
+
+    #chat-form {
+      display: flex;
+      gap: 8px;
+      padding: 14px 16px;
+      border-top: 1px solid #e4e2dc;
+      background: #fff;
+    }
+    #chat-input {
+      flex: 1;
+      border: 1px solid #d6d4ce;
+      border-radius: 999px;
+      padding: 10px 16px;
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+    }
+    #chat-input:focus { border-color: #2c1d10; }
+    #chat-send {
+      background: #2c1d10;
+      color: #f6f1ea;
+      border: none;
+      border-radius: 999px;
+      padding: 0 18px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    #chat-send:hover { background: #43301d; }
+    #chat-send:disabled { opacity: 0.5; cursor: default; }
   </style>
 </head>
 <body>
   <div id="brand">Vizual Ninja Studios</div>
-  <div id="hint">WASD / arrow keys to walk &nbsp;·&nbsp; drag to look around</div>
+  <div id="hint">WASD / arrow keys to walk &nbsp;·&nbsp; drag to look around &nbsp;·&nbsp; click the painting to chat</div>
+
+  <!-- ===================== CHAT PANEL ===================== -->
+  <div id="chat-panel" aria-hidden="true">
+    <div id="chat-header">
+      <div>
+        <div class="chat-name">Tara McIlroy</div>
+        <div class="chat-sub">Artist &middot; Toronto</div>
+      </div>
+      <button id="chat-close" aria-label="Close chat">&times;</button>
+    </div>
+    <div id="chat-messages"></div>
+    <div id="chat-typing">Tara is typing&hellip;</div>
+    <form id="chat-form">
+      <input id="chat-input" type="text" placeholder="Ask Tara about her work&hellip;" autocomplete="off" />
+      <button id="chat-send" type="submit">Send</button>
+    </form>
+  </div>
 
   <a-scene background="color: #0d0d0f" renderer="colorManagement: true; antialias: true" cursor="rayOrigin: mouse" raycaster="objects: .clickable">
 
@@ -201,14 +337,103 @@
       }, 7000);
     });
 
-    /* ---- Painting click (chat panel arrives in the next step) ---- */
+    /* ---- Chat panel: talk to an AI version of the artist ---- */
     window.addEventListener('load', function () {
+      var panel = document.getElementById('chat-panel');
       var painting = document.getElementById('painting-plane');
-      if (painting) {
-        painting.addEventListener('click', function () {
-          console.log('Painting clicked — chat panel coming in the next step.');
-        });
+      var closeBtn = document.getElementById('chat-close');
+      var form = document.getElementById('chat-form');
+      var input = document.getElementById('chat-input');
+      var sendBtn = document.getElementById('chat-send');
+      var messagesEl = document.getElementById('chat-messages');
+      var typingEl = document.getElementById('chat-typing');
+      var camera = document.getElementById('camera');
+
+      var GREETING = "Hi — I'm Tara, or rather an AI version of me. Welcome to my room at Vizual Ninja Studios. That piece in front of you came out of a long Toronto winter. Ask me anything about it, or about how I work.";
+
+      // Conversation history sent to the API (greeting included for context).
+      var convo = [{ role: 'assistant', content: GREETING }];
+      var opened = false;
+      var busy = false;
+
+      function setControls(enabled) {
+        if (!camera) return;
+        camera.setAttribute('wasd-controls', 'enabled', enabled);
+        camera.setAttribute('look-controls', 'enabled', enabled);
       }
+
+      function renderMessage(role, text) {
+        var div = document.createElement('div');
+        div.className = 'msg ' + role;
+        div.textContent = text;
+        messagesEl.appendChild(div);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+      }
+
+      function openChat() {
+        panel.classList.add('open');
+        panel.setAttribute('aria-hidden', 'false');
+        setControls(false);
+        if (!opened) {
+          opened = true;
+          renderMessage('assistant', GREETING);
+        }
+        setTimeout(function () { input.focus(); }, 450);
+      }
+
+      function closeChat() {
+        panel.classList.remove('open');
+        panel.setAttribute('aria-hidden', 'true');
+        setControls(true);
+      }
+
+      if (painting) painting.addEventListener('click', openChat);
+      if (closeBtn) closeBtn.addEventListener('click', closeChat);
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && panel.classList.contains('open')) closeChat();
+      });
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (busy) return;
+        var text = input.value.trim();
+        if (!text) return;
+
+        input.value = '';
+        convo.push({ role: 'user', content: text });
+        renderMessage('user', text);
+
+        busy = true;
+        sendBtn.disabled = true;
+        typingEl.classList.add('show');
+
+        fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ messages: convo })
+        })
+          .then(function (res) {
+            return res.json().then(function (data) {
+              return { ok: res.ok, data: data };
+            });
+          })
+          .then(function (result) {
+            if (!result.ok || !result.data.reply) {
+              throw new Error((result.data && result.data.error) || 'No response.');
+            }
+            convo.push({ role: 'assistant', content: result.data.reply });
+            renderMessage('assistant', result.data.reply);
+          })
+          .catch(function (err) {
+            renderMessage('error', err.message || 'Sorry, I could not reach the studio just now.');
+          })
+          .finally(function () {
+            busy = false;
+            sendBtn.disabled = false;
+            typingEl.classList.remove('show');
+            input.focus();
+          });
+      });
     });
   </script>
 </body>
