@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vizual Ninja Studios — Gallery Room 1</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+  <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+  <style>
+    html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #0a0a0a; font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; }
+
+    #hint {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      color: rgba(255,255,255,0.7);
+      padding: 10px 22px;
+      border-radius: 999px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      pointer-events: none;
+      transition: opacity 0.8s ease;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    #hint.fade { opacity: 0; }
+
+    #brand {
+      position: fixed;
+      top: 22px;
+      left: 24px;
+      z-index: 10;
+      color: rgba(255,255,255,0.6);
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      pointer-events: none;
+    }
+
+    /* ===================== CHAT PANEL ===================== */
+    #chat-panel {
+      position: fixed; top: 0; right: 0; z-index: 20;
+      width: 380px; max-width: 92vw; height: 100%;
+      background: #fafaf8;
+      box-shadow: -12px 0 48px rgba(0, 0, 0, 0.5);
+      display: flex; flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.42s cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+    #chat-panel.open { transform: translateX(0); }
+
+    #chat-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 20px; background: #111; color: #fff;
+    }
+    .chat-name { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 400; letter-spacing: 0.04em; }
+    .chat-sub { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #888; margin-top: 3px; }
+    #chat-close { background: none; border: none; color: #999; font-size: 24px; line-height: 1; cursor: pointer; padding: 0 4px; }
+    #chat-close:hover { color: #fff; }
+
+    #chat-messages { flex: 1; overflow-y: auto; padding: 18px 16px; display: flex; flex-direction: column; gap: 12px; }
+    .msg { max-width: 84%; padding: 10px 14px; border-radius: 16px; font-size: 13px; line-height: 1.55; white-space: pre-wrap; word-wrap: break-word; font-family: 'Inter', sans-serif; }
+    .msg.assistant { align-self: flex-start; background: #f0eeea; color: #1f1f1f; border-bottom-left-radius: 4px; }
+    .msg.user { align-self: flex-end; background: #1a1a1a; color: #e8e4dc; border-bottom-right-radius: 4px; }
+    .msg.error { align-self: flex-start; background: #f6dede; color: #7a2020; border-bottom-left-radius: 4px; }
+
+    #chat-typing { padding: 0 20px 6px; font-size: 11px; font-style: italic; color: #8a8a8a; display: none; }
+    #chat-typing.show { display: block; }
+
+    #chat-form { display: flex; gap: 8px; padding: 14px 16px; border-top: 1px solid #e8e6e0; background: #fff; }
+    #chat-input { flex: 1; border: 1px solid #ddd; border-radius: 999px; padding: 10px 16px; font-size: 13px; font-family: 'Inter', sans-serif; outline: none; }
+    #chat-input:focus { border-color: #1a1a1a; }
+    #chat-send { background: #1a1a1a; color: #e8e4dc; border: none; border-radius: 999px; padding: 0 18px; font-size: 13px; font-family: 'Inter', sans-serif; cursor: pointer; }
+    #chat-send:hover { background: #333; }
+    #chat-send:disabled { opacity: 0.4; cursor: default; }
+
+    /* ===================== ENTRY SCREEN ===================== */
+    #entry-screen {
+      position: fixed; inset: 0; z-index: 40;
+      background: radial-gradient(ellipse at 50% 35%, #1a1a1c 0%, #080808 75%);
+      color: #d8d2c6;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0;
+      animation: entryFadeIn 1.8s ease-out 0.2s forwards;
+      transition: opacity 1.4s ease;
+    }
+    #entry-screen.fade-out { opacity: 0 !important; pointer-events: none; animation: none; }
+    @keyframes entryFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    .entry-content {
+      text-align: center; padding: 0 32px;
+      animation: entryRise 2s cubic-bezier(0.22, 0.61, 0.36, 1) 0.3s both;
+    }
+    @keyframes entryRise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+    .entry-eyebrow {
+      font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 300;
+      letter-spacing: 0.55em; color: #807a6e; text-transform: uppercase;
+      margin-bottom: 34px; padding-left: 0.5em;
+    }
+    .entry-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(34px, 5.8vw, 62px); font-weight: 300;
+      letter-spacing: 0.2em; margin: 0; line-height: 1.08;
+      color: #ece8df; padding-left: 0.2em;
+    }
+    .entry-rule { width: 48px; height: 1px; background: #6a6354; margin: 42px auto 46px; }
+    #enter-btn {
+      font-family: 'Inter', sans-serif; background: transparent;
+      border: 1px solid rgba(185, 168, 132, 0.4); color: #c8c0b2;
+      padding: 14px 42px; font-size: 10px; font-weight: 300;
+      letter-spacing: 0.38em; text-transform: uppercase; cursor: pointer;
+      transition: all 0.4s ease;
+    }
+    #enter-btn:hover { background: rgba(185, 168, 132, 0.12); color: #ece8df; border-color: rgba(185, 168, 132, 0.7); }
+
+    /* ===================== MUTE BUTTON ===================== */
+    #mute-btn {
+      position: fixed; top: 20px; right: 20px; z-index: 15;
+      width: 38px; height: 38px; border-radius: 50%;
+      background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.5);
+      cursor: pointer; display: none; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.8s ease, background 0.2s ease; padding: 0;
+    }
+    #mute-btn.visible { display: flex; opacity: 1; }
+    #mute-btn:hover { background: rgba(0, 0, 0, 0.6); color: rgba(255,255,255,0.8); }
+    #mute-btn svg { width: 16px; height: 16px; display: block; }
+    #mute-btn .icon-muted { display: none; }
+    #mute-btn.muted .icon-on { display: none; }
+    #mute-btn.muted .icon-muted { display: block; }
+  </style>
+</head>
+<body>
+  <div id="brand">Vizual Ninja Studios</div>
+  <div id="hint">WASD to walk &nbsp;·&nbsp; drag to look &nbsp;·&nbsp; click painting to chat &nbsp;·&nbsp; double-click floor to glide</div>
+
+  <div id="chat-panel" aria-hidden="true">
+    <div id="chat-header">
+      <div>
+        <div class="chat-name">Tara McIlroy</div>
+        <div class="chat-sub">Artist &middot; Toronto</div>
+      </div>
+      <button id="chat-close" aria-label="Close chat">&times;</button>
+    </div>
+    <div id="chat-messages"></div>
+    <div id="chat-typing">Tara is typing&hellip;</div>
+    <form id="chat-form">
+      <input id="chat-input" type="text" placeholder="Ask Tara about her work&hellip;" autocomplete="off" />
+      <button id="chat-send" type="submit">Send</button>
+    </form>
+  </div>
+
+  <audio id="ambient-audio" src="ambient.mp3" loop preload="auto"></audio>
+
+  <div id="entry-screen">
+    <div class="entry-content">
+      <div class="entry-eyebrow">Current Exhibition</div>
+      <h1 class="entry-title">VIZUAL&nbsp;NINJA<br>STUDIOS</h1>
+      <div class="entry-rule"></div>
+      <button id="enter-btn" type="button">Enter Gallery</button>
+    </div>
+  </div>
+
+  <button id="mute-btn" aria-label="Toggle music" type="button">
+    <svg class="icon-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+      <path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"></path>
+    </svg>
+    <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+      <line x1="23" y1="9" x2="17" y2="15"></line>
+      <line x1="17" y1="9" x2="23" y2="15"></line>
+    </svg>
+  </button>
+
+  <a-scene background="color: #1a1916" renderer="colorManagement: true; antialias: true" cursor="rayOrigin: mouse" raycaster="objects: .clickable">
+
+    <a-assets timeout="800">
+      <img id="painting"       src="painting.jpg"         crossorigin="anonymous" />
+      <img id="tara-art2"      src="Tara_Art2.jpg"        crossorigin="anonymous" />
+      <img id="tara-art3"      src="Tara_Art3.jpg"        crossorigin="anonymous" />
+      <img id="steph-art1"     src="Steph_Art1.jpg"       crossorigin="anonymous" />
+      <img id="steph-art2"     src="Steph_Art2.JPEG"      crossorigin="anonymous" />
+      <img id="steph-art3"     src="Steph_Art3.JPEG"      crossorigin="anonymous" />
+      <img id="img-venice"     src="Venice_web.jpg"       crossorigin="anonymous" />
+      <img id="img-kerry"      src="Kerry_web.jpg"        crossorigin="anonymous" />
+      <img id="img-ringofkerry" src="RingofKerry_web.jpg" crossorigin="anonymous" />
+      <img id="img-positano"   src="Positano_web.jpg"     crossorigin="anonymous" />
+      <img id="img-roma"       src="TreviFountain_web.jpg" crossorigin="anonymous" />
+    </a-assets>
+
+    <!-- ===================== LIGHTING ===================== -->
+    <!-- Warm ambient fill — bright enough to read the white walls -->
+    <a-entity light="type: ambient; color: #fff8f0; intensity: 0.65"></a-entity>
+
+    <!-- Soft overhead fill -->
+    <a-entity light="type: directional; color: #fff5e8; intensity: 0.5" position="2 7 3"></a-entity>
+    <a-entity light="type: point; color: #fff5e8; intensity: 0.5; distance: 30; decay: 2" position="0 6 0"></a-entity>
+    <a-entity light="type: point; color: #fff5e8; intensity: 0.3; distance: 24; decay: 2" position="-6 5 0"></a-entity>
+    <a-entity light="type: point; color: #fff5e8; intensity: 0.3; distance: 24; decay: 2" position="6 5 0"></a-entity>
+
+    <!-- ===================== ROOM SHELL ===================== -->
+    <!-- 24 wide × 7 tall × 16 deep -->
+
+    <!-- Polished light concrete floor -->
+    <a-plane id="floor" class="clickable" procedural-concrete
+             rotation="-90 0 0" position="0 0 0"
+             width="24" height="16"
+             material="roughness: 0.25; metalness: 0.1"></a-plane>
+
+    <!-- Navigation pin -->
+    <a-ring id="nav-pin" radius-inner="0.18" radius-outer="0.3"
+            rotation="-90 0 0" position="0 -10 0"
+            material="color: #c8a96e; shader: flat; transparent: true; opacity: 0; side: double"></a-ring>
+
+    <!-- Ceiling — warm off-white -->
+    <a-plane rotation="90 0 0" position="0 7 0" width="24" height="16"
+             material="color: #f0ede8; roughness: 0.85; metalness: 0"></a-plane>
+
+    <!-- Exposed ceiling beams — dark steel I-beams -->
+    <a-box position="-6 6.8 0"  width="0.18" height="0.32" depth="16" material="color: #2a2a2a; roughness: 0.4; metalness: 0.6"></a-box>
+    <a-box position="0 6.8 0"   width="0.18" height="0.32" depth="16" material="color: #2a2a2a; roughness: 0.4; metalness: 0.6"></a-box>
+    <a-box position="6 6.8 0"   width="0.18" height="0.32" depth="16" material="color: #2a2a2a; roughness: 0.4; metalness: 0.6"></a-box>
+    <!-- I-beam flanges -->
+    <a-box position="-6 6.95 0" width="0.46" height="0.035" depth="16" material="color: #252525; roughness: 0.35; metalness: 0.65"></a-box>
+    <a-box position="-6 6.64 0" width="0.46" height="0.035" depth="16" material="color: #252525; roughness: 0.35; metalness: 0.65"></a-box>
+    <a-box position="0 6.95 0"  width="0.46" height="0.035" depth="16" material="color: #252525; roughness: 0.35; metalness: 0.65"></a-box>
+    <a-box position="0 6.64 0"  width="0.46" height="0.035" depth="16" material="color: #252525; roughness: 0.35; metalness: 0.65"></a-box>
+    <a-box position="6 6.95 0"  width="0.46" height="0.035" depth="16" material="color: #252525; roughness: 0.35; metalness: 0.65"></a-box>
+    <a-box position="6 6.64 0"  width="0.46" height="0.035" depth="16" material="color: #252525; roughness: 0.35; metalness: 0.65"></a-box>
+
+    <!-- Walls — bright white -->
+    <a-plane position="0 3.5 -8" width="24" height="7"
+             material="color: #f5f3f0; roughness: 0.92; metalness: 0"></a-plane>
+    <a-plane rotation="0 180 0" position="0 3.5 8" width="24" height="7"
+             material="color: #f5f3f0; roughness: 0.92; metalness: 0"></a-plane>
+    <a-plane rotation="0 90 0" position="-12 3.5 0" width="16" height="7"
+             material="color: #f2f0ec; roughness: 0.92; metalness: 0"></a-plane>
+    <a-plane rotation="0 -90 0" position="12 3.5 0" width="16" height="7"
+             material="color: #f2f0ec; roughness: 0.92; metalness: 0"></a-plane>
+
+    <!-- Shadow gap at floor-wall junction -->
+    <a-box position="0 0.015 -7.97"  width="24"  height="0.03" depth="0.04" material="color: #1a1a1a; roughness: 1"></a-box>
+    <a-box position="0 0.015 7.97"   width="24"  height="0.03" depth="0.04" material="color: #1a1a1a; roughness: 1"></a-box>
+    <a-box position="-11.97 0.015 0" width="0.04" height="0.03" depth="16"  material="color: #1a1a1a; roughness: 1"></a-box>
+    <a-box position="11.97 0.015 0"  width="0.04" height="0.03" depth="16"  material="color: #1a1a1a; roughness: 1"></a-box>
+
+    <!-- ===================== TRACK LIGHTING FIXTURES ===================== -->
+    <!-- Track rails -->
+    <a-box position="0 6.56 -6.8"  width="20" height="0.04" depth="0.08" material="color: #1a1a1a; roughness: 0.3; metalness: 0.7"></a-box>
+    <a-box position="-10.5 6.56 0" width="0.08" height="0.04" depth="14" material="color: #1a1a1a; roughness: 0.3; metalness: 0.7"></a-box>
+    <a-box position="10.5 6.56 0"  width="0.08" height="0.04" depth="14" material="color: #1a1a1a; roughness: 0.3; metalness: 0.7"></a-box>
+
+    <!-- Light cans — far wall -->
+    <a-cylinder position="-5 6.35 -6.8" radius="0.06" height="0.2" material="color: #111; roughness: 0.3; metalness: 0.6"></a-cylinder>
+    <a-cylinder position="0 6.35 -6.8"  radius="0.06" height="0.2" material="color: #111; roughness: 0.3; metalness: 0.6"></a-cylinder>
+    <a-cylinder position="5 6.35 -6.8"  radius="0.06" height="0.2" material="color: #111; roughness: 0.3; metalness: 0.6"></a-cylinder>
+
+    <!-- Light cans — left wall -->
+    <a-cylinder position="-10.5 6.35 -4"   radius="0.06" height="0.2" material="color: #111; roughness: 0.3; metalness: 0.6"></a-cylinder>
+    <a-cylinder position="-10.5 6.35 -1.5" radius="0.06" height="0.2" material="color: #111; roughness: 0.3; metalness: 0.6"></a-cylinder>
+    <a-cylinder position="-10.5 6.35 1"    radius="0.06" height="0.2" material="color: #111; roughness: 0.3; metalness: 0.6"></a-cylinder>
+    <a-cylinder position="-10.5 6.35 3.5"  radius="0.06" height="0.2" material="color: #111; roughness: 0.3; metalness: 0.6"></a-cylinder>
+    <a-cylinder position="-10.5 6.35 6"    radius="0.06" height="0.2" material="color: #111; roughness: 0.3; metalness: 0.6"></a-cylinder>
+
+    <!-- Light cans — right wall -->
+    <a-cylinder position="10.5 6.35 -3.5" radius="0.06" height="0.2" material="color: #111; roughness: 0.3; metalness: 0.6"></a-cylinder>
+    <a-cylinder position="10.5 6.35 0"    radius="0.06" height="0.2" material="color: #111; roughness: 0.3; metalness: 0.6"></a-cylinder>
+    <a-cylinder position="10.5 6.35 3.5"  radius="0.06" height="0.2" material="color: #111; roughness: 0.3; metalness: 0.6"></a-cylinder>
+
+    <!-- ===================== SPOTLIGHTS — FAR WALL (Tara) ===================== -->
+    <a-entity light="type: spot; color: #fff0d4; intensity: 3.0; angle: 28; penumbra: 0.45; distance: 14; decay: 1.4"
+              position="-5 6.2 -6.8" rotation="-12 0 0"></a-entity>
+    <a-entity light="type: spot; color: #fff0d4; intensity: 3.2; angle: 30; penumbra: 0.45; distance: 14; decay: 1.4"
+              position="0 6.2 -6.8" rotation="-12 0 0"></a-entity>
+    <a-entity light="type: spot; color: #fff0d4; intensity: 3.0; angle: 28; penumbra: 0.45; distance: 14; decay: 1.4"
+              position="5 6.2 -6.8" rotation="-12 0 0"></a-entity>
+
+    <!-- ===================== SPOTLIGHTS — LEFT WALL (European Series) ===================== -->
+    <a-entity light="type: spot; color: #fff2dc; intensity: 2.2; angle: 22; penumbra: 0.5; distance: 10; decay: 1.5"
+              position="-10.5 6.2 -4" rotation="0 0 12"></a-entity>
+    <a-entity light="type: spot; color: #fff2dc; intensity: 2.2; angle: 22; penumbra: 0.5; distance: 10; decay: 1.5"
+              position="-10.5 6.2 -1.5" rotation="0 0 12"></a-entity>
+    <a-entity light="type: spot; color: #fff2dc; intensity: 2.4; angle: 24; penumbra: 0.5; distance: 10; decay: 1.5"
+              position="-10.5 6.2 1" rotation="0 0 12"></a-entity>
+    <a-entity light="type: spot; color: #fff2dc; intensity: 2.2; angle: 22; penumbra: 0.5; distance: 10; decay: 1.5"
+              position="-10.5 6.2 3.5" rotation="0 0 12"></a-entity>
+    <a-entity light="type: spot; color: #fff2dc; intensity: 2.2; angle: 22; penumbra: 0.5; distance: 10; decay: 1.5"
+              position="-10.5 6.2 6" rotation="0 0 12"></a-entity>
+
+    <!-- ===================== SPOTLIGHTS — RIGHT WALL (Steph) ===================== -->
+    <a-entity light="type: spot; color: #fff0d4; intensity: 2.8; angle: 26; penumbra: 0.45; distance: 12; decay: 1.5"
+              position="10.5 6.2 -3.5" rotation="0 0 -12"></a-entity>
+    <a-entity light="type: spot; color: #fff0d4; intensity: 2.8; angle: 26; penumbra: 0.45; distance: 12; decay: 1.5"
+              position="10.5 6.2 0" rotation="0 0 -12"></a-entity>
+    <a-entity light="type: spot; color: #fff0d4; intensity: 2.8; angle: 26; penumbra: 0.45; distance: 12; decay: 1.5"
+              position="10.5 6.2 3.5" rotation="0 0 -12"></a-entity>
+
+    <!-- ===================== TARA'S WALL — far wall (z = -8) ===================== -->
+    <!-- Butterfly (painting.jpg): 704×1251 not available locally to measure, treating as 2×2 square (4'×4') -->
+    <!-- Tara_Art2: 704×1251 → portrait ~0.563:1 → at height 2.6 → width ~1.46 -->
+    <!-- Tara_Art3: 704×746 → nearly square ~0.944:1 → 2×2 (4'×4') -->
+
+    <!-- LEFT: Butterfly painting (2 × 2 = 4' × 4') -->
+    <a-entity id="artwork" position="-5 2.6 -7.92">
+      <a-box position="0  1.04 0" width="2.12" height="0.06" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="0 -1.04 0" width="2.12" height="0.06" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="-1.04 0 0" width="0.06" height="2.02" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="1.04 0 0"  width="0.06" height="2.02" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-plane id="painting-plane" class="clickable" position="0 0 0.01" width="2" height="2"
+               material="src: #painting; roughness: 0.85; metalness: 0"></a-plane>
+    </a-entity>
+    <a-entity position="-5 1.28 -7.9">
+      <a-text value="Tara McIlroy" align="center" color="#555" width="2.0" font="roboto" letter-spacing="3"></a-text>
+      <a-text value="Untitled  ·  Toronto  ·  2024" align="center" color="#888" width="2.8" font="roboto" position="0 -0.16 0"></a-text>
+    </a-entity>
+
+    <!-- CENTRE: Tara_Art2 — 704×1251 portrait → width 1.46, height 2.6 -->
+    <a-entity id="artwork-tara2" position="0 2.6 -7.92">
+      <!-- Gold frame sized to 1.46 × 2.6 -->
+      <a-box position="0  1.34 0" width="1.58" height="0.06" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="0 -1.34 0" width="1.58" height="0.06" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="-0.76 0 0" width="0.06" height="2.62" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="0.76 0 0"  width="0.06" height="2.62" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-plane position="0 0 0.01" width="1.46" height="2.6"
+               material="src: #tara-art2; roughness: 0.85; metalness: 0"></a-plane>
+    </a-entity>
+    <a-entity position="0 1.0 -7.9">
+      <a-text value="Tara McIlroy" align="center" color="#555" width="2.0" font="roboto" letter-spacing="3"></a-text>
+      <a-text value="Series II  ·  Toronto  ·  2024" align="center" color="#888" width="2.8" font="roboto" position="0 -0.16 0"></a-text>
+    </a-entity>
+
+    <!-- RIGHT: Tara_Art3 — 704×746 ≈ square → 2 × 2 (4' × 4') -->
+    <a-entity id="artwork-tara3" position="5 2.6 -7.92">
+      <a-box position="0  1.04 0" width="2.12" height="0.06" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="0 -1.04 0" width="2.12" height="0.06" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="-1.04 0 0" width="0.06" height="2.02" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="1.04 0 0"  width="0.06" height="2.02" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-plane position="0 0 0.01" width="2" height="2"
+               material="src: #tara-art3; roughness: 0.85; metalness: 0"></a-plane>
+    </a-entity>
+    <a-entity position="5 1.28 -7.9">
+      <a-text value="Tara McIlroy" align="center" color="#555" width="2.0" font="roboto" letter-spacing="3"></a-text>
+      <a-text value="Series III  ·  Toronto  ·  2024" align="center" color="#888" width="2.8" font="roboto" position="0 -0.16 0"></a-text>
+    </a-entity>
+
+    <!-- ===================== EUROPEAN SERIES — left wall (x = -12) ===================== -->
+
+    <a-entity position="-11.92 4.6 0" rotation="0 90 0">
+      <a-text value="EUROPEAN SERIES" align="center" color="#444" width="4.5" font="roboto" letter-spacing="10"></a-text>
+      <a-plane width="1.2" height="0.008" position="0 -0.15 0.003"
+               material="color: #c8a96e; roughness: 0.3; metalness: 0.5"></a-plane>
+    </a-entity>
+
+    <!-- Venice -->
+    <a-entity id="photo-venice" position="-11.94 2.3 -4" rotation="0 90 0">
+      <a-box position="0 0 -0.02" width="1.1" height="0.84" depth="0.04"
+             material="color: #1a1a1a; roughness: 0.4; metalness: 0.15"></a-box>
+      <a-plane position="0 0 0.006" width="1.02" height="0.76"
+               material="color: #f7f4ee; roughness: 0.95"></a-plane>
+      <a-image src="#img-venice" position="0 0 0.012" width="0.9" height="0.67"></a-image>
+      <a-text value="Venice" align="center" color="#777" width="1.8" font="roboto" position="0 -0.52 0.012"></a-text>
+    </a-entity>
+
+    <!-- Kerry -->
+    <a-entity id="photo-kerry" position="-11.94 2.3 -1.5" rotation="0 90 0">
+      <a-box position="0 0 -0.02" width="1.1" height="0.84" depth="0.04"
+             material="color: #1a1a1a; roughness: 0.4; metalness: 0.15"></a-box>
+      <a-plane position="0 0 0.006" width="1.02" height="0.76"
+               material="color: #f7f4ee; roughness: 0.95"></a-plane>
+      <a-image src="#img-kerry" position="0 0 0.012" width="0.88" height="0.67"></a-image>
+      <a-text value="Kerry" align="center" color="#777" width="1.8" font="roboto" position="0 -0.52 0.012"></a-text>
+    </a-entity>
+
+    <!-- Roma (portrait) -->
+    <a-entity id="photo-roma" position="-11.94 2.3 1" rotation="0 90 0">
+      <a-box position="0 0 -0.02" width="0.84" height="1.1" depth="0.04"
+             material="color: #1a1a1a; roughness: 0.4; metalness: 0.15"></a-box>
+      <a-plane position="0 0 0.006" width="0.76" height="1.02"
+               material="color: #f7f4ee; roughness: 0.95"></a-plane>
+      <a-image src="#img-roma" position="0 0 0.012" width="0.6" height="0.78"></a-image>
+      <a-text value="Roma" align="center" color="#777" width="1.8" font="roboto" position="0 -0.65 0.012"></a-text>
+    </a-entity>
+
+    <!-- Positano -->
+    <a-entity id="photo-positano" position="-11.94 2.3 3.5" rotation="0 90 0">
+      <a-box position="0 0 -0.02" width="1.1" height="0.84" depth="0.04"
+             material="color: #1a1a1a; roughness: 0.4; metalness: 0.15"></a-box>
+      <a-plane position="0 0 0.006" width="1.02" height="0.76"
+               material="color: #f7f4ee; roughness: 0.95"></a-plane>
+      <a-image src="#img-positano" position="0 0 0.012" width="0.93" height="0.67"></a-image>
+      <a-text value="Positano" align="center" color="#777" width="1.8" font="roboto" position="0 -0.52 0.012"></a-text>
+    </a-entity>
+
+    <!-- Ring of Kerry -->
+    <a-entity id="photo-ringofkerry" position="-11.94 2.3 6" rotation="0 90 0">
+      <a-box position="0 0 -0.02" width="1.1" height="0.84" depth="0.04"
+             material="color: #1a1a1a; roughness: 0.4; metalness: 0.15"></a-box>
+      <a-plane position="0 0 0.006" width="1.02" height="0.76"
+               material="color: #f7f4ee; roughness: 0.95"></a-plane>
+      <a-image src="#img-ringofkerry" position="0 0 0.012" width="0.93" height="0.66"></a-image>
+      <a-text value="Ring of Kerry" align="center" color="#777" width="1.8" font="roboto" position="0 -0.52 0.012"></a-text>
+    </a-entity>
+
+    <!-- ===================== STEPH'S WALL — right wall (x = 12) ===================== -->
+    <!-- Steph_Art1: 4284×5712 portrait → 0.75:1 → w=1.5 h=2.0 -->
+    <!-- Steph_Art2: 960×720 landscape → 1.33:1 → w=2.0 h=1.5 -->
+    <!-- Steph_Art3: 5117×2086 ultra-wide → 2.45:1 → w=2.4 h=0.98 -->
+
+    <a-entity position="11.92 4.6 0" rotation="0 -90 0">
+      <a-text value="STEPH" align="center" color="#444" width="4.5" font="roboto" letter-spacing="10"></a-text>
+      <a-plane width="0.5" height="0.008" position="0 -0.15 0.003"
+               material="color: #c8a96e; roughness: 0.3; metalness: 0.5"></a-plane>
+    </a-entity>
+
+    <!-- Steph_Art1 — portrait 1.5 × 2.0 -->
+    <a-entity id="photo-steph1" position="11.94 2.6 -3.5" rotation="0 -90 0">
+      <a-box position="0  1.04 0" width="1.62" height="0.06" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="0 -1.04 0" width="1.62" height="0.06" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="-0.78 0 0" width="0.06" height="2.02" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="0.78 0 0"  width="0.06" height="2.02" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-plane position="0 0 0.01" width="1.5" height="2.0"
+               material="src: #steph-art1; roughness: 0.85; metalness: 0"></a-plane>
+    </a-entity>
+    <a-entity position="11.92 1.28 -3.5" rotation="0 -90 0">
+      <a-text value="Steph" align="center" color="#555" width="2.0" font="roboto" letter-spacing="3"></a-text>
+      <a-text value="Work I" align="center" color="#888" width="2.8" font="roboto" position="0 -0.16 0"></a-text>
+    </a-entity>
+
+    <!-- Steph_Art2 — landscape 2.0 × 1.5 -->
+    <a-entity id="photo-steph2" position="11.94 2.35 0" rotation="0 -90 0">
+      <a-box position="0  0.79 0" width="2.12" height="0.06" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="0 -0.79 0" width="2.12" height="0.06" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="-1.04 0 0" width="0.06" height="1.52" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="1.04 0 0"  width="0.06" height="1.52" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-plane position="0 0 0.01" width="2.0" height="1.5"
+               material="src: #steph-art2; roughness: 0.85; metalness: 0"></a-plane>
+    </a-entity>
+    <a-entity position="11.92 1.28 0" rotation="0 -90 0">
+      <a-text value="Steph" align="center" color="#555" width="2.0" font="roboto" letter-spacing="3"></a-text>
+      <a-text value="Work II" align="center" color="#888" width="2.8" font="roboto" position="0 -0.16 0"></a-text>
+    </a-entity>
+
+    <!-- Steph_Art3 — ultra-wide 2.4 × 0.98 -->
+    <a-entity id="photo-steph3" position="11.94 2.35 3.5" rotation="0 -90 0">
+      <a-box position="0  0.52 0" width="2.52" height="0.06" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="0 -0.52 0" width="2.52" height="0.06" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="-1.24 0 0" width="0.06" height="0.98" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="1.24 0 0"  width="0.06" height="0.98" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-plane position="0 0 0.01" width="2.4" height="0.98"
+               material="src: #steph-art3; roughness: 0.85; metalness: 0"></a-plane>
+    </a-entity>
+    <a-entity position="11.92 1.56 3.5" rotation="0 -90 0">
+      <a-text value="Steph" align="center" color="#555" width="2.0" font="roboto" letter-spacing="3"></a-text>
+      <a-text value="Work III" align="center" color="#888" width="2.8" font="roboto" position="0 -0.16 0"></a-text>
+    </a-entity>
+
+    <!-- ===================== VISITOR ===================== -->
+    <a-entity id="rig" position="0 0 6" room-bounds>
+      <a-entity id="camera" camera position="0 1.65 0"
+                look-controls="pointerLockEnabled: false; reverseMouseDrag: true; reverseTouchDrag: true"
+                wasd-controls="acceleration: 28"></a-entity>
+    </a-entity>
+
+  </a-scene>
+
+  <script>
+    /* ---- Procedural polished concrete floor — LIGHT warm grey ---- */
+    AFRAME.registerComponent('procedural-concrete', {
+      init: function () {
+        var c = document.createElement('canvas');
+        c.width = 1024; c.height = 1024;
+        var ctx = c.getContext('2d');
+
+        // Light warm grey base
+        ctx.fillStyle = '#c8c3bc';
+        ctx.fillRect(0, 0, c.width, c.height);
+
+        // Subtle aggregate speckle
+        for (var i = 0; i < 50000; i++) {
+          var x = Math.random() * c.width;
+          var y = Math.random() * c.height;
+          var g = Math.floor(170 + Math.random() * 50);
+          ctx.fillStyle = 'rgba(' + g + ',' + (g - 3) + ',' + (g - 6) + ',' + (0.03 + Math.random() * 0.06) + ')';
+          ctx.fillRect(x, y, 1 + Math.random() * 2, 1 + Math.random() * 2);
+        }
+
+        // Mottled patches
+        for (var p = 0; p < 70; p++) {
+          var px = Math.random() * c.width;
+          var py = Math.random() * c.height;
+          var pr = 25 + Math.random() * 90;
+          var pg = Math.floor(180 + Math.random() * 40);
+          ctx.beginPath();
+          ctx.arc(px, py, pr, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(' + pg + ',' + (pg - 2) + ',' + (pg - 5) + ',' + (0.03 + Math.random() * 0.05) + ')';
+          ctx.fill();
+        }
+
+        // Faint hairline cracks
+        ctx.strokeStyle = 'rgba(120, 115, 108, 0.08)';
+        ctx.lineWidth = 0.5;
+        for (var cr = 0; cr < 6; cr++) {
+          ctx.beginPath();
+          var cx = Math.random() * c.width;
+          var cy = Math.random() * c.height;
+          ctx.moveTo(cx, cy);
+          for (var s = 0; s < 5; s++) {
+            cx += (Math.random() - 0.5) * 140;
+            cy += (Math.random() - 0.5) * 140;
+            ctx.lineTo(cx, cy);
+          }
+          ctx.stroke();
+        }
+
+        // Subtle polish sheen — lighter bands
+        for (var t = 0; t < 12; t++) {
+          var ty = Math.random() * c.height;
+          ctx.strokeStyle = 'rgba(210, 205, 198, ' + (0.04 + Math.random() * 0.05) + ')';
+          ctx.lineWidth = 2 + Math.random() * 5;
+          ctx.beginPath();
+          ctx.moveTo(0, ty);
+          ctx.bezierCurveTo(c.width * 0.3, ty + (Math.random() - 0.5) * 8,
+                            c.width * 0.7, ty + (Math.random() - 0.5) * 8,
+                            c.width, ty + (Math.random() - 0.5) * 5);
+          ctx.stroke();
+        }
+
+        var url = c.toDataURL();
+        this.el.setAttribute('material', 'src', url);
+        this.el.setAttribute('material', 'repeat', '3 3');
+      }
+    });
+
+    /* ---- Room boundary collision ---- */
+    AFRAME.registerComponent('room-bounds', {
+      schema: {
+        xMin: { default: -11.2 }, xMax: { default: 11.2 },
+        zMin: { default: -7.2 },  zMax: { default: 7.2 }
+      },
+      tick: function () {
+        var p = this.el.object3D.position;
+        if (p.x < this.data.xMin) p.x = this.data.xMin;
+        if (p.x > this.data.xMax) p.x = this.data.xMax;
+        if (p.z < this.data.zMin) p.z = this.data.zMin;
+        if (p.z > this.data.zMax) p.z = this.data.zMax;
+      }
+    });
+
+    /* ---- Entry screen, ambient music, mute toggle ---- */
+    window.addEventListener('load', function () {
+      var entry = document.getElementById('entry-screen');
+      var enterBtn = document.getElementById('enter-btn');
+      var muteBtn = document.getElementById('mute-btn');
+      var audio = document.getElementById('ambient-audio');
+      var camera = document.getElementById('camera');
+
+      if (audio) audio.volume = 0.25;
+
+      function setSceneControls(enabled) {
+        if (!camera) return;
+        camera.setAttribute('wasd-controls', 'enabled', enabled);
+        camera.setAttribute('look-controls', 'enabled', enabled);
+      }
+      setSceneControls(false);
+
+      if (enterBtn) {
+        enterBtn.addEventListener('click', function () {
+          // Force audio play on user gesture — retry with a small delay if first attempt fails
+          if (audio) {
+            audio.play().catch(function () {
+              setTimeout(function () { audio.play().catch(function () {}); }, 200);
+            });
+          }
+
+          entry.classList.add('fade-out');
+          muteBtn.classList.add('visible');
+          setSceneControls(true);
+          setTimeout(function () {
+            var h = document.getElementById('hint');
+            if (h) h.classList.add('fade');
+          }, 7000);
+          setTimeout(function () {
+            if (entry && entry.parentNode) entry.parentNode.removeChild(entry);
+          }, 1600);
+        });
+      }
+
+      // Also try to unlock audio on any user interaction within the entry screen
+      if (entry && audio) {
+        entry.addEventListener('click', function () {
+          if (audio.paused) audio.play().catch(function () {});
+        }, { once: false });
+        entry.addEventListener('touchstart', function () {
+          if (audio.paused) audio.play().catch(function () {});
+        }, { once: false });
+      }
+
+      if (muteBtn) {
+        muteBtn.addEventListener('click', function () {
+          if (!audio) return;
+          if (audio.paused) {
+            audio.play().catch(function () {});
+            muteBtn.classList.remove('muted');
+          } else {
+            audio.pause();
+            muteBtn.classList.add('muted');
+          }
+        });
+      }
+    });
+
+    /* ---- Chat panel + double-click navigation ---- */
+    window.addEventListener('load', function () {
+      var panel = document.getElementById('chat-panel');
+      var painting = document.getElementById('painting-plane');
+      var closeBtn = document.getElementById('chat-close');
+      var form = document.getElementById('chat-form');
+      var input = document.getElementById('chat-input');
+      var sendBtn = document.getElementById('chat-send');
+      var messagesEl = document.getElementById('chat-messages');
+      var typingEl = document.getElementById('chat-typing');
+      var camera = document.getElementById('camera');
+      var rig = document.getElementById('rig');
+
+      var GREETING = "Hi — I'm Tara, or rather an AI version of me. Welcome to my room at Vizual Ninja Studios. That piece in front of you came out of a long Toronto winter. Ask me anything about it, or about how I work.";
+      var convo = [{ role: 'assistant', content: GREETING }];
+      var opened = false;
+      var busy = false;
+
+      function setControls(enabled) {
+        if (!camera) return;
+        camera.setAttribute('wasd-controls', 'enabled', enabled);
+        camera.setAttribute('look-controls', 'enabled', enabled);
+      }
+
+      function renderMessage(role, text) {
+        var div = document.createElement('div');
+        div.className = 'msg ' + role;
+        div.textContent = text;
+        messagesEl.appendChild(div);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+      }
+
+      function openChat() {
+        panel.classList.add('open');
+        panel.setAttribute('aria-hidden', 'false');
+        setControls(false);
+        if (!opened) { opened = true; renderMessage('assistant', GREETING); }
+        setTimeout(function () { input.focus(); }, 450);
+      }
+
+      function closeChat() {
+        panel.classList.remove('open');
+        panel.setAttribute('aria-hidden', 'true');
+        setControls(true);
+      }
+
+      var floor = document.getElementById('floor');
+      var navPin = document.getElementById('nav-pin');
+      var zoomed = false;
+      var savedRigPos = null;
+      var paintingClickTimer = null;
+      var floorClickTimer = null;
+      var ROOM_X_MIN = -11.1, ROOM_X_MAX = 11.1;
+      var ROOM_Z_MIN = -7.1,  ROOM_Z_MAX = 7.1;
+
+      function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+
+      function animateRig(toX, toY, toZ, dur) {
+        if (!rig) return;
+        rig.setAttribute('animation__move', {
+          property: 'position', to: toX + ' ' + toY + ' ' + toZ,
+          dur: dur || 1200, easing: 'easeInOutQuad'
+        });
+      }
+
+      function flashPin(x, z) {
+        if (!navPin) return;
+        navPin.setAttribute('position', x + ' 0.02 ' + z);
+        navPin.removeAttribute('animation__pin');
+        navPin.setAttribute('material', 'opacity', 0.8);
+        navPin.setAttribute('animation__pin', {
+          property: 'material.opacity', from: 0.8, to: 0, dur: 1200, easing: 'easeOutQuad'
+        });
+      }
+
+      function moveToFloorPoint(pt) {
+        if (!rig || !camera) return;
+        var tx = clamp(pt.x, ROOM_X_MIN, ROOM_X_MAX);
+        var tz = clamp(pt.z, ROOM_Z_MIN, ROOM_Z_MAX);
+        var cam = camera.object3D.position;
+        var rx = clamp(tx - cam.x, ROOM_X_MIN, ROOM_X_MAX);
+        var rz = clamp(tz - cam.z, ROOM_Z_MIN, ROOM_Z_MAX);
+        var rp = rig.object3D.position;
+        var dx = rx - rp.x, dz = rz - rp.z;
+        var dist = Math.sqrt(dx * dx + dz * dz);
+        animateRig(rx, 0, rz, clamp(500 + dist * 120, 500, 1600));
+        flashPin(tx, tz);
+        zoomed = false; savedRigPos = null;
+      }
+
+      function toggleCloseUp() {
+        if (!rig || !camera) return;
+        if (!zoomed) {
+          var rp = rig.object3D.position;
+          savedRigPos = { x: rp.x, y: rp.y, z: rp.z };
+          var cam = camera.object3D.position;
+          animateRig(-cam.x, 0, -4.5 - cam.z, 1200);
+          zoomed = true;
+        } else {
+          animateRig(savedRigPos.x, savedRigPos.y, savedRigPos.z, 1200);
+          zoomed = false; savedRigPos = null;
+        }
+      }
+
+      function onPaintingClick() {
+        if (paintingClickTimer) {
+          clearTimeout(paintingClickTimer);
+          paintingClickTimer = null;
+          toggleCloseUp();
+        } else {
+          paintingClickTimer = setTimeout(function () { paintingClickTimer = null; openChat(); }, 260);
+        }
+      }
+
+      function onFloorClick(e) {
+        var hit = e.detail && e.detail.intersection;
+        if (!hit || !hit.point) return;
+        var pt = hit.point;
+        if (floorClickTimer) {
+          clearTimeout(floorClickTimer);
+          floorClickTimer = null;
+          moveToFloorPoint(pt);
+        } else {
+          floorClickTimer = setTimeout(function () { floorClickTimer = null; }, 280);
+        }
+      }
+
+      if (painting) painting.addEventListener('click', onPaintingClick);
+      if (floor) floor.addEventListener('click', onFloorClick);
+      if (closeBtn) closeBtn.addEventListener('click', closeChat);
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && panel.classList.contains('open')) closeChat();
+      });
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (busy) return;
+        var text = input.value.trim();
+        if (!text) return;
+        input.value = '';
+        convo.push({ role: 'user', content: text });
+        renderMessage('user', text);
+        busy = true; sendBtn.disabled = true; typingEl.classList.add('show');
+        fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ messages: convo })
+        })
+        .then(function (res) { return res.json().then(function (data) { return { ok: res.ok, data: data }; }); })
+        .then(function (result) {
+          if (!result.ok || !result.data.reply) throw new Error((result.data && result.data.error) || 'No response.');
+          convo.push({ role: 'assistant', content: result.data.reply });
+          renderMessage('assistant', result.data.reply);
+        })
+        .catch(function (err) { renderMessage('error', err.message || 'Sorry, I could not reach the studio just now.'); })
+        .finally(function () { busy = false; sendBtn.disabled = false; typingEl.classList.remove('show'); input.focus(); });
+      });
+    });
+  </script>
+</body>
+</html>
