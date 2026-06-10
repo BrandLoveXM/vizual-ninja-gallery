@@ -11,7 +11,7 @@
 
 White cube gallery meets converted industrial loft. Key design decisions:
 
-- **Floor:** Procedurally generated polished light concrete (warm grey `#c8c3bc` base, canvas-drawn speckle + hairline cracks + polish sheen). No external texture file needed.
+- **Floor:** Procedurally generated polished light concrete (warm grey `#c8c3bc` base, canvas-drawn speckle + hairline cracks + polish sheen + broad radial sheen pools + burnished swirls for depth). Material tuned for a wet-look polish (`roughness: 0.13; metalness: 0.45; reflectivity: 0.7`) with additive light-pool planes (`#floor-reflections`) under each track-light cluster so the floor catches the warm lighting. No external texture file needed.
 - **Walls:** Bright warm white (`#f5f3f0` far/back, `#f2f0ec` side walls)
 - **Ceiling:** Warm off-white (`#f0ede8`)
 - **Ceiling detail:** Three exposed steel I-beams (dark `#2a2a2a`) running the full depth of the room at x = -6, 0, +6
@@ -41,7 +41,7 @@ Camera height: `y = 1.65`. Room bounds clamp visitor to x ±11.2, z ±7.2.
 | Wall | Position | Rotation | Contents |
 |------|----------|----------|----------|
 | **Far wall (Tara's wall)** | `z = -8` | none (faces +z) | 3 Tara paintings |
-| **Back wall** | `z = +8` | `0 180 0` | Empty |
+| **Back wall (Jajaira's wall)** | `z = +8` | `0 180 0` | 3 Jajaira Berrios paintings |
 | **Left wall (European Series)** | `x = -12` | `0 90 0` | 5 travel photographs |
 | **Right wall (Steph's wall)** | `x = +12` | `0 -90 0` | 3 Steph paintings |
 
@@ -71,6 +71,18 @@ All entities positioned at `z = -7.92` (just in front of `z = -8` wall).
 Caption entities sit ~1.28 units below centre of painting (adjusted for portrait pieces).
 
 ---
+
+### Back Wall — Jajaira Berrios
+
+All entities at `z = 7.92`, rotation `0 180 0`. Section title "JAJAIRA BERRIOS" + gold underline at `0 4.7 7.9`. All frames thin gold (`#c8a96e`). Own track rail + 3 cans + 3 spotlights (intensity 3.0–3.2, `rotation="12 180 0"`, tilted toward +z wall).
+
+| Position | Plane ID | File | Scene dimensions | Pixel size | Aspect |
+|----------|----------|------|-----------------|------------|--------|
+| Left (x = -5) | `#plane-intertwined` | `Intertwined.jpg` | 1.49 × 2.0 | 1467 × 1965 | 0.747:1 |
+| Centre (x = 0) | `#plane-dia` | `DiaDeLosMuertos.jpeg` | 0.94 × 2.0 | 372 × 796 | 0.467:1 |
+| Right (x = +5) | `#plane-unapologetic` | `Unapologetic.jpg` | 1.10 × 1.8 | 1448 × 2369 | 0.611:1 |
+
+> Note: `DiaDeLosMuertos.jpeg` was renamed from `Dia De Los Muertos.jpeg` to remove spaces from the URL.
 
 ### Left Wall — European Series
 
@@ -121,7 +133,10 @@ All frames: thin gold (`#c8a96e`).
 | `RingofKerry_web.jpg` | European Series | `_web` suffix required |
 | `Positano_web.jpg` | European Series | `_web` suffix required |
 | `TreviFountain_web.jpg` | European Series | `_web` suffix required |
-| `ambient.mp3` | Background music | Loops at volume 0.25 |
+| `Intertwined.jpg` | Back wall — Jajaira (left) | Portrait 1467×1965 |
+| `DiaDeLosMuertos.jpeg` | Back wall — Jajaira (centre) | Tall portrait 372×796 (renamed, no spaces) |
+| `Unapologetic.jpg` | Back wall — Jajaira (right) | Portrait 1448×2369 |
+| `ambient.mp3` | Background music | Loops at volume 0.25. Starts on Enter-Gallery click; a document-level first-gesture fallback retries if autoplay was blocked |
 
 > ⚠️ The European Series files use `_web.jpg` suffixes — if these aren't loading, check whether the actual files in the repo match this naming. The local folder only has `Venice.png`, `Kerry.png` etc. without `_web`.
 
@@ -133,8 +148,7 @@ All frames: thin gold (`#c8a96e`).
 |---------|-------------|
 | **Entry screen** | Overlay fades in on load. "Enter Gallery" click starts music, fades out overlay, enables WASD/look controls |
 | **Ambient music** | `ambient.mp3`, loops at 0.25 volume. Plays on Enter Gallery click (with retry for browser autoplay policy). Mute button top-right |
-| **Chat panel** | Click butterfly painting (`#painting-plane`) once → opens slide-in chat panel with AI persona of Tara. Powered by `/api/chat` endpoint (POST, JSON `{messages:[]}`) |
-| **Double-click to zoom** | Double-click butterfly painting → camera glides close. Double-click again → returns |
+| **Painting chatbots** | Click ANY painting (planes with class `.art-chat`) → opens slide-in chat panel with an AI persona of that painting's artist, pre-loaded with that specific work's context + the artist bio. Powered directly by the Anthropic Messages API (`claude-haiku-4-5`). API key is the placeholder `ANTHROPIC_API_KEY` near the top of the chat `<script>` — replace before going live. Per-painting context lives in the `ART` map keyed by plane id. **Security note:** calling Anthropic from the browser exposes the key; proxy through a server endpoint for production. |
 | **Double-click floor** | Double-click any floor point → camera glides to that location with animated nav pin |
 | **ESC** | Closes chat panel |
 | **WASD / arrow keys** | Walk. Room bounds prevent walking through walls |
@@ -144,7 +158,7 @@ All frames: thin gold (`#c8a96e`).
 
 ## What's Not Yet Built / Known Gaps
 
-- **Back wall (z = +8):** Completely empty — good candidate for a third artist or a text/title panel
+- **Back wall (z = +8):** Now hung with 3 Jajaira Berrios works (Intertwined, Dia De Los Muertos, Unapologetic)
 - **European Series photos:** Asset filenames use `_web.jpg` — verify these files exist in repo with that exact naming
 - **Chat API:** `/api/chat` endpoint lives in the `api/` directory of the repo. Not part of `index.html` — check separately if chat is broken
 - **Butterfly painting (`painting.jpg`):** Not present in the local working folder, only in GitHub repo — will appear black in local preview but correct on the live site
