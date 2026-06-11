@@ -79,10 +79,10 @@ All entities at `z = 7.92`, rotation `0 180 0`. Section title "JAJAIRA BERRIOS" 
 | Position | Plane ID | File | Scene dimensions | Pixel size | Aspect |
 |----------|----------|------|-----------------|------------|--------|
 | Left (x = -5) | `#plane-intertwined` | `Intertwined.jpg` | 1.49 × 2.0 | 1467 × 1965 | 0.747:1 |
-| Centre (x = 0) | `#plane-dia` | `DiaDeLosMuertos.jpeg` | 0.94 × 2.0 | 372 × 796 | 0.467:1 |
+| Centre (x = 0) | `#plane-dia` | `DiaDeLosMuertos2.png` | 1.34 × 2.0 | 1404 × 2095 | 0.670:1 |
 | Right (x = +5) | `#plane-unapologetic` | `Unapologetic.jpg` | 1.10 × 1.8 | 1448 × 2369 | 0.611:1 |
 
-> Note: `DiaDeLosMuertos.jpeg` was renamed from `Dia De Los Muertos.jpeg` to remove spaces from the URL.
+> Note: the centre piece now uses `DiaDeLosMuertos2.png` (renamed from `Dia De Los Muertos 2.png` to drop spaces); the older `DiaDeLosMuertos.jpeg` was removed.
 
 ### Left Wall — European Series
 
@@ -136,7 +136,7 @@ All frames: thin gold (`#c8a96e`).
 | `Intertwined.jpg` | Back wall — Jajaira (left) | Portrait 1467×1965 |
 | `DiaDeLosMuertos.jpeg` | Back wall — Jajaira (centre) | Tall portrait 372×796 (renamed, no spaces) |
 | `Unapologetic.jpg` | Back wall — Jajaira (right) | Portrait 1448×2369 |
-| `ambient.mp3` | Background music | Loops at volume 0.25. Starts on Enter-Gallery click; a document-level first-gesture fallback retries if autoplay was blocked |
+| `ambient.mp3` | Background music | Loops at volume 0.25. Starts on the "Enter" overlay click; a document-level first-gesture fallback retries if autoplay was blocked. ⚠️ **This file is NOT present in the repo** — the `<audio>` tag 404s, so no music plays until `ambient.mp3` is uploaded to the repo root. The gesture/overlay code is correct; the missing asset is the actual blocker. |
 
 > ⚠️ The European Series files use `_web.jpg` suffixes — if these aren't loading, check whether the actual files in the repo match this naming. The local folder only has `Venice.png`, `Kerry.png` etc. without `_web`.
 
@@ -148,7 +148,8 @@ All frames: thin gold (`#c8a96e`).
 |---------|-------------|
 | **Entry screen** | Overlay fades in on load. "Enter Gallery" click starts music, fades out overlay, enables WASD/look controls |
 | **Ambient music** | `ambient.mp3`, loops at 0.25 volume. Plays on Enter Gallery click (with retry for browser autoplay policy). Mute button top-right |
-| **Painting chatbots** | Click ANY painting (planes with class `.art-chat`) → opens slide-in chat panel with an AI persona of that painting's artist, pre-loaded with that specific work's context + the artist bio. Powered directly by the Anthropic Messages API (`claude-haiku-4-5`). API key is the placeholder `ANTHROPIC_API_KEY` near the top of the chat `<script>` — replace before going live. Per-painting context lives in the `ART` map keyed by plane id. **Security note:** calling Anthropic from the browser exposes the key; proxy through a server endpoint for production. |
+| **Painting chatbots** | Click ANY painting (planes with class `.art-chat`) → opens slide-in chat panel. The panel **immediately shows the full artwork placard** (`art-card`: title, artist, medium · size, description, artist quote, price/commission) before any input, then an AI persona of the artist answers follow-ups. Powered directly by the Anthropic Messages API (`claude-haiku-4-5`). API key is the placeholder `ANTHROPIC_API_KEY` near the top of the chat `<script>` — replace before going live. Per-painting `card` (placard) + `info` (system context) live in the `ART` map keyed by plane id. **Security note:** calling Anthropic from the browser exposes the key; proxy through a server endpoint for production. |
+| **Wall typography** | Each wall has a large artist-name header above the works (far wall: "Tara-Lea McIlroy" + "Leading with Love"; right wall: "Stephanie Camacho"; back wall: "Jajaira Berrios") and a Donatello-style two-column wall-mounted bio beside the paintings (`<a-text>` columns, `anchor=left baseline=top`). Left wall is titled "European Moments / Captured In Time". |
 | **Double-click floor** | Double-click any floor point → camera glides to that location with animated nav pin |
 | **ESC** | Closes chat panel |
 | **WASD / arrow keys** | Walk. Room bounds prevent walking through walls |

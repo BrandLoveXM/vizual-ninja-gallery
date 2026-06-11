@@ -72,6 +72,24 @@
     .msg.user { align-self: flex-end; background: #1a1a1a; color: #e8e4dc; border-bottom-right-radius: 4px; }
     .msg.error { align-self: flex-start; background: #f6dede; color: #7a2020; border-bottom-left-radius: 4px; }
 
+    /* Opening artwork placard — full-width, gallery-label styling */
+    .art-card {
+      align-self: stretch; max-width: 100%;
+      background: #fff; border: 1px solid #e6e2d8;
+      border-left: 3px solid #c8a96e;
+      border-radius: 6px; padding: 16px 18px;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.04);
+    }
+    .art-card-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 22px; font-weight: 400; letter-spacing: 0.02em;
+      color: #1a1a1a; line-height: 1.15; margin-bottom: 8px;
+    }
+    .art-card-body {
+      font-family: 'Inter', sans-serif; font-size: 12.5px; line-height: 1.65;
+      color: #3a3a3a; white-space: pre-wrap; word-wrap: break-word;
+    }
+
     #chat-typing { padding: 0 20px 6px; font-size: 11px; font-style: italic; color: #8a8a8a; display: none; }
     #chat-typing.show { display: block; }
 
@@ -166,7 +184,7 @@
       <div class="entry-eyebrow">Current Exhibition</div>
       <h1 class="entry-title">VIZUAL&nbsp;NINJA<br>STUDIOS</h1>
       <div class="entry-rule"></div>
-      <button id="enter-btn" type="button">Enter Gallery</button>
+      <button id="enter-btn" type="button">Enter</button>
     </div>
   </div>
 
@@ -197,7 +215,7 @@
       <img id="img-positano"   src="Positano_web.jpg"     crossorigin="anonymous" />
       <img id="img-roma"       src="TreviFountain_web.jpg" crossorigin="anonymous" />
       <img id="intertwined"    src="Intertwined.jpg"       crossorigin="anonymous" />
-      <img id="dia"            src="DiaDeLosMuertos.jpeg"   crossorigin="anonymous" />
+      <img id="dia"            src="DiaDeLosMuertos2.png"   crossorigin="anonymous" />
       <img id="unapologetic"   src="Unapologetic.jpg"       crossorigin="anonymous" />
     </a-assets>
 
@@ -329,6 +347,23 @@
     <!-- Tara_Art2: 704×1251 → portrait ~0.563:1 → at height 2.6 → width ~1.46 -->
     <!-- Tara_Art3: 704×746 → nearly square ~0.944:1 → 2×2 (4'×4') -->
 
+    <!-- Wall header: artist name + tagline -->
+    <a-entity position="0 5.45 -7.88">
+      <a-text value="Tara-Lea McIlroy" align="center" color="#1f1f1f" width="6.4" font="roboto" letter-spacing="5"></a-text>
+      <a-text value="Leading with Love" align="center" color="#8a6d3b" width="3.2" font="roboto" letter-spacing="6" position="0 -0.5 0"></a-text>
+      <a-plane width="1.3" height="0.008" position="0 -0.74 0.002" material="color: #c8a96e; shader: flat"></a-plane>
+    </a-entity>
+
+    <!-- Wall-mounted artist bio (left of the paintings), Donatello-style two columns -->
+    <a-entity position="-9 2.85 -7.88">
+      <a-text value="ABOUT THE ARTIST" align="center" color="#8a6d3b" width="2.6" font="roboto" letter-spacing="6" position="0 1.55 0"></a-text>
+      <a-text value="Tara-Lea McIlroy" align="center" color="#1f1f1f" width="4.0" font="roboto" letter-spacing="2" position="0 1.12 0"></a-text>
+      <a-text value="Tara-Lea McIlroy is a Toronto-based painter who works largely in oil and acrylic, leading with love. Her work moves between grief, memory, and the quiet beauty of everyday life."
+              align="left" anchor="left" baseline="top" color="#555" width="2.3" wrap-count="32" font="roboto" position="-2.35 0.7 0"></a-text>
+      <a-text value="She paints to keep people close, and takes on commissions, including grief-inspired pieces. Above all, she leads with love."
+              align="left" anchor="left" baseline="top" color="#555" width="2.3" wrap-count="32" font="roboto" position="0.1 0.7 0"></a-text>
+    </a-entity>
+
     <!-- LEFT: Butterfly painting (2 × 2 = 4' × 4') -->
     <a-entity id="artwork" position="-5 2.6 -7.92">
       <a-box position="0  1.04 0" width="2.12" height="0.06" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
@@ -340,7 +375,7 @@
     </a-entity>
     <a-entity position="-5 1.28 -7.9">
       <a-text value="Always Here With You" align="center" color="#8a6d3b" width="2.0" font="roboto" letter-spacing="2"></a-text>
-      <a-text value="Tara McIlroy - Oil on canvas, 4 x 4 ft - Not for sale - commissions welcome" align="center" color="#888" width="2.8" font="roboto" position="0 -0.16 0"></a-text>
+      <a-text value="Tara-Lea McIlroy - Oil on canvas, 4 x 4 ft - Not for sale - commissions welcome" align="center" color="#888" width="2.8" font="roboto" position="0 -0.16 0"></a-text>
     </a-entity>
 
     <!-- CENTRE: Tara_Art2 — 704×1251 portrait → width 1.46, height 2.6 -->
@@ -355,7 +390,7 @@
     </a-entity>
     <a-entity position="0 1.0 -7.9">
       <a-text value="Somewhere Out There" align="center" color="#8a6d3b" width="2.0" font="roboto" letter-spacing="2"></a-text>
-      <a-text value="Tara McIlroy - Acrylic on canvas, 1.5 x 3 ft - $750 USD + shipping" align="center" color="#888" width="2.8" font="roboto" position="0 -0.16 0"></a-text>
+      <a-text value="Tara-Lea McIlroy - Acrylic on canvas, 1.5 x 3 ft - $750 USD + shipping" align="center" color="#888" width="2.8" font="roboto" position="0 -0.16 0"></a-text>
     </a-entity>
 
     <!-- RIGHT: Tara_Art3 — 704×746 ≈ square → 2 × 2 (4' × 4') -->
@@ -369,15 +404,16 @@
     </a-entity>
     <a-entity position="5 1.28 -7.9">
       <a-text value="It Was All A Dream" align="center" color="#8a6d3b" width="2.0" font="roboto" letter-spacing="2"></a-text>
-      <a-text value="Tara McIlroy - Acrylic on canvas, 4 x 4 ft - Not for sale - commissions" align="center" color="#888" width="2.8" font="roboto" position="0 -0.16 0"></a-text>
+      <a-text value="Tara-Lea McIlroy - Acrylic on canvas, 4 x 4 ft - Not for sale - commissions" align="center" color="#888" width="2.8" font="roboto" position="0 -0.16 0"></a-text>
     </a-entity>
 
     <!-- ===================== EUROPEAN SERIES — left wall (x = -12) ===================== -->
 
-    <a-entity position="-11.92 4.6 0" rotation="0 90 0">
-      <a-text value="EUROPEAN SERIES" align="center" color="#444" width="4.5" font="roboto" letter-spacing="10"></a-text>
-      <a-plane width="1.2" height="0.008" position="0 -0.15 0.003"
-               material="color: #c8a96e; roughness: 0.3; metalness: 0.5"></a-plane>
+    <a-entity position="-11.92 4.75 0" rotation="0 90 0">
+      <a-text value="European Moments" align="center" color="#1f1f1f" width="5.2" font="roboto" letter-spacing="3"></a-text>
+      <a-text value="Captured In Time" align="center" color="#1f1f1f" width="5.0" font="roboto" letter-spacing="3" position="0 -0.42 0"></a-text>
+      <a-plane width="1.4" height="0.008" position="0 -0.66 0.003"
+               material="color: #c8a96e; shader: flat"></a-plane>
     </a-entity>
 
     <!-- Venice -->
@@ -435,10 +471,21 @@
     <!-- Steph_Art2: 960×720 landscape → 1.33:1 → w=2.0 h=1.5 -->
     <!-- Steph_Art3: 5117×2086 ultra-wide → 2.45:1 → w=2.4 h=0.98 -->
 
-    <a-entity position="11.92 4.6 0" rotation="0 -90 0">
-      <a-text value="STEPH" align="center" color="#444" width="4.5" font="roboto" letter-spacing="10"></a-text>
-      <a-plane width="0.5" height="0.008" position="0 -0.15 0.003"
-               material="color: #c8a96e; roughness: 0.3; metalness: 0.5"></a-plane>
+    <!-- Wall header -->
+    <a-entity position="11.92 4.95 0" rotation="0 -90 0">
+      <a-text value="Stephanie Camacho" align="center" color="#1f1f1f" width="6.4" font="roboto" letter-spacing="4"></a-text>
+      <a-plane width="1.4" height="0.008" position="0 -0.42 0.003"
+               material="color: #c8a96e; shader: flat"></a-plane>
+    </a-entity>
+
+    <!-- Wall-mounted artist bio (back end of the wall), Donatello-style two columns -->
+    <a-entity position="11.92 2.95 6.5" rotation="0 -90 0">
+      <a-text value="ABOUT THE ARTIST" align="center" color="#8a6d3b" width="2.2" font="roboto" letter-spacing="5" position="0 1.95 0"></a-text>
+      <a-text value="Stephanie Camacho" align="center" color="#1f1f1f" width="3.2" font="roboto" letter-spacing="2" position="0 1.55 0"></a-text>
+      <a-text value="Stephanie Camacho was born into rhythm. Raised in New Jersey with Caribbean roots, her childhood home pulsed with music, movement, and love expressed through celebration. The city streets taught her to see - as a child she sketched mountains she'd never touched and waterfronts she'd never stood before. She has always painted what is coming before it arrives."
+              align="left" anchor="left" baseline="top" color="#555" width="1.35" wrap-count="30" font="roboto" position="-1.4 1.05 0"></a-text>
+      <a-text value="After studying Interior Design at FIT, she lived aboard a sailboat on the Hudson River, worked the Pacific waters of Hawaii, and stood in the silence of Nevada's Black Mountains - the same mountains she once drew on a city sidewalk. Her paintings are not decorative; they are devotional - a pouring of memory and lineage. She paints the way she loves: fully, without holding back, always following where God leads."
+              align="left" anchor="left" baseline="top" color="#555" width="1.35" wrap-count="30" font="roboto" position="0.05 1.05 0"></a-text>
     </a-entity>
 
     <!-- Steph_Art1 — portrait 1.5 × 2.0 -->
@@ -502,11 +549,21 @@
     <a-entity light="type: spot; color: #fff0d4; intensity: 3.0; angle: 28; penumbra: 0.45; distance: 14; decay: 1.4"
               position="5 6.2 6.8" rotation="12 180 0"></a-entity>
 
-    <!-- Section title -->
-    <a-entity position="0 4.7 7.9" rotation="0 180 0">
-      <a-text value="JAJAIRA BERRIOS" align="center" color="#444" width="4.5" font="roboto" letter-spacing="10"></a-text>
-      <a-plane width="1.1" height="0.008" position="0 -0.15 0.003"
-               material="color: #c8a96e; roughness: 0.3; metalness: 0.5"></a-plane>
+    <!-- Wall header -->
+    <a-entity position="0 4.95 7.9" rotation="0 180 0">
+      <a-text value="Jajaira Berrios" align="center" color="#1f1f1f" width="6.0" font="roboto" letter-spacing="4"></a-text>
+      <a-plane width="1.4" height="0.008" position="0 -0.42 0.003"
+               material="color: #c8a96e; shader: flat"></a-plane>
+    </a-entity>
+
+    <!-- Wall-mounted artist bio (left of the paintings), Donatello-style two columns -->
+    <a-entity position="-9 2.95 7.88" rotation="0 180 0">
+      <a-text value="ABOUT THE ARTIST" align="center" color="#8a6d3b" width="2.6" font="roboto" letter-spacing="6" position="0 1.75 0"></a-text>
+      <a-text value="Jajaira Berrios" align="center" color="#1f1f1f" width="3.6" font="roboto" letter-spacing="2" position="0 1.32 0"></a-text>
+      <a-text value="Jajaira Berrios was born and raised in East Harlem. Art has always drawn her deeply. In elementary school her work was selected for a gallery, and soon after a children's doctor at Metropolitan Hospital wrote asking to purchase her artwork for his office - a letter she keeps to this day, the moment she realized she had a gift. She attended Art &amp; Design High School and later majored in Communication Design in college."
+              align="left" anchor="left" baseline="top" color="#555" width="2.3" wrap-count="36" font="roboto" position="-2.35 0.85 0"></a-text>
+      <a-text value="Life took her off course for a while, but art always finds its way back to her - whether through art or dance, it is simply what lights her up. Today her creative expression takes many forms: acrylic paintings, drawings, digital art, and hand-crafted bookmarks. She doesn't confine herself to one medium; she follows whatever calls her. Her hope is that her work inspires others to follow their own calling.  IG: j.barecreation"
+              align="left" anchor="left" baseline="top" color="#555" width="2.3" wrap-count="36" font="roboto" position="0.1 0.85 0"></a-text>
     </a-entity>
 
     <!-- LEFT: Intertwined — portrait 1.49 × 2.0 -->
@@ -524,12 +581,13 @@
     </a-entity>
 
     <!-- CENTRE: Dia De Los Muertos — tall portrait 0.94 × 2.0 -->
+    <!-- Dia De Los Muertos_2: 1404×2095 → 0.670:1 → w=1.34 h=2.0 -->
     <a-entity id="artwork-dia" position="0 2.6 7.92" rotation="0 180 0">
-      <a-box position="0  1.04 0" width="1.06" height="0.06" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
-      <a-box position="0 -1.04 0" width="1.06" height="0.06" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
-      <a-box position="-0.5 0 0" width="0.06" height="2.02" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
-      <a-box position="0.5 0 0"  width="0.06" height="2.02" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
-      <a-plane id="plane-dia" class="clickable art-chat" position="0 0 0.01" width="0.94" height="2.0"
+      <a-box position="0  1.04 0" width="1.46" height="0.06" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="0 -1.04 0" width="1.46" height="0.06" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="-0.70 0 0" width="0.06" height="2.02" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="0.70 0 0"  width="0.06" height="2.02" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-plane id="plane-dia" class="clickable art-chat" position="0 0 0.01" width="1.34" height="2.0"
                material="src: #dia; roughness: 0.85; metalness: 0"></a-plane>
     </a-entity>
     <a-entity position="0 1.28 7.9" rotation="0 180 0">
@@ -777,53 +835,55 @@
     /* Artist bios — shared context woven into each painting's persona */
     var BIO_STEPH = "Stephanie Camacho was born into rhythm. Raised in New Jersey with Caribbean roots, her childhood home pulsed with music, movement, and love expressed through celebration. The city streets taught her to see — as a child she sketched mountains she'd never touched and waterfronts she'd never stood before. She has always painted what is coming before it arrives. After studying Interior Design at FIT, she lived aboard a sailboat on the Hudson River, worked the Pacific waters of Hawaii, and stood in the silence of Nevada's Black Mountains — the same mountains she once drew on a city sidewalk. Her paintings are not decorative; they are devotional — a pouring of memory and lineage. She paints the way she loves: fully, without holding back, always following where God leads.";
     var BIO_JAJAIRA = "Jajaira Berrios was born and raised in East Harlem. Art has always drawn her deeply. In elementary school her work was selected for a gallery, and soon after a children's doctor at Metropolitan Hospital wrote asking to purchase her artwork for his office — a letter she keeps to this day, the moment she realized she had a gift. She attended Art & Design High School and later majored in Communication Design in college. Life took her off course for a while, but art always finds its way back to her — whether through art or dance, it is simply what lights her up. Today her creative expression takes many forms: acrylic paintings, drawings, digital art, and hand-crafted bookmarks. She doesn't confine herself to one medium; she follows whatever calls her. Her hope is that her work inspires others to follow their own calling. Instagram: @j.barecreation.";
-    var BIO_TARA = "Tara McIlroy is a Toronto-based painter who works largely in oil and acrylic. Her work moves between grief, memory, and the quiet beauty of everyday life, and she takes on commissions — including grief-inspired pieces.";
+    var BIO_TARA = "Tara-Lea McIlroy is a Toronto-based painter who works largely in oil and acrylic, leading with love. Her work moves between grief, memory, and the quiet beauty of everyday life, and she takes on commissions — including grief-inspired pieces.";
 
-    /* Per-painting context, keyed by the painting plane's element id */
+    /* Per-painting context, keyed by the painting plane's element id.
+       - card:  the full artwork placard shown immediately when the panel opens
+       - info:  the same facts, fed to Claude as system context for follow-ups */
     var ART = {
       "painting-plane": {
-        name: "Tara McIlroy", subtitle: "Always Here With You",
-        greeting: "Hi — I'm an AI version of Tara. You're looking at “Always Here With You.” Ask me anything about it, or about commissioning a piece.",
-        info: "Painting: “Always Here With You” by Tara McIlroy. Oil on canvas, 4 ft × 4 ft. This piece is NOT for sale, but Tara is taking commissions for similar grief-inspired works. " + BIO_TARA
+        name: "Tara-Lea McIlroy", subtitle: "Always Here With You",
+        card: "Always Here With You\nTara-Lea McIlroy\nOil on canvas · 4 × 4 ft\n\nNot for sale — but Tara-Lea is taking commissions for similar grief-inspired pieces.",
+        info: "Painting: “Always Here With You” by Tara-Lea McIlroy. Oil on canvas, 4 ft × 4 ft. This piece is NOT for sale, but Tara-Lea is taking commissions for similar grief-inspired works. " + BIO_TARA
       },
       "plane-tara2": {
-        name: "Tara McIlroy", subtitle: "Somewhere Out There",
-        greeting: "Hi — I'm an AI version of Tara. This is “Somewhere Out There.” What would you like to know?",
-        info: "Painting: “Somewhere Out There” by Tara McIlroy. Acrylic on canvas, 1.5 ft × 3 ft. Price: $750 USD plus shipping. " + BIO_TARA
+        name: "Tara-Lea McIlroy", subtitle: "Somewhere Out There",
+        card: "Somewhere Out There\nTara-Lea McIlroy\nAcrylic on canvas · 1.5 × 3 ft\n\nPrice: $750 USD + shipping",
+        info: "Painting: “Somewhere Out There” by Tara-Lea McIlroy. Acrylic on canvas, 1.5 ft × 3 ft. Price: $750 USD plus shipping. " + BIO_TARA
       },
       "plane-tara3": {
-        name: "Tara McIlroy", subtitle: "It Was All A Dream",
-        greeting: "Hi — I'm an AI version of Tara. This is “It Was All A Dream.” Ask me about it or about a commission.",
-        info: "Painting: “It Was All A Dream” by Tara McIlroy. Acrylic on canvas, 4 ft × 4 ft. This piece is NOT for sale, but Tara is taking orders for commissions. " + BIO_TARA
+        name: "Tara-Lea McIlroy", subtitle: "It Was All A Dream",
+        card: "It Was All A Dream\nTara-Lea McIlroy\nAcrylic on canvas · 4 × 4 ft\n\nNot for sale — but Tara-Lea is taking orders for commissions.",
+        info: "Painting: “It Was All A Dream” by Tara-Lea McIlroy. Acrylic on canvas, 4 ft × 4 ft. This piece is NOT for sale, but Tara-Lea is taking orders for commissions. " + BIO_TARA
       },
       "plane-steph1": {
         name: "Stephanie Camacho", subtitle: "When She Lets Go",
-        greeting: "Hi — I'm an AI version of Stephanie. You're looking at “When She Lets Go.” Ask me anything.",
+        card: "When She Lets Go\nStephanie Camacho\nAcrylic and marker on canvas · 18 × 24 in · 2020\n\nInspired by Afro Latin tradition and the way she herself has always moved through the world. Because feeling doesn't wait for the details to be right. Feeling moves. Certain without looking up.\n\nPrice: $1,100 USD + shipping",
         info: "Painting: “When She Lets Go” by Stephanie Camacho. Acrylic and marker on canvas, 18″ × 24″, 2020. Inspired by Afro Latin tradition and the way she herself has always moved through the world. Because feeling doesn't wait for the details to be right. Feeling moves. Certain without looking up. Price: $1,100 USD plus shipping. " + BIO_STEPH
       },
       "plane-steph2": {
         name: "Stephanie Camacho", subtitle: "They Kept Rowing",
-        greeting: "Hi — I'm an AI version of Stephanie. This is “They Kept Rowing.” What would you like to know?",
+        card: "They Kept Rowing\nStephanie Camacho\nAcrylic on canvas · 30 × 40 in\n\nInspired by the connection she felt to Hawaiian culture when she lived there — learning how the Hawaiian people move with urgency and grace. This painting is about moving forward: about three souls who decided to keep rowing even when the horizon was made of fire.\n\nNote: the photo shown is of the original sold work. Variation II will be painted to commission; the buyer receives a fresh work from the same series.\n\nPrice: $1,400 USD + shipping",
         info: "Painting: “They Kept Rowing” by Stephanie Camacho. Acrylic on canvas, 30″ × 40″. Inspired by the connection she felt to Hawaiian culture when she lived there — learning how the Hawaiian people move with urgency and grace. This painting is about moving forward: about three souls who decided to keep rowing even when the horizon was made of fire. NOTE: the photo shown is of the original sold work; Variation II will be painted to commission, and the buyer receives a fresh work from the same series. Price: $1,400 USD plus shipping. " + BIO_STEPH
       },
       "plane-steph3": {
         name: "Stephanie Camacho", subtitle: "Blood Memory",
-        greeting: "Hi — I'm an AI version of Stephanie. This is “Blood Memory.” Ask me anything about it.",
+        card: "Blood Memory\nStephanie Camacho\nAcrylic, collaged paper, and marker on canvas · 16 × 40 in · 2011\n\nGrowing up she was always called an old soul, carrying a wisdom she couldn't explain and hadn't yet lived. Now she understands. The Taíno blood running through her Caribbean roots was never silent — it was simply waiting for the right moment to speak through her hands. This face is that moment.\n\nPrice: $1,500 USD + shipping",
         info: "Painting: “Blood Memory” by Stephanie Camacho. Acrylic, collaged paper, and marker on canvas, 16″ × 40″, 2011. Growing up she was always called an old soul, carrying a wisdom she couldn't explain and hadn't yet lived. Now she understands. The Taíno blood running through her Caribbean roots was never silent — it was simply waiting for the right moment to speak through her hands. This face is that moment. Price: $1,500 USD plus shipping. " + BIO_STEPH
       },
       "plane-intertwined": {
         name: "Jajaira Berrios", subtitle: "Intertwined",
-        greeting: "Hi — I'm an AI version of Jajaira. You're looking at “Intertwined.” Ask me anything. Be love.",
+        card: "Intertwined\nJajaira Berrios\nAcrylic paint on canvas · 12 × 16 in\n\nThis acrylic painting is a beautifully rendered replica reimagined through an abstract lens and brought to life with a vibrant, mixed palette. It captures two women face to face, their lips barely grazing in a moment suspended between longing and surrender.\n\n“Be love.”\n\nInstagram: @j.barecreation",
         info: "Painting: “Intertwined” by Jajaira Berrios. This acrylic painting is a beautifully rendered replica reimagined through an abstract lens and brought to life with a vibrant, mixed palette. It captures two women face to face, their lips barely grazing in a moment suspended between longing and surrender. Theme: “Be love.” Material: Canvas. Medium: Acrylic Paint. Size: 12 × 16 in. Instagram: @j.barecreation. " + BIO_JAJAIRA
       },
       "plane-dia": {
         name: "Jajaira Berrios", subtitle: "Dia De Los Muertos",
-        greeting: "Hi — I'm an AI version of Jajaira. This is “Dia De Los Muertos.” Soft and untouchable. What would you like to know?",
+        card: "Dia De Los Muertos\nJajaira Berrios\nPencil drawing on heavyweight white art paper, in a boxed frame · 12 × 16 in\n\nInspired by the Day of the Dead, a Mexican holiday that celebrates death as a natural part of life. This piece honors the coexistence of death, beauty, spirit and memory. She wears both strength and softness without fear.\n\n“Soft and untouchable.”\n\nInstagram: @j.barecreation",
         info: "Drawing: “Dia De Los Muertos” by Jajaira Berrios. Inspired by the Day of the Dead, a Mexican holiday that celebrates death as a natural part of life. This piece honors the coexistence of death, beauty, spirit and memory. She wears both strength and softness without fear. Theme: “Soft and untouchable.” Material: Heavy weight white art paper, displayed in a boxed frame. Medium: Pencil Drawing. Size: 12 × 16 in. Instagram: @j.barecreation. " + BIO_JAJAIRA
       },
       "plane-unapologetic": {
         name: "Jajaira Berrios", subtitle: "Unapologetic",
-        greeting: "Hi — I'm an AI version of Jajaira. This is “Unapologetic.” Own your own sensuality. Ask me anything.",
+        card: "Unapologetic\nJajaira Berrios\nColored pencils and black markers on mixed media paper with brown texture paper · 5 × 8 in\n\nA woman standing fully within her sensuality, untouched by shame. The words around her are not burdens — they are truths, desires, emotions, and freedoms she no longer hides from.\n\n“Own your own sensuality.”\n\nInstagram: @j.barecreation",
         info: "Drawing: “Unapologetic” by Jajaira Berrios. A woman standing fully within her sensuality, untouched by shame. The words around her are not burdens — they are truths, desires, emotions, and freedoms she no longer hides from. Theme: “Own your own sensuality.” Material: Sketchbook drawing on mixed media white paper with an added brown texture paper. Medium: Colored Pencils and Black markers. Size: 5″ × 8″. Instagram: @j.barecreation. " + BIO_JAJAIRA
       }
     };
@@ -864,6 +924,23 @@
         messagesEl.scrollTop = messagesEl.scrollHeight;
       }
 
+      // The opening placard: title on its own line, then artwork details.
+      function renderCard(text) {
+        var lines = text.split('\n');
+        var card = document.createElement('div');
+        card.className = 'art-card';
+        var title = document.createElement('div');
+        title.className = 'art-card-title';
+        title.textContent = lines[0];
+        card.appendChild(title);
+        var body = document.createElement('div');
+        body.className = 'art-card-body';
+        body.textContent = lines.slice(1).join('\n').replace(/^\n+/, '');
+        card.appendChild(body);
+        messagesEl.appendChild(card);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+      }
+
       function openChatFor(id) {
         var ctx = ART[id];
         if (!ctx) return;
@@ -872,8 +949,10 @@
         messagesEl.innerHTML = '';
         nameEl.textContent = ctx.name;
         subEl.textContent = ctx.subtitle;
-        input.placeholder = 'Ask ' + ctx.name.split(' ')[0] + ' about this work…';
-        renderMessage('assistant', ctx.greeting);
+        input.placeholder = 'Ask ' + ctx.name.split(' ')[0].replace('-Lea', '') + ' about this work…';
+        // Show the complete artwork information immediately, before any input.
+        renderCard(ctx.card);
+        renderMessage('assistant', "I'm an AI version of " + ctx.name.split(' ')[0].replace('-Lea', '') + ". Ask me anything about this piece, the materials, the story behind it, or commissions.");
         panel.classList.add('open');
         panel.setAttribute('aria-hidden', 'false');
         setControls(false);
