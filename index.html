@@ -1017,6 +1017,9 @@
           tryStartMusic();
           setTimeout(tryStartMusic, 250);
 
+          entry.style.animation = 'none';
+          entry.style.opacity = '1';
+          void entry.offsetHeight;
           entry.style.transition = 'opacity 1.4s ease';
           entry.style.opacity = '0';
           entry.style.pointerEvents = 'none';
