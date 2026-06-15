@@ -1014,15 +1014,11 @@
       /* ===== Enter the gallery ===== */
       if (enterBtn) {
         enterBtn.addEventListener('click', function () {
+          // Start audio on this user gesture; retry shortly if the first play is blocked
           tryStartMusic();
           setTimeout(tryStartMusic, 250);
 
-          entry.style.animation = 'none';
-          entry.style.opacity = '1';
-          void entry.offsetHeight;
-          entry.style.transition = 'opacity 1.4s ease';
-          entry.style.opacity = '0';
-          entry.style.pointerEvents = 'none';
+          entry.classList.add('fade-out');
           if (nowPlaying) nowPlaying.classList.add('visible');
           setSceneControls(true);
           setTimeout(function () {
