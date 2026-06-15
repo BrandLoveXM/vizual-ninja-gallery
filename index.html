@@ -174,26 +174,6 @@
       color: #c8b890; line-height: 1.35; margin: 0 auto 52px;
     }
 
-    .entry-col-label {
-      font-family: 'Inter', sans-serif; font-size: 9.5px; font-weight: 300;
-      letter-spacing: 0.34em; text-transform: uppercase; color: #8a8270;
-      margin-bottom: 22px;
-    }
-
-    /* Guest book form */
-    #guestbook { width: 280px; margin: 0 auto; text-align: left; }
-    #guestbook .gb-field { margin-bottom: 16px; }
-    #guestbook input {
-      width: 100%; box-sizing: border-box;
-      background: rgba(255, 255, 255, 0.02);
-      border: none; border-bottom: 1px solid rgba(185, 168, 132, 0.32);
-      color: #ece8df; padding: 9px 2px; font-size: 13px;
-      font-family: 'Inter', sans-serif; letter-spacing: 0.04em; outline: none;
-      transition: border-color 0.3s ease;
-    }
-    #guestbook input::placeholder { color: #6a6458; letter-spacing: 0.06em; }
-    #guestbook input:focus { border-bottom-color: rgba(185, 168, 132, 0.75); }
-
     #enter-btn {
       font-family: 'Inter', sans-serif; background: transparent;
       border: 1px solid rgba(185, 168, 132, 0.65); color: #c8c0b2;
@@ -201,12 +181,13 @@
       letter-spacing: 0.38em; text-transform: uppercase; cursor: pointer;
       transition: all 0.4s ease; margin-top: 30px; display: inline-block;
     }
-    #enter-btn:hover:not(:disabled) { background: rgba(185, 168, 132, 0.12); color: #ece8df; border-color: rgba(185, 168, 132, 0.85); }
-    #enter-btn:disabled { opacity: 0.32; cursor: not-allowed; }
-    .entry-gate-note {
-      font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 300;
-      letter-spacing: 0.18em; text-transform: uppercase; color: #6a6458;
-      margin-top: 16px; transition: opacity 0.3s ease;
+    #enter-btn:hover { background: rgba(185, 168, 132, 0.12); color: #ece8df; border-color: rgba(185, 168, 132, 0.85); }
+
+    .entry-gb-note {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 13px; font-weight: 300; font-style: italic;
+      letter-spacing: 0.04em; color: #807a6e;
+      margin: 22px 0 0;
     }
 
     /* Navigation instructions numbered list */
@@ -227,6 +208,76 @@
       content: counter(nav-count) ".";
       flex: none; color: #8a6d3b; font-size: 10px;
       letter-spacing: 0.06em; min-width: 16px; text-align: right;
+    }
+
+    /* ===================== GUESTBOOK MODAL ===================== */
+    #guestbook-modal {
+      position: fixed; inset: 0; z-index: 30;
+      display: none; align-items: center; justify-content: center;
+      background: rgba(6, 6, 7, 0.72);
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      opacity: 0; transition: opacity 0.35s ease;
+      padding: 24px;
+    }
+    #guestbook-modal.open { display: flex; opacity: 1; }
+
+    .gb-modal-card {
+      position: relative;
+      width: 400px; max-width: 100%;
+      background: linear-gradient(180deg, #141416 0%, #0e0e10 100%);
+      border: 1px solid rgba(200, 169, 110, 0.28);
+      border-radius: 10px;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.65);
+      padding: 40px 44px 44px;
+      transform: translateY(14px) scale(0.985);
+      transition: transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+    #guestbook-modal.open .gb-modal-card { transform: translateY(0) scale(1); }
+
+    #gb-modal-close {
+      position: absolute; top: 14px; right: 16px;
+      background: none; border: none; color: #6f6a5e;
+      font-size: 26px; line-height: 1; cursor: pointer; padding: 4px 8px;
+      transition: color 0.2s ease;
+    }
+    #gb-modal-close:hover { color: #d8d2c6; }
+
+    .gb-modal-eyebrow {
+      font-family: 'Inter', sans-serif; font-size: 9.5px; font-weight: 300;
+      letter-spacing: 0.42em; text-transform: uppercase; color: #8a6d3b;
+      margin-bottom: 18px; padding-left: 0.3em;
+    }
+    .gb-modal-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 28px; font-weight: 300; letter-spacing: 0.015em;
+      color: #ece8df; margin: 0 0 28px; line-height: 1.1;
+    }
+    .gb-modal-field { margin-bottom: 18px; }
+    .gb-modal-field input {
+      width: 100%; box-sizing: border-box;
+      background: rgba(255, 255, 255, 0.02);
+      border: none; border-bottom: 1px solid rgba(185, 168, 132, 0.32);
+      color: #ece8df; padding: 10px 2px; font-size: 13px;
+      font-family: 'Inter', sans-serif; letter-spacing: 0.04em; outline: none;
+      transition: border-color 0.3s ease;
+    }
+    .gb-modal-field input::placeholder { color: #6a6458; letter-spacing: 0.06em; }
+    .gb-modal-field input:focus { border-bottom-color: rgba(185, 168, 132, 0.75); }
+
+    #gb-modal-submit {
+      font-family: 'Inter', sans-serif; background: transparent;
+      border: 1px solid rgba(185, 168, 132, 0.55); color: #c8c0b2;
+      padding: 12px 36px; font-size: 10px; font-weight: 300;
+      letter-spacing: 0.36em; text-transform: uppercase; cursor: pointer;
+      transition: all 0.4s ease; margin-top: 14px;
+    }
+    #gb-modal-submit:hover { background: rgba(185, 168, 132, 0.1); color: #ece8df; border-color: rgba(185, 168, 132, 0.75); }
+
+    .gb-modal-confirmation {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 14px; font-weight: 300; font-style: italic;
+      letter-spacing: 0.04em; color: #b9a884;
+      margin-top: 18px; display: none;
     }
   </style>
 </head>
@@ -276,18 +327,9 @@
       <p class="entry-opening">Opening Exhibit</p>
       <p class="entry-exhibit">Leading with Love &mdash; An LT227 Artist Showcase</p>
 
-      <form id="guestbook" autocomplete="on">
-        <div class="entry-col-label">Sign the Guest Book to Enter</div>
-        <div class="gb-field">
-          <input id="gb-name" type="text" name="firstName" placeholder="First name" autocomplete="given-name" />
-        </div>
-        <div class="gb-field">
-          <input id="gb-email" type="email" name="email" placeholder="Email address" autocomplete="email" />
-        </div>
-      </form>
+      <button id="enter-btn" type="button">Enter</button>
 
-      <button id="enter-btn" type="button" disabled>Enter</button>
-      <div class="entry-gate-note" id="gate-note">Please sign the guest book to enter</div>
+      <p class="entry-gb-note">Please sign our Guest Book inside the studio to register your visit.</p>
 
       <ol class="nav-instructions">
         <li>Double-click to move forward into the space</li>
@@ -296,6 +338,23 @@
         <li>Use arrow keys to move around</li>
         <li>Press ESC to close any open panel</li>
       </ol>
+    </div>
+  </div>
+
+  <!-- Guest Book modal — opens when visitor clicks the book inside the gallery -->
+  <div id="guestbook-modal" aria-hidden="true">
+    <div class="gb-modal-card" role="dialog" aria-modal="true">
+      <button id="gb-modal-close" aria-label="Close">&times;</button>
+      <div class="gb-modal-eyebrow">Vizual Ninja Studios</div>
+      <h2 class="gb-modal-title">Sign the Guest Book</h2>
+      <div class="gb-modal-field">
+        <input id="gb-modal-name" type="text" placeholder="First name" autocomplete="given-name" />
+      </div>
+      <div class="gb-modal-field">
+        <input id="gb-modal-email" type="email" placeholder="Email address" autocomplete="email" />
+      </div>
+      <button id="gb-modal-submit" type="button">Sign</button>
+      <p class="gb-modal-confirmation" id="gb-modal-confirmation">Thank you for signing the guest book.</p>
     </div>
   </div>
 
@@ -720,6 +779,39 @@
       <a-text value="Click Painting to Learn More" align="center" color="#aaa" width="1.6" font="roboto" letter-spacing="1" position="0 -0.2 0"></a-text>
     </a-entity>
 
+    <!-- ===================== GUEST BOOK STAND ===================== -->
+    <!-- Positioned near the gallery entrance, right side — visible on entry -->
+    <a-entity position="9.2 0 5.6" rotation="0 -135 0">
+      <!-- Pedestal base -->
+      <a-cylinder radius="0.24" height="0.055" position="0 0.028 0"
+                  material="color: #1c1814; roughness: 0.5; metalness: 0.55"></a-cylinder>
+      <!-- Pedestal column -->
+      <a-cylinder radius="0.055" height="0.86" position="0 0.485 0"
+                  material="color: #1c1814; roughness: 0.5; metalness: 0.55"></a-cylinder>
+      <!-- Pedestal top cap -->
+      <a-cylinder radius="0.19" height="0.038" position="0 0.94 0"
+                  material="color: #1c1814; roughness: 0.5; metalness: 0.55"></a-cylinder>
+      <!-- Book body — dark leather -->
+      <a-box id="gb-book-click" class="clickable" width="0.3" height="0.038" depth="0.22"
+             position="0 0.978 0"
+             material="color: #0d0b09; roughness: 0.92; metalness: 0.04"></a-box>
+      <!-- Gold spine -->
+      <a-box width="0.007" height="0.042" depth="0.22" position="-0.148 0.978 0"
+             material="color: #c8a96e; roughness: 0.35; metalness: 0.65; shader: flat"></a-box>
+      <!-- Gold corner tabs -->
+      <a-box width="0.032" height="0.042" depth="0.007" position="-0.131 0.978  0.108"
+             material="color: #c8a96e; roughness: 0.35; metalness: 0.65"></a-box>
+      <a-box width="0.032" height="0.042" depth="0.007" position="-0.131 0.978 -0.108"
+             material="color: #c8a96e; roughness: 0.35; metalness: 0.65"></a-box>
+      <!-- Label above -->
+      <a-text value="GUEST BOOK" align="center" color="#c8a96e"
+              width="1.0" font="roboto" letter-spacing="5"
+              position="0 1.22 0" rotation="-6 0 0"></a-text>
+      <a-text value="Click to sign" align="center" color="#6a6458"
+              width="0.72" font="roboto" letter-spacing="1"
+              position="0 1.08 0.01" rotation="-6 0 0"></a-text>
+    </a-entity>
+
     <!-- ===================== VISITOR ===================== -->
     <a-entity id="rig" position="0 0 6" room-bounds>
       <a-entity id="camera" camera position="0 1.65 0"
@@ -845,12 +937,9 @@
 
     /* ---- Playlist, Now Playing bar, entry screen, guest book gate ---- */
     (function () {
-      var entry = document.getElementById('entry-screen');
+      var entry    = document.getElementById('entry-screen');
       var enterBtn = document.getElementById('enter-btn');
-      var gateNote = document.getElementById('gate-note');
-      var gbName = document.getElementById('gb-name');
-      var gbEmail = document.getElementById('gb-email');
-      var camera = document.getElementById('camera');
+      var camera   = document.getElementById('camera');
 
       /* ===== Playlist ===== */
       var audio = document.getElementById('gallery-audio');
@@ -913,58 +1002,9 @@
       }
       setSceneControls(false);
 
-      /* ===== Guest book email gate ===== */
-      function isFilled() {
-        var nameOk = gbName.value.trim().length > 0;
-        var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(gbEmail.value.trim());
-        return nameOk && emailOk;
-      }
-      function refreshGate() {
-        var ok = isFilled();
-        enterBtn.disabled = !ok;
-        if (gateNote) gateNote.style.opacity = ok ? '0' : '1';
-      }
-      gbName.addEventListener('input', refreshGate);
-      gbEmail.addEventListener('input', refreshGate);
-      refreshGate();
-
-      // Don't let Enter-key submit the guest book form reload the page.
-      var gbForm = document.getElementById('guestbook');
-      if (gbForm) gbForm.addEventListener('submit', function (e) { e.preventDefault(); });
-
-      /* ===== Submit guest book entry ===== */
-      function submitGuestBook() {
-        var payload = {
-          firstName: gbName.value.trim(),
-          email: gbEmail.value.trim(),
-          timestamp: new Date().toISOString()
-        };
-
-        // ============================================================
-        // GOOGLE APPS SCRIPT SUBMISSION — paste your Web App URL below.
-        // Deploy the Apps Script as a Web App ("Anyone" access) and put
-        // its /exec URL here. Until then, the entry is logged to console.
-        // ============================================================
-        var GOOGLE_APPS_SCRIPT_URL = ""; // <-- PASTE YOUR GOOGLE APPS SCRIPT /exec URL HERE
-
-        if (GOOGLE_APPS_SCRIPT_URL) {
-          fetch(GOOGLE_APPS_SCRIPT_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-          }).catch(function () { /* fire-and-forget; never block entry */ });
-        } else {
-          console.log('Guest book entry (no submission URL set yet):', payload);
-        }
-      }
-
       /* ===== Enter the gallery ===== */
       if (enterBtn) {
         enterBtn.addEventListener('click', function () {
-          if (enterBtn.disabled) return;
-          submitGuestBook();
-
           tryStartMusic();
           setTimeout(tryStartMusic, 250);
 
@@ -978,6 +1018,95 @@
           setTimeout(function () {
             if (entry && entry.parentNode) entry.parentNode.removeChild(entry);
           }, 1600);
+        });
+      }
+    }());
+
+    /* ===================== GUEST BOOK MODAL ===================== */
+    (function () {
+      var modal      = document.getElementById('guestbook-modal');
+      var closeBtn   = document.getElementById('gb-modal-close');
+      var submitBtn  = document.getElementById('gb-modal-submit');
+      var nameInput  = document.getElementById('gb-modal-name');
+      var emailInput = document.getElementById('gb-modal-email');
+      var confirm    = document.getElementById('gb-modal-confirmation');
+      var camera     = document.getElementById('camera');
+
+      function setControls(enabled) {
+        if (!camera) return;
+        camera.setAttribute('wasd-controls', 'enabled', enabled);
+        camera.setAttribute('look-controls', 'enabled', enabled);
+      }
+
+      function openGuestBookModal() {
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden', 'false');
+        if (confirm) confirm.style.display = 'none';
+        setControls(false);
+      }
+
+      function closeGuestBookModal() {
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden', 'true');
+        setControls(true);
+      }
+
+      /* 3-D book click opens the modal */
+      var bookEl = document.getElementById('gb-book-click');
+      if (bookEl) bookEl.addEventListener('click', openGuestBookModal);
+
+      /* Close on ✕ button or click outside the card */
+      if (closeBtn) closeBtn.addEventListener('click', closeGuestBookModal);
+      if (modal) modal.addEventListener('click', function (e) {
+        if (e.target === modal) closeGuestBookModal();
+      });
+
+      /* ESC closes the modal */
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && modal.classList.contains('open')) closeGuestBookModal();
+      });
+
+      /* Submit */
+      if (submitBtn) {
+        submitBtn.addEventListener('click', function () {
+          var name  = nameInput  ? nameInput.value.trim()  : '';
+          var email = emailInput ? emailInput.value.trim() : '';
+          if (!name || !email) return;
+
+          var payload = {
+            firstName: name,
+            email: email,
+            timestamp: new Date().toISOString()
+          };
+
+          // ============================================================
+          // GOOGLE APPS SCRIPT SUBMISSION
+          // 1. Create a Google Apps Script Web App that accepts POST JSON.
+          // 2. Deploy it with "Anyone" access.
+          // 3. Paste the resulting /exec URL as the value below.
+          // ============================================================
+          var GOOGLE_APPS_SCRIPT_URL = ''; // <-- PASTE YOUR /exec URL HERE
+
+          if (GOOGLE_APPS_SCRIPT_URL) {
+            fetch(GOOGLE_APPS_SCRIPT_URL, {
+              method: 'POST',
+              mode: 'no-cors',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload)
+            }).catch(function () { /* fire-and-forget */ });
+          } else {
+            console.log('Guest book entry:', payload);
+          }
+
+          /* Show confirmation, then close */
+          submitBtn.style.display = 'none';
+          if (confirm) { confirm.style.display = 'block'; }
+          setTimeout(closeGuestBookModal, 2200);
+          setTimeout(function () {
+            if (submitBtn) submitBtn.style.display = '';
+            if (nameInput)  nameInput.value  = '';
+            if (emailInput) emailInput.value = '';
+          }, 2500);
         });
       }
     }());
