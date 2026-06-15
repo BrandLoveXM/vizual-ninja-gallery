@@ -171,7 +171,7 @@
       font-family: 'Cormorant Garamond', Georgia, serif;
       font-size: clamp(16px, 2.4vw, 23px); font-weight: 300;
       font-style: italic; letter-spacing: 0.06em;
-      color: #c8b890; line-height: 1.35; margin: 0 auto 52px;
+      color: #c8b890; line-height: 1.35; margin: 0 auto 24px;
     }
 
     #enter-btn {
@@ -179,7 +179,7 @@
       border: 1px solid rgba(185, 168, 132, 0.65); color: #c8c0b2;
       padding: 14px 48px; font-size: 10px; font-weight: 300;
       letter-spacing: 0.38em; text-transform: uppercase; cursor: pointer;
-      transition: all 0.4s ease; margin-top: 30px; display: inline-block;
+      transition: all 0.4s ease; margin-top: 14px; display: inline-block;
     }
     #enter-btn:hover { background: rgba(185, 168, 132, 0.12); color: #ece8df; border-color: rgba(185, 168, 132, 0.85); }
 
@@ -188,6 +188,13 @@
       font-size: 13px; font-weight: 300; font-style: italic;
       letter-spacing: 0.04em; color: #807a6e;
       margin: 22px 0 0;
+    }
+
+    .entry-nav-heading {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(13px, 1.5vw, 16px); font-weight: 300;
+      letter-spacing: 0.1em; color: #c8b890;
+      margin: 44px 0 0; text-align: center;
     }
 
     /* Navigation instructions numbered list */
@@ -330,6 +337,8 @@
       <button id="enter-btn" type="button">Enter</button>
 
       <p class="entry-gb-note">Please sign our Guest Book inside the studio to register your visit.</p>
+
+      <p class="entry-nav-heading">How to Navigate This Space</p>
 
       <ol class="nav-instructions">
         <li>Double-click to move forward into the space</li>
@@ -1008,7 +1017,9 @@
           tryStartMusic();
           setTimeout(tryStartMusic, 250);
 
-          entry.classList.add('fade-out');
+          entry.style.transition = 'opacity 1.4s ease';
+          entry.style.opacity = '0';
+          entry.style.pointerEvents = 'none';
           if (nowPlaying) nowPlaying.classList.add('visible');
           setSceneControls(true);
           setTimeout(function () {
