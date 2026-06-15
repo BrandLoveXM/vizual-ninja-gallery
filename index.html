@@ -105,7 +105,8 @@
       position: fixed; inset: 0; z-index: 40;
       background: radial-gradient(ellipse at 50% 35%, #1a1a1c 0%, #080808 75%);
       color: #d8d2c6;
-      display: flex; align-items: center; justify-content: center;
+      display: flex; align-items: flex-start; justify-content: center;
+      overflow-y: auto; padding: 8vh 0 6vh;
       opacity: 0;
       animation: entryFadeIn 1.8s ease-out 0.2s forwards;
       transition: opacity 1.4s ease;
@@ -115,6 +116,7 @@
 
     .entry-content {
       text-align: center; padding: 0 32px;
+      max-width: 560px; width: 100%; box-sizing: border-box;
       animation: entryRise 2s cubic-bezier(0.22, 0.61, 0.36, 1) 0.3s both;
     }
     @keyframes entryRise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
@@ -139,6 +141,44 @@
       transition: all 0.4s ease;
     }
     #enter-btn:hover { background: rgba(185, 168, 132, 0.12); color: #ece8df; border-color: rgba(185, 168, 132, 0.7); }
+
+    .entry-subhead {
+      font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 300;
+      letter-spacing: 0.5em; text-transform: uppercase; color: #807a6e;
+      margin: 28px 0 8px; padding-left: 0.5em;
+    }
+    .entry-subtitle {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(14px, 2.0vw, 20px); font-weight: 300;
+      font-style: italic; letter-spacing: 0.06em; color: #c8b890; margin: 0;
+    }
+    .entry-gb-note {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 13px; font-weight: 300; font-style: italic;
+      letter-spacing: 0.04em; color: #807a6e; margin: 32px 0 0;
+    }
+    .entry-nav-heading {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(13px, 1.5vw, 16px); font-weight: 300;
+      letter-spacing: 0.1em; color: #c8b890; margin: 36px 0 0;
+    }
+    .entry-nav-list {
+      list-style: none; counter-reset: nav-count;
+      margin: 16px auto 0; padding: 0; max-width: 380px; text-align: left;
+    }
+    .entry-nav-list li {
+      counter-increment: nav-count;
+      font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 300;
+      letter-spacing: 0.03em; color: #a8a294; line-height: 1.6;
+      padding: 8px 0; display: flex; gap: 14px; align-items: baseline;
+      border-top: 1px solid rgba(255,255,255,0.04);
+    }
+    .entry-nav-list li:first-child { border-top: none; }
+    .entry-nav-list li::before {
+      content: counter(nav-count) ".";
+      flex: none; color: #8a6d3b; font-size: 10px;
+      letter-spacing: 0.06em; min-width: 14px; text-align: right;
+    }
 
     /* ===================== MUTE BUTTON ===================== */
     #mute-btn {
@@ -181,10 +221,21 @@
 
   <div id="entry-screen">
     <div class="entry-content">
-      <div class="entry-eyebrow">Current Exhibition</div>
+      <div class="entry-eyebrow"><em>Introducing</em></div>
       <h1 class="entry-title">VIZUAL&nbsp;NINJA<br>STUDIOS</h1>
+      <p class="entry-subhead">Opening Exhibit</p>
+      <p class="entry-subtitle">Leading with Love &mdash; An LT227 Artist Showcase</p>
       <div class="entry-rule"></div>
       <button id="enter-btn" type="button">Enter</button>
+      <p class="entry-gb-note">Please sign our Guest Book inside the studio to register your visit.</p>
+      <p class="entry-nav-heading">How to Navigate This Space</p>
+      <ol class="entry-nav-list">
+        <li>Double-click to move forward into the space</li>
+        <li>Click and drag to look around</li>
+        <li>Click any painting to view artwork details</li>
+        <li>Use arrow keys to move around</li>
+        <li>Press ESC to close any open panel</li>
+      </ol>
     </div>
   </div>
 
@@ -347,11 +398,10 @@
     <!-- Tara_Art2: 704×1251 → portrait ~0.563:1 → at height 2.6 → width ~1.46 -->
     <!-- Tara_Art3: 704×746 → nearly square ~0.944:1 → 2×2 (4'×4') -->
 
-    <!-- Wall header: artist name + tagline -->
+    <!-- Wall header: artist name -->
     <a-entity position="0 5.45 -7.88">
       <a-text value="Tara-Lea McIlroy" align="center" color="#1f1f1f" width="6.4" font="roboto" letter-spacing="5"></a-text>
-      <a-text value="Leading with Love" align="center" color="#8a6d3b" width="3.2" font="roboto" letter-spacing="6" position="0 -0.5 0"></a-text>
-      <a-plane width="1.3" height="0.008" position="0 -0.74 0.002" material="color: #c8a96e; shader: flat"></a-plane>
+      <a-plane width="1.3" height="0.008" position="0 -0.26 0.002" material="color: #c8a96e; shader: flat"></a-plane>
     </a-entity>
 
     <!-- Wall-mounted artist bio (left of the paintings), Donatello-style two columns -->
@@ -375,7 +425,7 @@
     </a-entity>
     <a-entity position="-5 1.28 -7.9">
       <a-text value="Always Here With You" align="center" color="#8a6d3b" width="2.0" font="roboto" letter-spacing="2"></a-text>
-      <a-text value="Tara-Lea McIlroy - Oil on canvas, 4 x 4 ft - Not for sale - commissions welcome" align="center" color="#888" width="2.8" font="roboto" position="0 -0.16 0"></a-text>
+      <a-text value="Click Painting to Learn More" align="center" color="#888" width="2.0" font="roboto" position="0 -0.16 0"></a-text>
     </a-entity>
 
     <!-- CENTRE: Tara_Art2 — 704×1251 portrait → width 1.46, height 2.6 -->
@@ -390,7 +440,7 @@
     </a-entity>
     <a-entity position="0 1.0 -7.9">
       <a-text value="Somewhere Out There" align="center" color="#8a6d3b" width="2.0" font="roboto" letter-spacing="2"></a-text>
-      <a-text value="Tara-Lea McIlroy - Acrylic on canvas, 1.5 x 3 ft - $750 USD + shipping" align="center" color="#888" width="2.8" font="roboto" position="0 -0.16 0"></a-text>
+      <a-text value="Click Painting to Learn More" align="center" color="#888" width="2.0" font="roboto" position="0 -0.16 0"></a-text>
     </a-entity>
 
     <!-- RIGHT: Tara_Art3 — 704×746 ≈ square → 2 × 2 (4' × 4') -->
@@ -404,7 +454,7 @@
     </a-entity>
     <a-entity position="5 1.28 -7.9">
       <a-text value="It Was All A Dream" align="center" color="#8a6d3b" width="2.0" font="roboto" letter-spacing="2"></a-text>
-      <a-text value="Tara-Lea McIlroy - Acrylic on canvas, 4 x 4 ft - Not for sale - commissions" align="center" color="#888" width="2.8" font="roboto" position="0 -0.16 0"></a-text>
+      <a-text value="Click Painting to Learn More" align="center" color="#888" width="2.0" font="roboto" position="0 -0.16 0"></a-text>
     </a-entity>
 
     <!-- ===================== EUROPEAN SERIES — left wall (x = -12) ===================== -->
@@ -414,6 +464,14 @@
       <a-text value="Captured In Time" align="center" color="#1f1f1f" width="5.0" font="roboto" letter-spacing="3" position="0 -0.42 0"></a-text>
       <a-plane width="1.4" height="0.008" position="0 -0.66 0.003"
                material="color: #c8a96e; shader: flat"></a-plane>
+    </a-entity>
+
+    <!-- European series artist statement placard -->
+    <a-entity position="-11.85 3.1 -6.5" rotation="0 90 0">
+      <a-plane width="2.5" height="1.6" material="color: #f0ede8; roughness: 0.95; metalness: 0"></a-plane>
+      <a-plane width="2.2" height="0.004" position="0 0.64 0.002" material="color: #c8a96e; shader: flat"></a-plane>
+      <a-text value="In 2017, I took my mother on her first trip to Europe — a journey through six countries over 21 days. For her, it was a trip of a lifetime. For me, it became one of my most treasured memories as her daughter. This series captures the moments, landscapes, and quiet in-betweens of a shared adventure that neither of us will ever forget."
+              align="left" anchor="left" baseline="top" color="#444" width="2.1" wrap-count="36" font="roboto" position="-1.05 0.58 0.01"></a-text>
     </a-entity>
 
     <!-- Venice -->
@@ -499,7 +557,7 @@
     </a-entity>
     <a-entity position="11.92 1.28 -3.5" rotation="0 -90 0">
       <a-text value="When She Lets Go" align="center" color="#8a6d3b" width="2.0" font="roboto" letter-spacing="2"></a-text>
-      <a-text value="Stephanie Camacho - Acrylic &amp; marker, 18 x 24 in - $1,100 USD + shipping" align="center" color="#888" width="2.8" font="roboto" position="0 -0.16 0"></a-text>
+      <a-text value="Click Painting to Learn More" align="center" color="#888" width="2.0" font="roboto" position="0 -0.16 0"></a-text>
     </a-entity>
 
     <!-- Steph_Art2 — landscape 2.0 × 1.5 -->
@@ -513,7 +571,7 @@
     </a-entity>
     <a-entity position="11.92 1.28 0" rotation="0 -90 0">
       <a-text value="They Kept Rowing" align="center" color="#8a6d3b" width="2.0" font="roboto" letter-spacing="2"></a-text>
-      <a-text value="Stephanie Camacho - Acrylic on canvas, 30 x 40 in - $1,400 USD + shipping" align="center" color="#888" width="2.8" font="roboto" position="0 -0.16 0"></a-text>
+      <a-text value="Click Painting to Learn More" align="center" color="#888" width="2.0" font="roboto" position="0 -0.16 0"></a-text>
     </a-entity>
 
     <!-- Steph_Art3 — ultra-wide 2.4 × 0.98 -->
@@ -527,7 +585,7 @@
     </a-entity>
     <a-entity position="11.92 1.56 3.5" rotation="0 -90 0">
       <a-text value="Blood Memory" align="center" color="#8a6d3b" width="2.0" font="roboto" letter-spacing="2"></a-text>
-      <a-text value="Stephanie Camacho - Acrylic, collage &amp; marker, 16 x 40 in - $1,500 USD + shipping" align="center" color="#888" width="2.8" font="roboto" position="0 -0.16 0"></a-text>
+      <a-text value="Click Painting to Learn More" align="center" color="#888" width="2.0" font="roboto" position="0 -0.16 0"></a-text>
     </a-entity>
 
     <!-- ===================== BACK WALL — Jajaira Berrios (z = +8) ===================== -->
@@ -577,7 +635,7 @@
     </a-entity>
     <a-entity position="-5 1.28 7.9" rotation="0 180 0">
       <a-text value="Intertwined" align="center" color="#8a6d3b" width="2.0" font="roboto" letter-spacing="2"></a-text>
-      <a-text value="Jajaira Berrios - Acrylic on canvas - 12 x 16 in" align="center" color="#888" width="2.8" font="roboto" position="0 -0.16 0"></a-text>
+      <a-text value="Click Painting to Learn More" align="center" color="#888" width="2.0" font="roboto" position="0 -0.16 0"></a-text>
     </a-entity>
 
     <!-- CENTRE: Dia De Los Muertos — tall portrait 0.94 × 2.0 -->
@@ -592,7 +650,7 @@
     </a-entity>
     <a-entity position="0 1.28 7.9" rotation="0 180 0">
       <a-text value="Dia De Los Muertos" align="center" color="#8a6d3b" width="2.0" font="roboto" letter-spacing="2"></a-text>
-      <a-text value="Jajaira Berrios - Pencil drawing, boxed frame - 12 x 16 in" align="center" color="#888" width="2.8" font="roboto" position="0 -0.16 0"></a-text>
+      <a-text value="Click Painting to Learn More" align="center" color="#888" width="2.0" font="roboto" position="0 -0.16 0"></a-text>
     </a-entity>
 
     <!-- RIGHT: Unapologetic — portrait 1.10 × 1.8 -->
@@ -606,7 +664,7 @@
     </a-entity>
     <a-entity position="5 1.42 7.9" rotation="0 180 0">
       <a-text value="Unapologetic" align="center" color="#8a6d3b" width="2.0" font="roboto" letter-spacing="2"></a-text>
-      <a-text value="Jajaira Berrios - Colored pencil &amp; marker - 5 x 8 in" align="center" color="#888" width="2.8" font="roboto" position="0 -0.16 0"></a-text>
+      <a-text value="Click Painting to Learn More" align="center" color="#888" width="2.0" font="roboto" position="0 -0.16 0"></a-text>
     </a-entity>
 
     <!-- ===================== VISITOR ===================== -->
