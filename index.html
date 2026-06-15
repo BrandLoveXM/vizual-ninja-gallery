@@ -58,11 +58,11 @@
     .modal-art-rule { width: 32px; height: 1px; background: #6a6354; margin: 0 0 22px; }
     .modal-art-medium {
       font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 300;
-      letter-spacing: 0.08em; color: rgba(255,255,255,0.45); margin: 0 0 18px;
+      letter-spacing: 0.08em; color: rgba(255,255,255,0.65); margin: 0 0 18px;
     }
     .modal-art-body {
       font-family: 'Cormorant Garamond', Georgia, serif; font-size: 16px; font-weight: 300;
-      line-height: 1.72; color: rgba(255,255,255,0.7);
+      line-height: 1.72; color: rgba(255,255,255,0.88);
     }
     .modal-art-price {
       font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 400;
@@ -213,7 +213,7 @@
     .entry-subtitle {
       font-family: 'Cormorant Garamond', Georgia, serif;
       font-size: clamp(14px, 2.0vw, 20px); font-weight: 300;
-      font-style: italic; letter-spacing: 0.06em; color: #c8b890; margin: 0;
+      letter-spacing: 0.06em; color: #c8b890; margin: 20px 0 0;
     }
     .entry-gb-note {
       font-family: 'Cormorant Garamond', Georgia, serif;
@@ -309,8 +309,7 @@
       <div class="entry-eyebrow"><em>Introducing</em></div>
       <h1 class="entry-title">VIZUAL&nbsp;NINJA<br>STUDIOS</h1>
       <p class="entry-subhead">Opening Exhibit</p>
-      <p class="entry-subtitle">Leading with Love &mdash; An LT227 Artist Showcase</p>
-      <div class="entry-rule"></div>
+      <p class="entry-subtitle">Leading with Love: An LT227 Artist Showcase</p>
       <button id="enter-btn" type="button">Enter</button>
       <p class="entry-gb-note">Please sign our Guest Book inside the studio to register your visit.</p>
       <p class="entry-nav-heading">How to Navigate This Space</p>
@@ -397,9 +396,9 @@
 
     <!-- Floor decal — exhibition title inlaid into the floor -->
     <a-entity rotation="-90 0 0" position="0 0.012 2">
-      <a-text value="Leading with Love — An LT227 Artist Showcase"
-              align="center" color="#c8b890" width="9" font="roboto"
-              letter-spacing="5" opacity="0.32"></a-text>
+      <a-text value="Leading with Love: An LT227 Artist Showcase"
+              align="center" color="#a09050" width="12" font="roboto"
+              letter-spacing="4"></a-text>
     </a-entity>
 
     <!-- Ceiling — warm off-white -->
@@ -491,19 +490,17 @@
     <!-- Tara_Art3: 704×746 → nearly square ~0.944:1 → 2×2 (4'×4') -->
 
     <!-- Wall header: artist name -->
-    <a-entity position="0 5.45 -7.88">
+    <a-entity position="0 4.2 -7.88">
       <a-text value="Tara-Lea McIlroy" align="center" color="#1f1f1f" width="6.4" font="roboto" letter-spacing="5"></a-text>
       <a-plane width="1.3" height="0.008" position="0 -0.26 0.002" material="color: #c8a96e; shader: flat"></a-plane>
     </a-entity>
 
-    <!-- Wall-mounted artist bio (left of the paintings), Donatello-style two columns -->
+    <!-- Wall-mounted artist bio (left of the paintings) -->
     <a-entity position="-9 2.05 -7.88">
       <a-text value="ABOUT THE ARTIST" align="center" color="#8a6d3b" width="2.6" font="roboto" letter-spacing="6" position="0 1.55 0"></a-text>
       <a-text value="Tara-Lea McIlroy" align="center" color="#1f1f1f" width="4.0" font="roboto" letter-spacing="2" position="0 1.12 0"></a-text>
-      <a-text value="Tara-Lea McIlroy is a Toronto-based painter who works largely in oil and acrylic, leading with love. Her work moves between grief, memory, and the quiet beauty of everyday life."
-              align="left" anchor="left" baseline="top" color="#555" width="2.3" wrap-count="32" font="roboto" position="-2.35 0.7 0"></a-text>
-      <a-text value="She paints to keep people close, and takes on commissions, including grief-inspired pieces. Above all, she leads with love."
-              align="left" anchor="left" baseline="top" color="#555" width="2.3" wrap-count="32" font="roboto" position="0.1 0.7 0"></a-text>
+      <a-text value="Tara-Lea McIlroy is born in and lives in Toronto, Ontario, Canada. She loves to experiment with mediums and colour, with her hope to bring joy to others and inspire. @thevizualninja"
+              align="left" anchor="left" baseline="top" color="#555" width="4.8" wrap-count="52" font="roboto" position="-2.35 0.7 0"></a-text>
     </a-entity>
 
     <!-- LEFT: Butterfly painting (2 × 2 = 4' × 4') -->
@@ -512,7 +509,7 @@
       <a-box position="0 -1.04 0" width="2.12" height="0.06" depth="0.06" material="color: #111111; roughness: 0.25; metalness: 0.35"></a-box>
       <a-box position="-1.04 0 0" width="0.06" height="2.02" depth="0.06" material="color: #111111; roughness: 0.25; metalness: 0.35"></a-box>
       <a-box position="1.04 0 0"  width="0.06" height="2.02" depth="0.06" material="color: #111111; roughness: 0.25; metalness: 0.35"></a-box>
-      <a-plane id="painting-plane" class="clickable art-chat" position="0 0 0.01" width="2" height="2"
+      <a-plane id="painting-plane" class="clickable art-chat" position="0 0 0.01" width="2.02" height="2.02"
                material="src: #painting; roughness: 0.85; metalness: 0"></a-plane>
     </a-entity>
     <a-entity position="-5 1.28 -7.9">
@@ -527,7 +524,7 @@
       <a-box position="0 -1.34 0" width="1.58" height="0.06" depth="0.06" material="color: #111111; roughness: 0.25; metalness: 0.35"></a-box>
       <a-box position="-0.76 0 0" width="0.06" height="2.62" depth="0.06" material="color: #111111; roughness: 0.25; metalness: 0.35"></a-box>
       <a-box position="0.76 0 0"  width="0.06" height="2.62" depth="0.06" material="color: #111111; roughness: 0.25; metalness: 0.35"></a-box>
-      <a-plane id="plane-tara2" class="clickable art-chat" position="0 0 0.01" width="1.46" height="2.6"
+      <a-plane id="plane-tara2" class="clickable art-chat" position="0 0 0.01" width="1.46" height="2.62"
                material="src: #tara-art2; roughness: 0.85; metalness: 0"></a-plane>
     </a-entity>
     <a-entity position="0 1.0 -7.9">
@@ -541,7 +538,7 @@
       <a-box position="0 -1.04 0" width="2.12" height="0.06" depth="0.06" material="color: #111111; roughness: 0.25; metalness: 0.35"></a-box>
       <a-box position="-1.04 0 0" width="0.06" height="2.02" depth="0.06" material="color: #111111; roughness: 0.25; metalness: 0.35"></a-box>
       <a-box position="1.04 0 0"  width="0.06" height="2.02" depth="0.06" material="color: #111111; roughness: 0.25; metalness: 0.35"></a-box>
-      <a-plane id="plane-tara3" class="clickable art-chat" position="0 0 0.01" width="2" height="2"
+      <a-plane id="plane-tara3" class="clickable art-chat" position="0 0 0.01" width="2.02" height="2.02"
                material="src: #tara-art3; roughness: 0.85; metalness: 0"></a-plane>
     </a-entity>
     <a-entity position="5 1.28 -7.9">
@@ -550,9 +547,9 @@
     </a-entity>
 
     <!-- ===================== GUEST BOOK — far wall, right corner ===================== -->
-    <a-entity id="guest-book-wall" class="clickable" position="9 1.7 -7.92">
-      <!-- Book body -->
-      <a-box width="0.44" height="0.60" depth="0.06" material="color: #1a1208; roughness: 0.75; metalness: 0"></a-box>
+    <a-entity id="guest-book-wall" class="clickable" position="9 0.9 -7.78" rotation="-15 0 0">
+      <!-- Book body — clickable so raycaster registers the hit -->
+      <a-box class="clickable" width="0.44" height="0.60" depth="0.06" material="color: #1a1208; roughness: 0.75; metalness: 0"></a-box>
       <!-- Gold spine -->
       <a-box width="0.04" height="0.60" depth="0.09" position="-0.23 0 0" material="color: #c8a96e; roughness: 0.4; metalness: 0.6"></a-box>
       <!-- Cover title -->
@@ -561,21 +558,20 @@
       <a-plane width="0.26" height="0.003" position="0 -0.1 0.04" material="color: #c8a96e; shader: flat"></a-plane>
     </a-entity>
     <!-- Guest book label below -->
-    <a-entity position="9 0.88 -7.88">
+    <a-entity position="9 0.42 -7.88">
       <a-text value="Sign the Guest Book" align="center" color="#8a6d3b" width="2.0" font="roboto" letter-spacing="2"></a-text>
     </a-entity>
 
     <!-- ===================== EUROPEAN SERIES — left wall (x = -12) ===================== -->
 
     <a-entity position="-11.92 4.75 0" rotation="0 90 0">
-      <a-text value="European Moments" align="center" color="#1f1f1f" width="5.2" font="roboto" letter-spacing="3"></a-text>
-      <a-text value="Captured In Time" align="center" color="#1f1f1f" width="5.0" font="roboto" letter-spacing="3" position="0 -0.42 0"></a-text>
-      <a-plane width="1.4" height="0.008" position="0 -0.66 0.003"
+      <a-text value="European Moments: Captured in Time" align="center" color="#1f1f1f" width="6.2" font="roboto" letter-spacing="2"></a-text>
+      <a-plane width="1.4" height="0.008" position="0 -0.36 0.003"
                material="color: #c8a96e; shader: flat"></a-plane>
     </a-entity>
 
     <!-- European series artist statement placard -->
-    <a-entity position="-11.85 3.1 -6.5" rotation="0 90 0">
+    <a-entity position="-11.85 1.92 -6.5" rotation="0 90 0">
       <a-plane width="2.5" height="1.6" material="color: #f0ede8; roughness: 0.95; metalness: 0"></a-plane>
       <a-plane width="2.2" height="0.004" position="0 0.64 0.002" material="color: #c8a96e; shader: flat"></a-plane>
       <a-text value="In 2017, I took my mother on her first trip to Europe — a journey through six countries over 21 days. For her, it was a trip of a lifetime. For me, it became one of my most treasured memories as her daughter. This series captures the moments, landscapes, and quiet in-betweens of a shared adventure that neither of us will ever forget."
@@ -638,16 +634,16 @@
     <!-- Steph_Art3: 5117×2086 ultra-wide → 2.45:1 → w=2.4 h=0.98 -->
 
     <!-- Wall header -->
-    <a-entity position="11.92 4.95 0" rotation="0 -90 0">
+    <a-entity position="11.92 4.2 0" rotation="0 -90 0">
       <a-text value="Stephanie Camacho" align="center" color="#1f1f1f" width="6.4" font="roboto" letter-spacing="4"></a-text>
       <a-plane width="1.4" height="0.008" position="0 -0.42 0.003"
                material="color: #c8a96e; shader: flat"></a-plane>
     </a-entity>
 
     <!-- Wall-mounted artist bio (back end of the wall), Donatello-style two columns -->
-    <a-entity position="11.92 2.95 6.5" rotation="0 -90 0">
+    <a-entity position="11.92 1.65 6.5" rotation="0 -90 0">
       <a-text value="ABOUT THE ARTIST" align="center" color="#8a6d3b" width="2.2" font="roboto" letter-spacing="5" position="0 1.95 0"></a-text>
-      <a-text value="Stephanie Camacho" align="center" color="#1f1f1f" width="3.2" font="roboto" letter-spacing="2" position="0 1.55 0"></a-text>
+      <a-text value="Stephanie Camacho" align="center" color="#1f1f1f" width="3.2" font="roboto" letter-spacing="2" position="0 1.45 0"></a-text>
       <a-text value="Stephanie Camacho was born into rhythm. Raised in New Jersey with Caribbean roots, her childhood home pulsed with music, movement, and love expressed through celebration. The city streets taught her to see - as a child she sketched mountains she'd never touched and waterfronts she'd never stood before. She has always painted what is coming before it arrives."
               align="left" anchor="left" baseline="top" color="#555" width="1.35" wrap-count="30" font="roboto" position="-1.4 1.05 0"></a-text>
       <a-text value="After studying Interior Design at FIT, she lived aboard a sailboat on the Hudson River, worked the Pacific waters of Hawaii, and stood in the silence of Nevada's Black Mountains - the same mountains she once drew on a city sidewalk. Her paintings are not decorative; they are devotional - a pouring of memory and lineage. She paints the way she loves: fully, without holding back, always following where God leads."
@@ -655,7 +651,7 @@
     </a-entity>
 
     <!-- Steph_Art1 — portrait 1.5 × 2.0 -->
-    <a-entity id="photo-steph1" position="11.94 2.6 -3.5" rotation="0 -90 0">
+    <a-entity id="photo-steph1" position="11.94 2.6 -3.0" rotation="0 -90 0">
       <a-box position="0  1.04 0" width="1.62" height="0.06" depth="0.06" material="color: #111111; roughness: 0.25; metalness: 0.35"></a-box>
       <a-box position="0 -1.04 0" width="1.62" height="0.06" depth="0.06" material="color: #111111; roughness: 0.25; metalness: 0.35"></a-box>
       <a-box position="-0.78 0 0" width="0.06" height="2.02" depth="0.06" material="color: #111111; roughness: 0.25; metalness: 0.35"></a-box>
@@ -663,13 +659,13 @@
       <a-plane id="plane-steph1" class="clickable art-chat" position="0 0 0.01" width="1.5" height="2.0"
                material="src: #steph-art1; roughness: 0.85; metalness: 0"></a-plane>
     </a-entity>
-    <a-entity position="11.92 1.28 -3.5" rotation="0 -90 0">
+    <a-entity position="11.92 1.28 -3.0" rotation="0 -90 0">
       <a-text value="When She Lets Go" align="center" color="#8a6d3b" width="2.4" font="roboto" letter-spacing="2"></a-text>
       <a-text value="Click Painting to Learn More" align="center" color="#888" width="2.0" font="roboto" position="0 -0.16 0"></a-text>
     </a-entity>
 
     <!-- Steph_Art2 — landscape 2.0 × 1.5 -->
-    <a-entity id="photo-steph2" position="11.94 2.35 0" rotation="0 -90 0">
+    <a-entity id="photo-steph2" position="11.94 2.35 0.5" rotation="0 -90 0">
       <a-box position="0  0.79 0" width="2.12" height="0.06" depth="0.06" material="color: #111111; roughness: 0.25; metalness: 0.35"></a-box>
       <a-box position="0 -0.79 0" width="2.12" height="0.06" depth="0.06" material="color: #111111; roughness: 0.25; metalness: 0.35"></a-box>
       <a-box position="-1.04 0 0" width="0.06" height="1.52" depth="0.06" material="color: #111111; roughness: 0.25; metalness: 0.35"></a-box>
@@ -677,13 +673,13 @@
       <a-plane id="plane-steph2" class="clickable art-chat" position="0 0 0.01" width="2.0" height="1.5"
                material="src: #steph-art2; roughness: 0.85; metalness: 0"></a-plane>
     </a-entity>
-    <a-entity position="11.92 1.28 0" rotation="0 -90 0">
+    <a-entity position="11.92 1.28 0.5" rotation="0 -90 0">
       <a-text value="They Kept Rowing" align="center" color="#8a6d3b" width="2.4" font="roboto" letter-spacing="2"></a-text>
       <a-text value="Click Painting to Learn More" align="center" color="#888" width="2.0" font="roboto" position="0 -0.16 0"></a-text>
     </a-entity>
 
     <!-- Steph_Art3 — ultra-wide 2.4 × 0.98 -->
-    <a-entity id="photo-steph3" position="11.94 2.35 3.5" rotation="0 -90 0">
+    <a-entity id="photo-steph3" position="11.94 2.35 4.0" rotation="0 -90 0">
       <a-box position="0  0.52 0" width="2.52" height="0.06" depth="0.06" material="color: #111111; roughness: 0.25; metalness: 0.35"></a-box>
       <a-box position="0 -0.52 0" width="2.52" height="0.06" depth="0.06" material="color: #111111; roughness: 0.25; metalness: 0.35"></a-box>
       <a-box position="-1.24 0 0" width="0.06" height="0.98" depth="0.06" material="color: #111111; roughness: 0.25; metalness: 0.35"></a-box>
@@ -691,7 +687,7 @@
       <a-plane id="plane-steph3" class="clickable art-chat" position="0 0 0.01" width="2.4" height="0.98"
                material="src: #steph-art3; roughness: 0.85; metalness: 0"></a-plane>
     </a-entity>
-    <a-entity position="11.92 1.56 3.5" rotation="0 -90 0">
+    <a-entity position="11.92 1.56 4.0" rotation="0 -90 0">
       <a-text value="Blood Memory" align="center" color="#8a6d3b" width="2.4" font="roboto" letter-spacing="2"></a-text>
       <a-text value="Click Painting to Learn More" align="center" color="#888" width="2.0" font="roboto" position="0 -0.16 0"></a-text>
     </a-entity>
@@ -716,7 +712,7 @@
               position="5 6.2 6.8" rotation="12 180 0"></a-entity>
 
     <!-- Wall header -->
-    <a-entity position="0 4.95 7.9" rotation="0 180 0">
+    <a-entity position="0 4.2 7.9" rotation="0 180 0">
       <a-text value="Jajaira Berrios" align="center" color="#1f1f1f" width="6.0" font="roboto" letter-spacing="4"></a-text>
       <a-plane width="1.4" height="0.008" position="0 -0.42 0.003"
                material="color: #c8a96e; shader: flat"></a-plane>
@@ -947,19 +943,6 @@
         if (nowPlayingBar) nowPlayingBar.classList.add('visible');
       }
 
-      function gestureUnlock() {
-        if (musicStarted) { removeGestureUnlock(); return; }
-        tryStartMusic();
-      }
-      function removeGestureUnlock() {
-        ['click', 'keydown', 'touchend', 'pointerdown'].forEach(function (evt) {
-          document.removeEventListener(evt, gestureUnlock, true);
-        });
-      }
-      ['click', 'keydown', 'touchend', 'pointerdown'].forEach(function (evt) {
-        document.addEventListener(evt, gestureUnlock, true);
-      });
-
       function setSceneControls(enabled) {
         if (!camera) return;
         camera.setAttribute('wasd-controls', 'enabled', enabled);
@@ -1001,26 +984,26 @@
     /* Artist bios — used in per-painting info cards */
     var BIO_STEPH = "Stephanie Camacho was born into rhythm. Raised in New Jersey with Caribbean roots, her childhood home pulsed with music, movement, and love expressed through celebration. The city streets taught her to see — as a child she sketched mountains she'd never touched and waterfronts she'd never stood before. She has always painted what is coming before it arrives. After studying Interior Design at FIT, she lived aboard a sailboat on the Hudson River, worked the Pacific waters of Hawaii, and stood in the silence of Nevada's Black Mountains — the same mountains she once drew on a city sidewalk. Her paintings are not decorative; they are devotional — a pouring of memory and lineage. She paints the way she loves: fully, without holding back, always following where God leads.";
     var BIO_JAJAIRA = "Jajaira Berrios was born and raised in East Harlem. Art has always drawn her deeply. In elementary school her work was selected for a gallery, and soon after a children's doctor at Metropolitan Hospital wrote asking to purchase her artwork for his office — a letter she keeps to this day, the moment she realized she had a gift. She attended Art & Design High School and later majored in Communication Design in college. Life took her off course for a while, but art always finds its way back to her — whether through art or dance, it is simply what lights her up. Today her creative expression takes many forms: acrylic paintings, drawings, digital art, and hand-crafted bookmarks. She doesn't confine herself to one medium; she follows whatever calls her. Her hope is that her work inspires others to follow their own calling. Instagram: @j.barecreation.";
-    var BIO_TARA = "Tara-Lea McIlroy is a Toronto-based painter who works largely in oil and acrylic, leading with love. Her work moves between grief, memory, and the quiet beauty of everyday life, and she takes on commissions — including grief-inspired pieces.";
+    var BIO_TARA = "Tara-Lea McIlroy is born in and lives in Toronto, Ontario, Canada. She loves to experiment with mediums and colour, with her hope to bring joy to others and inspire. Instagram: @thevizualninja";
 
     /* Per-painting context, keyed by the painting plane's element id.
        - card:  the full artwork placard shown immediately when the panel opens
        - info:  the same facts, fed to Claude as system context for follow-ups */
     var ART = {
-      "painting-plane": {
-        name: "Tara-Lea McIlroy", subtitle: "Always Here With You",
-        card: "Always Here With You\nTara-Lea McIlroy\nOil on canvas · 4 × 4 ft\n\nNot for sale — but Tara-Lea is taking commissions for similar grief-inspired pieces.",
-        info: "Painting: “Always Here With You” by Tara-Lea McIlroy. Oil on canvas, 4 ft × 4 ft. This piece is NOT for sale, but Tara-Lea is taking commissions for similar grief-inspired works. " + BIO_TARA
+      “painting-plane”: {
+        name: “Tara-Lea McIlroy”, subtitle: “Always Here With You”,
+        card: “Always Here With You\nTara-Lea McIlroy\nOil on canvas · 4 × 4 ft\n\nThis piece is dedicated to dear friends who lost their mother in 2023. Created to honour her memory, it hangs in a property built to memorialize her in Progreso, Mexico. This is an exploration of grief and transformation, drawing on symbols of things she loved and freezing them in time as a lasting tribute.\n\nNot for sale — but Tara-Lea is taking commissions for similar grief-inspired pieces.”,
+        info: “Painting: “Always Here With You” by Tara-Lea McIlroy. Oil on canvas, 4 ft × 4 ft. This piece is dedicated to dear friends who lost their mother in 2023. Created to honour her memory, it hangs in a property built to memorialize her in Progreso, Mexico. This is an exploration of grief and transformation, drawing on symbols of things she loved and freezing them in time as a lasting tribute. This piece is NOT for sale, but Tara-Lea is taking commissions for similar grief-inspired works. “ + BIO_TARA
       },
-      "plane-tara2": {
-        name: "Tara-Lea McIlroy", subtitle: "Somewhere Out There",
-        card: "Somewhere Out There\nTara-Lea McIlroy\nAcrylic on canvas · 1.5 × 3 ft\n\nPrice: $750 USD + shipping",
-        info: "Painting: “Somewhere Out There” by Tara-Lea McIlroy. Acrylic on canvas, 1.5 ft × 3 ft. Price: $750 USD plus shipping. " + BIO_TARA
+      “plane-tara2”: {
+        name: “Tara-Lea McIlroy”, subtitle: “Somewhere Out There”,
+        card: “Somewhere Out There\nTara-Lea McIlroy\nAcrylic on canvas · 1.5 × 3 ft\n\nAn experimental piece that stretches beyond a traditional paint-to-canvas style. Various textures and materials were used to create patterns and layered effects, resulting in a true abstract work that strays from a typical surrealist and pop-art approach. A fun exploration of broader techniques, this piece is intended to bring calm and tranquility to any space it inhabits.\n\nPrice: $750 USD + shipping”,
+        info: “Painting: “Somewhere Out There” by Tara-Lea McIlroy. Acrylic on canvas, 1.5 ft × 3 ft. An experimental piece that stretches beyond a traditional paint-to-canvas style. Various textures and materials were used to create patterns and layered effects, resulting in a true abstract work that strays from a typical surrealist and pop-art approach. A fun exploration of broader techniques, this piece is intended to bring calm and tranquility to any space it inhabits. Price: $750 USD plus shipping. “ + BIO_TARA
       },
-      "plane-tara3": {
-        name: "Tara-Lea McIlroy", subtitle: "It Was All A Dream",
-        card: "It Was All A Dream\nTara-Lea McIlroy\nAcrylic on canvas · 4 × 4 ft\n\nNot for sale — but Tara-Lea is taking orders for commissions.",
-        info: "Painting: “It Was All A Dream” by Tara-Lea McIlroy. Acrylic on canvas, 4 ft × 4 ft. This piece is NOT for sale, but Tara-Lea is taking orders for commissions. " + BIO_TARA
+      “plane-tara3”: {
+        name: “Tara-Lea McIlroy”, subtitle: “It Was All A Dream”,
+        card: “It Was All A Dream\nTara-Lea McIlroy\nAcrylic on canvas · 4 × 4 ft\n\nCreated during an experimental period in 2020 as an ode to 90s hip hop. Techniques include print transferring a large printout directly to canvas, abstract background painting, metallic stencil layering, and a final finish of epoxy resin. This piece represents a period of creative growth and skill-building.\n\nNot for sale — but Tara-Lea is taking orders for commissions.”,
+        info: “Painting: “It Was All A Dream” by Tara-Lea McIlroy. Acrylic on canvas, 4 ft × 4 ft. Created during an experimental period in 2020 as an ode to 90s hip hop. Techniques include print transferring a large printout directly to canvas, abstract background painting, metallic stencil layering, and a final finish of epoxy resin. This piece represents a period of creative growth and skill-building. This piece is NOT for sale, but Tara-Lea is taking orders for commissions. “ + BIO_TARA
       },
       "plane-steph1": {
         name: "Stephanie Camacho", subtitle: "When She Lets Go",
