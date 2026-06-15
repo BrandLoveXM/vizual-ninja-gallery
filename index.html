@@ -45,95 +45,67 @@
       pointer-events: none;
     }
 
-    /* ===================== ART INFO MODAL ===================== */
-    #art-modal {
-      position: fixed; inset: 0; z-index: 30;
-      display: none; align-items: center; justify-content: center;
-      background: rgba(6, 6, 7, 0.72);
-      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
-      opacity: 0; transition: opacity 0.35s ease;
-      padding: 24px;
+    /* ===================== CHAT PANEL ===================== */
+    #chat-panel {
+      position: fixed; top: 0; right: 0; z-index: 20;
+      width: 380px; max-width: 92vw; height: 100%;
+      background: #fafaf8;
+      box-shadow: -12px 0 48px rgba(0, 0, 0, 0.5);
+      display: flex; flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.42s cubic-bezier(0.22, 0.61, 0.36, 1);
     }
-    #art-modal.open { display: flex; opacity: 1; }
+    #chat-panel.open { transform: translateX(0); }
 
-    .art-modal-card {
-      position: relative;
-      width: 460px; max-width: 100%; max-height: 84vh; overflow-y: auto;
-      background: linear-gradient(180deg, #141416 0%, #0e0e10 100%);
-      border: 1px solid rgba(200, 169, 110, 0.28);
-      border-radius: 10px;
-      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.65);
-      padding: 38px 40px 40px;
-      transform: translateY(14px) scale(0.985);
-      transition: transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+    #chat-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 20px; background: #111; color: #fff;
     }
-    #art-modal.open .art-modal-card { transform: translateY(0) scale(1); }
+    .chat-name { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 400; letter-spacing: 0.04em; }
+    .chat-sub { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #888; margin-top: 3px; }
+    #chat-close { background: none; border: none; color: #999; font-size: 24px; line-height: 1; cursor: pointer; padding: 0 4px; }
+    #chat-close:hover { color: #fff; }
 
-    #art-modal-close {
-      position: absolute; top: 14px; right: 16px;
-      background: none; border: none; color: #6f6a5e;
-      font-size: 26px; line-height: 1; cursor: pointer; padding: 4px 8px;
-      transition: color 0.2s ease;
-    }
-    #art-modal-close:hover { color: #d8d2c6; }
+    #chat-messages { flex: 1; overflow-y: auto; padding: 18px 16px; display: flex; flex-direction: column; gap: 12px; }
+    .msg { max-width: 84%; padding: 10px 14px; border-radius: 16px; font-size: 13px; line-height: 1.55; white-space: pre-wrap; word-wrap: break-word; font-family: 'Inter', sans-serif; }
+    .msg.assistant { align-self: flex-start; background: #f0eeea; color: #1f1f1f; border-bottom-left-radius: 4px; }
+    .msg.user { align-self: flex-end; background: #1a1a1a; color: #e8e4dc; border-bottom-right-radius: 4px; }
+    .msg.error { align-self: flex-start; background: #f6dede; color: #7a2020; border-bottom-left-radius: 4px; }
 
-    .art-modal-eyebrow {
-      font-family: 'Inter', sans-serif; font-size: 9.5px; font-weight: 300;
-      letter-spacing: 0.42em; text-transform: uppercase; color: #8a6d3b;
-      margin-bottom: 16px; padding-left: 0.3em;
+    /* Opening artwork placard — full-width, gallery-label styling */
+    .art-card {
+      align-self: stretch; max-width: 100%;
+      background: #fff; border: 1px solid #e6e2d8;
+      border-left: 3px solid #c8a96e;
+      border-radius: 6px; padding: 16px 18px;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.04);
     }
-    .art-modal-title {
+    .art-card-title {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 33px; font-weight: 400; letter-spacing: 0.015em;
-      color: #ece8df; line-height: 1.12; margin: 0 0 6px;
+      font-size: 22px; font-weight: 400; letter-spacing: 0.02em;
+      color: #1a1a1a; line-height: 1.15; margin-bottom: 8px;
     }
-    .art-modal-artist {
-      font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 300;
-      letter-spacing: 0.16em; text-transform: uppercase; color: #b9a884;
-      margin-bottom: 22px;
-    }
-    .art-modal-rule { width: 40px; height: 1px; background: #6a6354; margin: 0 0 22px; }
-    .art-modal-body {
-      font-family: 'Inter', sans-serif; font-size: 13.5px; line-height: 1.72;
-      color: #c2bcb0; white-space: pre-wrap; word-wrap: break-word;
+    .art-card-body {
+      font-family: 'Inter', sans-serif; font-size: 12.5px; line-height: 1.65;
+      color: #3a3a3a; white-space: pre-wrap; word-wrap: break-word;
     }
 
-    /* ===================== NOW PLAYING BAR ===================== */
-    #now-playing {
-      position: fixed; bottom: 0; left: 0; right: 0; z-index: 18;
-      display: none; align-items: center; gap: 14px;
-      padding: 9px 18px;
-      background: rgba(10, 10, 11, 0.72);
-      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-      border-top: 1px solid rgba(255, 255, 255, 0.07);
-      opacity: 0; transition: opacity 0.8s ease;
-    }
-    #now-playing.visible { display: flex; opacity: 1; }
-    .np-controls { display: flex; align-items: center; gap: 4px; }
-    .np-btn {
-      background: none; border: none; color: rgba(255, 255, 255, 0.55);
-      cursor: pointer; padding: 6px; display: flex; align-items: center; justify-content: center;
-      border-radius: 50%; transition: color 0.2s ease, background 0.2s ease;
-    }
-    .np-btn:hover { color: #ece8df; background: rgba(255, 255, 255, 0.06); }
-    .np-btn svg { width: 16px; height: 16px; display: block; }
-    #np-play .icon-pause { display: none; }
-    #np-play.playing .icon-play { display: none; }
-    #np-play.playing .icon-pause { display: block; }
-    .np-meta { display: flex; flex-direction: column; line-height: 1.25; min-width: 0; }
-    .np-label { font-size: 8.5px; letter-spacing: 0.3em; text-transform: uppercase; color: #807a6e; }
-    .np-track {
-      font-size: 12.5px; font-weight: 300; letter-spacing: 0.05em;
-      color: #d8d2c6; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    }
+    #chat-typing { padding: 0 20px 6px; font-size: 11px; font-style: italic; color: #8a8a8a; display: none; }
+    #chat-typing.show { display: block; }
+
+    #chat-form { display: flex; gap: 8px; padding: 14px 16px; border-top: 1px solid #e8e6e0; background: #fff; }
+    #chat-input { flex: 1; border: 1px solid #ddd; border-radius: 999px; padding: 10px 16px; font-size: 13px; font-family: 'Inter', sans-serif; outline: none; }
+    #chat-input:focus { border-color: #1a1a1a; }
+    #chat-send { background: #1a1a1a; color: #e8e4dc; border: none; border-radius: 999px; padding: 0 18px; font-size: 13px; font-family: 'Inter', sans-serif; cursor: pointer; }
+    #chat-send:hover { background: #333; }
+    #chat-send:disabled { opacity: 0.4; cursor: default; }
 
     /* ===================== ENTRY SCREEN ===================== */
     #entry-screen {
       position: fixed; inset: 0; z-index: 40;
       background: radial-gradient(ellipse at 50% 35%, #1a1a1c 0%, #080808 75%);
       color: #d8d2c6;
-      display: flex; align-items: flex-start; justify-content: center;
-      overflow-y: auto;
+      display: flex; align-items: center; justify-content: center;
       opacity: 0;
       animation: entryFadeIn 1.8s ease-out 0.2s forwards;
       transition: opacity 1.4s ease;
@@ -142,17 +114,15 @@
     @keyframes entryFadeIn { from { opacity: 0; } to { opacity: 1; } }
 
     .entry-content {
-      text-align: center; padding: 9vh 40px 6vh;
-      width: 100%; max-width: 600px; margin: 0 auto; box-sizing: border-box;
+      text-align: center; padding: 0 32px;
       animation: entryRise 2s cubic-bezier(0.22, 0.61, 0.36, 1) 0.3s both;
     }
     @keyframes entryRise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 
-    .entry-introducing {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: clamp(16px, 2.4vw, 23px); font-weight: 300; font-style: italic;
-      letter-spacing: 0.08em; color: #c8b890;
-      margin: 0 0 22px;
+    .entry-eyebrow {
+      font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 300;
+      letter-spacing: 0.55em; color: #807a6e; text-transform: uppercase;
+      margin-bottom: 34px; padding-left: 0.5em;
     }
     .entry-title {
       font-family: 'Cormorant Garamond', Georgia, serif;
@@ -160,212 +130,75 @@
       letter-spacing: 0.2em; margin: 0; line-height: 1.08;
       color: #ece8df; padding-left: 0.2em;
     }
-    .entry-opening {
-      font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 300;
-      letter-spacing: 0.5em; text-transform: uppercase; color: #807a6e;
-      margin: 22px 0 12px; padding-left: 0.5em;
-    }
-
-    /* Formal exhibit title card */
-    .entry-exhibit {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: clamp(16px, 2.4vw, 23px); font-weight: 300;
-      font-style: italic; letter-spacing: 0.06em;
-      color: #c8b890; line-height: 1.35; margin: 0 auto 24px;
-    }
-
+    .entry-rule { width: 48px; height: 1px; background: #6a6354; margin: 42px auto 46px; }
     #enter-btn {
       font-family: 'Inter', sans-serif; background: transparent;
-      border: 1px solid rgba(185, 168, 132, 0.65); color: #c8c0b2;
-      padding: 14px 48px; font-size: 10px; font-weight: 300;
+      border: 1px solid rgba(185, 168, 132, 0.4); color: #c8c0b2;
+      padding: 14px 42px; font-size: 10px; font-weight: 300;
       letter-spacing: 0.38em; text-transform: uppercase; cursor: pointer;
-      transition: all 0.4s ease; margin-top: 14px; display: inline-block;
+      transition: all 0.4s ease;
     }
-    #enter-btn:hover { background: rgba(185, 168, 132, 0.12); color: #ece8df; border-color: rgba(185, 168, 132, 0.85); }
+    #enter-btn:hover { background: rgba(185, 168, 132, 0.12); color: #ece8df; border-color: rgba(185, 168, 132, 0.7); }
 
-    .entry-gb-note {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 13px; font-weight: 300; font-style: italic;
-      letter-spacing: 0.04em; color: #807a6e;
-      margin: 22px 0 0;
+    /* ===================== MUTE BUTTON ===================== */
+    #mute-btn {
+      position: fixed; top: 20px; right: 20px; z-index: 15;
+      width: 38px; height: 38px; border-radius: 50%;
+      background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.5);
+      cursor: pointer; display: none; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.8s ease, background 0.2s ease; padding: 0;
     }
-
-    .entry-nav-heading {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: clamp(13px, 1.5vw, 16px); font-weight: 300;
-      letter-spacing: 0.1em; color: #c8b890;
-      margin: 44px 0 0; text-align: center;
-    }
-
-    /* Navigation instructions numbered list */
-    .nav-instructions {
-      list-style: none; counter-reset: nav-count;
-      margin: 44px auto 0; padding: 0; max-width: 400px;
-      text-align: left;
-    }
-    .nav-instructions li {
-      counter-increment: nav-count;
-      font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 300;
-      letter-spacing: 0.03em; color: #a8a294; line-height: 1.6;
-      padding: 10px 0; display: flex; gap: 16px; align-items: baseline;
-      border-top: 1px solid rgba(255,255,255,0.04);
-    }
-    .nav-instructions li:first-child { border-top: none; }
-    .nav-instructions li::before {
-      content: counter(nav-count) ".";
-      flex: none; color: #8a6d3b; font-size: 10px;
-      letter-spacing: 0.06em; min-width: 16px; text-align: right;
-    }
-
-    /* ===================== GUESTBOOK MODAL ===================== */
-    #guestbook-modal {
-      position: fixed; inset: 0; z-index: 30;
-      display: none; align-items: center; justify-content: center;
-      background: rgba(6, 6, 7, 0.72);
-      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
-      opacity: 0; transition: opacity 0.35s ease;
-      padding: 24px;
-    }
-    #guestbook-modal.open { display: flex; opacity: 1; }
-
-    .gb-modal-card {
-      position: relative;
-      width: 400px; max-width: 100%;
-      background: linear-gradient(180deg, #141416 0%, #0e0e10 100%);
-      border: 1px solid rgba(200, 169, 110, 0.28);
-      border-radius: 10px;
-      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.65);
-      padding: 40px 44px 44px;
-      transform: translateY(14px) scale(0.985);
-      transition: transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
-    }
-    #guestbook-modal.open .gb-modal-card { transform: translateY(0) scale(1); }
-
-    #gb-modal-close {
-      position: absolute; top: 14px; right: 16px;
-      background: none; border: none; color: #6f6a5e;
-      font-size: 26px; line-height: 1; cursor: pointer; padding: 4px 8px;
-      transition: color 0.2s ease;
-    }
-    #gb-modal-close:hover { color: #d8d2c6; }
-
-    .gb-modal-eyebrow {
-      font-family: 'Inter', sans-serif; font-size: 9.5px; font-weight: 300;
-      letter-spacing: 0.42em; text-transform: uppercase; color: #8a6d3b;
-      margin-bottom: 18px; padding-left: 0.3em;
-    }
-    .gb-modal-title {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 28px; font-weight: 300; letter-spacing: 0.015em;
-      color: #ece8df; margin: 0 0 28px; line-height: 1.1;
-    }
-    .gb-modal-field { margin-bottom: 18px; }
-    .gb-modal-field input {
-      width: 100%; box-sizing: border-box;
-      background: rgba(255, 255, 255, 0.02);
-      border: none; border-bottom: 1px solid rgba(185, 168, 132, 0.32);
-      color: #ece8df; padding: 10px 2px; font-size: 13px;
-      font-family: 'Inter', sans-serif; letter-spacing: 0.04em; outline: none;
-      transition: border-color 0.3s ease;
-    }
-    .gb-modal-field input::placeholder { color: #6a6458; letter-spacing: 0.06em; }
-    .gb-modal-field input:focus { border-bottom-color: rgba(185, 168, 132, 0.75); }
-
-    #gb-modal-submit {
-      font-family: 'Inter', sans-serif; background: transparent;
-      border: 1px solid rgba(185, 168, 132, 0.55); color: #c8c0b2;
-      padding: 12px 36px; font-size: 10px; font-weight: 300;
-      letter-spacing: 0.36em; text-transform: uppercase; cursor: pointer;
-      transition: all 0.4s ease; margin-top: 14px;
-    }
-    #gb-modal-submit:hover { background: rgba(185, 168, 132, 0.1); color: #ece8df; border-color: rgba(185, 168, 132, 0.75); }
-
-    .gb-modal-confirmation {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 14px; font-weight: 300; font-style: italic;
-      letter-spacing: 0.04em; color: #b9a884;
-      margin-top: 18px; display: none;
-    }
+    #mute-btn.visible { display: flex; opacity: 1; }
+    #mute-btn:hover { background: rgba(0, 0, 0, 0.6); color: rgba(255,255,255,0.8); }
+    #mute-btn svg { width: 16px; height: 16px; display: block; }
+    #mute-btn .icon-muted { display: none; }
+    #mute-btn.muted .icon-on { display: none; }
+    #mute-btn.muted .icon-muted { display: block; }
   </style>
 </head>
 <body>
   <div id="brand">Vizual Ninja Studios</div>
-  <div id="hint">Arrow keys / WASD to walk &nbsp;·&nbsp; drag to look &nbsp;·&nbsp; click painting for details &nbsp;·&nbsp; double-click floor to glide</div>
+  <div id="hint">WASD to walk &nbsp;·&nbsp; drag to look &nbsp;·&nbsp; click painting to chat &nbsp;·&nbsp; double-click floor to glide</div>
 
-  <!-- Art info pop-up modal (populated from the ART data on painting click) -->
-  <div id="art-modal" aria-hidden="true">
-    <div class="art-modal-card" role="dialog" aria-modal="true" aria-labelledby="art-modal-title">
-      <button id="art-modal-close" aria-label="Close">&times;</button>
-      <div class="art-modal-eyebrow">Artwork</div>
-      <h2 class="art-modal-title" id="art-modal-title"></h2>
-      <div class="art-modal-artist" id="art-modal-artist"></div>
-      <div class="art-modal-rule"></div>
-      <div class="art-modal-body" id="art-modal-body"></div>
+  <div id="chat-panel" aria-hidden="true">
+    <div id="chat-header">
+      <div>
+        <div class="chat-name" id="chat-name">Tara McIlroy</div>
+        <div class="chat-sub" id="chat-subtitle">Artist</div>
+      </div>
+      <button id="chat-close" aria-label="Close chat">&times;</button>
     </div>
+    <div id="chat-messages"></div>
+    <div id="chat-typing">Typing&hellip;</div>
+    <form id="chat-form">
+      <input id="chat-input" type="text" placeholder="Ask about this work&hellip;" autocomplete="off" />
+      <button id="chat-send" type="submit">Send</button>
+    </form>
   </div>
 
-  <!-- Playlist: tracks play in order, auto-advance, loop back to track 1 -->
-  <audio id="gallery-audio" preload="auto"></audio>
-
-  <!-- Now Playing bar -->
-  <div id="now-playing">
-    <div class="np-controls">
-      <button class="np-btn" id="np-prev" aria-label="Previous track" type="button">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
-      </button>
-      <button class="np-btn" id="np-play" aria-label="Play or pause" type="button">
-        <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-        <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
-      </button>
-      <button class="np-btn" id="np-next" aria-label="Next track" type="button">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 6h2v12h-2zM6 6l8.5 6L6 18z"/></svg>
-      </button>
-    </div>
-    <div class="np-meta">
-      <span class="np-label">Now Playing</span>
-      <span class="np-track" id="np-track">&nbsp;</span>
-    </div>
-  </div>
+  <audio id="ambient-audio" src="ambient.mp3" loop preload="auto"></audio>
 
   <div id="entry-screen">
     <div class="entry-content">
-      <p class="entry-introducing">Introducing</p>
+      <div class="entry-eyebrow">Current Exhibition</div>
       <h1 class="entry-title">VIZUAL&nbsp;NINJA<br>STUDIOS</h1>
-      <p class="entry-opening">Opening Exhibit</p>
-      <p class="entry-exhibit">Leading with Love &mdash; An LT227 Artist Showcase</p>
-
+      <div class="entry-rule"></div>
       <button id="enter-btn" type="button">Enter</button>
-
-      <p class="entry-gb-note">Please sign our Guest Book inside the studio to register your visit.</p>
-
-      <p class="entry-nav-heading">How to Navigate This Space</p>
-
-      <ol class="nav-instructions">
-        <li>Double-click to move forward into the space</li>
-        <li>Click and drag to look around</li>
-        <li>Click any painting to view artwork details</li>
-        <li>Use arrow keys to move around</li>
-        <li>Press ESC to close any open panel</li>
-      </ol>
     </div>
   </div>
 
-  <!-- Guest Book modal — opens when visitor clicks the book inside the gallery -->
-  <div id="guestbook-modal" aria-hidden="true">
-    <div class="gb-modal-card" role="dialog" aria-modal="true">
-      <button id="gb-modal-close" aria-label="Close">&times;</button>
-      <div class="gb-modal-eyebrow">Vizual Ninja Studios</div>
-      <h2 class="gb-modal-title">Sign the Guest Book</h2>
-      <div class="gb-modal-field">
-        <input id="gb-modal-name" type="text" placeholder="First name" autocomplete="given-name" />
-      </div>
-      <div class="gb-modal-field">
-        <input id="gb-modal-email" type="email" placeholder="Email address" autocomplete="email" />
-      </div>
-      <button id="gb-modal-submit" type="button">Sign</button>
-      <p class="gb-modal-confirmation" id="gb-modal-confirmation">Thank you for signing the guest book.</p>
-    </div>
-  </div>
+  <button id="mute-btn" aria-label="Toggle music" type="button">
+    <svg class="icon-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+      <path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"></path>
+    </svg>
+    <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+      <line x1="23" y1="9" x2="17" y2="15"></line>
+      <line x1="17" y1="9" x2="23" y2="15"></line>
+    </svg>
+  </button>
 
   <a-scene background="color: #1a1916" renderer="colorManagement: true; antialias: true" cursor="rayOrigin: mouse" raycaster="objects: .clickable">
 
@@ -376,11 +209,11 @@
       <img id="steph-art1"     src="Steph_Art1.jpg"       crossorigin="anonymous" />
       <img id="steph-art2"     src="Steph_Art2.JPEG"      crossorigin="anonymous" />
       <img id="steph-art3"     src="Steph_Art3.JPEG"      crossorigin="anonymous" />
-      <img id="img-venice"     src="VeniceHome.png"       crossorigin="anonymous" />
-      <img id="img-kerry"      src="KerryHome.png"        crossorigin="anonymous" />
-      <img id="img-ringofkerry" src="RingofKerry.png"     crossorigin="anonymous" />
-      <img id="img-positano"   src="PositanoHome.png"     crossorigin="anonymous" />
-      <img id="img-roma"       src="TreviFountain.jpg"    crossorigin="anonymous" />
+      <img id="img-venice"     src="Venice_web.jpg"       crossorigin="anonymous" />
+      <img id="img-kerry"      src="Kerry_web.jpg"        crossorigin="anonymous" />
+      <img id="img-ringofkerry" src="RingofKerry_web.jpg" crossorigin="anonymous" />
+      <img id="img-positano"   src="Positano_web.jpg"     crossorigin="anonymous" />
+      <img id="img-roma"       src="TreviFountain_web.jpg" crossorigin="anonymous" />
       <img id="intertwined"    src="Intertwined.jpg"       crossorigin="anonymous" />
       <img id="dia"            src="DiaDeLosMuertos2.png"   crossorigin="anonymous" />
       <img id="unapologetic"   src="Unapologetic.jpg"       crossorigin="anonymous" />
@@ -404,12 +237,6 @@
              rotation="-90 0 0" position="0 0 0"
              width="24" height="16"
              material="roughness: 0.13; metalness: 0.45; reflectivity: 0.7"></a-plane>
-
-    <!-- Floor decal — exhibit title inlaid into the concrete -->
-    <a-text value="Leading with Love  —  An LT227 Artist Showcase"
-            align="center" color="#6b5840" width="8" font="roboto" letter-spacing="4"
-            rotation="-90 0 0" position="0 0.012 2"
-            material="transparent: true; opacity: 0.35; shader: flat"></a-text>
 
     <!-- Reflected light pools — faint warm highlights under the track cans, fake the wet-look sheen -->
     <a-entity id="floor-reflections">
@@ -520,14 +347,15 @@
     <!-- Tara_Art2: 704×1251 → portrait ~0.563:1 → at height 2.6 → width ~1.46 -->
     <!-- Tara_Art3: 704×746 → nearly square ~0.944:1 → 2×2 (4'×4') -->
 
-    <!-- Wall header: artist name -->
+    <!-- Wall header: artist name + tagline -->
     <a-entity position="0 5.45 -7.88">
       <a-text value="Tara-Lea McIlroy" align="center" color="#1f1f1f" width="6.4" font="roboto" letter-spacing="5"></a-text>
-      <a-plane width="1.3" height="0.008" position="0 -0.42 0.002" material="color: #c8a96e; shader: flat"></a-plane>
+      <a-text value="Leading with Love" align="center" color="#8a6d3b" width="3.2" font="roboto" letter-spacing="6" position="0 -0.5 0"></a-text>
+      <a-plane width="1.3" height="0.008" position="0 -0.74 0.002" material="color: #c8a96e; shader: flat"></a-plane>
     </a-entity>
 
     <!-- Wall-mounted artist bio (left of the paintings), Donatello-style two columns -->
-    <a-entity position="-9 2.05 -7.88">
+    <a-entity position="-9 2.85 -7.88">
       <a-text value="ABOUT THE ARTIST" align="center" color="#8a6d3b" width="2.6" font="roboto" letter-spacing="6" position="0 1.55 0"></a-text>
       <a-text value="Tara-Lea McIlroy" align="center" color="#1f1f1f" width="4.0" font="roboto" letter-spacing="2" position="0 1.12 0"></a-text>
       <a-text value="Tara-Lea McIlroy is a Toronto-based painter who works largely in oil and acrylic, leading with love. Her work moves between grief, memory, and the quiet beauty of everyday life."
@@ -538,45 +366,45 @@
 
     <!-- LEFT: Butterfly painting (2 × 2 = 4' × 4') -->
     <a-entity id="artwork" position="-5 2.6 -7.92">
-      <a-box position="0  1.04 0" width="2.12" height="0.06" depth="0.06" material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
-      <a-box position="0 -1.04 0" width="2.12" height="0.06" depth="0.06" material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
-      <a-box position="-1.04 0 0" width="0.06" height="2.02" depth="0.06" material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
-      <a-box position="1.04 0 0"  width="0.06" height="2.02" depth="0.06" material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
+      <a-box position="0  1.04 0" width="2.12" height="0.06" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="0 -1.04 0" width="2.12" height="0.06" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="-1.04 0 0" width="0.06" height="2.02" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="1.04 0 0"  width="0.06" height="2.02" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
       <a-plane id="painting-plane" class="clickable art-chat" position="0 0 0.01" width="2" height="2"
                material="src: #painting; roughness: 0.85; metalness: 0"></a-plane>
     </a-entity>
     <a-entity position="-5 1.28 -7.9">
-      <a-text value="Always Here With You" align="center" color="#8a6d3b" width="2.4" font="roboto" letter-spacing="2"></a-text>
-      <a-text value="Click Painting to Learn More" align="center" color="#aaa" width="1.6" font="roboto" letter-spacing="1" position="0 -0.2 0"></a-text>
+      <a-text value="Always Here With You" align="center" color="#8a6d3b" width="2.0" font="roboto" letter-spacing="2"></a-text>
+      <a-text value="Tara-Lea McIlroy - Oil on canvas, 4 x 4 ft - Not for sale - commissions welcome" align="center" color="#888" width="2.8" font="roboto" position="0 -0.16 0"></a-text>
     </a-entity>
 
     <!-- CENTRE: Tara_Art2 — 704×1251 portrait → width 1.46, height 2.6 -->
     <a-entity id="artwork-tara2" position="0 2.6 -7.92">
       <!-- Gold frame sized to 1.46 × 2.6 -->
-      <a-box position="0  1.34 0" width="1.58" height="0.06" depth="0.06" material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
-      <a-box position="0 -1.34 0" width="1.58" height="0.06" depth="0.06" material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
-      <a-box position="-0.76 0 0" width="0.06" height="2.62" depth="0.06" material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
-      <a-box position="0.76 0 0"  width="0.06" height="2.62" depth="0.06" material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
+      <a-box position="0  1.34 0" width="1.58" height="0.06" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="0 -1.34 0" width="1.58" height="0.06" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="-0.76 0 0" width="0.06" height="2.62" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="0.76 0 0"  width="0.06" height="2.62" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
       <a-plane id="plane-tara2" class="clickable art-chat" position="0 0 0.01" width="1.46" height="2.6"
                material="src: #tara-art2; roughness: 0.85; metalness: 0"></a-plane>
     </a-entity>
     <a-entity position="0 1.0 -7.9">
-      <a-text value="Somewhere Out There" align="center" color="#8a6d3b" width="2.4" font="roboto" letter-spacing="2"></a-text>
-      <a-text value="Click Painting to Learn More" align="center" color="#aaa" width="1.6" font="roboto" letter-spacing="1" position="0 -0.2 0"></a-text>
+      <a-text value="Somewhere Out There" align="center" color="#8a6d3b" width="2.0" font="roboto" letter-spacing="2"></a-text>
+      <a-text value="Tara-Lea McIlroy - Acrylic on canvas, 1.5 x 3 ft - $750 USD + shipping" align="center" color="#888" width="2.8" font="roboto" position="0 -0.16 0"></a-text>
     </a-entity>
 
     <!-- RIGHT: Tara_Art3 — 704×746 ≈ square → 2 × 2 (4' × 4') -->
     <a-entity id="artwork-tara3" position="5 2.6 -7.92">
-      <a-box position="0  1.04 0" width="2.12" height="0.06" depth="0.06" material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
-      <a-box position="0 -1.04 0" width="2.12" height="0.06" depth="0.06" material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
-      <a-box position="-1.04 0 0" width="0.06" height="2.02" depth="0.06" material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
-      <a-box position="1.04 0 0"  width="0.06" height="2.02" depth="0.06" material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
+      <a-box position="0  1.04 0" width="2.12" height="0.06" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="0 -1.04 0" width="2.12" height="0.06" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="-1.04 0 0" width="0.06" height="2.02" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="1.04 0 0"  width="0.06" height="2.02" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
       <a-plane id="plane-tara3" class="clickable art-chat" position="0 0 0.01" width="2" height="2"
                material="src: #tara-art3; roughness: 0.85; metalness: 0"></a-plane>
     </a-entity>
     <a-entity position="5 1.28 -7.9">
-      <a-text value="It Was All A Dream" align="center" color="#8a6d3b" width="2.4" font="roboto" letter-spacing="2"></a-text>
-      <a-text value="Click Painting to Learn More" align="center" color="#aaa" width="1.6" font="roboto" letter-spacing="1" position="0 -0.2 0"></a-text>
+      <a-text value="It Was All A Dream" align="center" color="#8a6d3b" width="2.0" font="roboto" letter-spacing="2"></a-text>
+      <a-text value="Tara-Lea McIlroy - Acrylic on canvas, 4 x 4 ft - Not for sale - commissions" align="center" color="#888" width="2.8" font="roboto" position="0 -0.16 0"></a-text>
     </a-entity>
 
     <!-- ===================== EUROPEAN SERIES — left wall (x = -12) ===================== -->
@@ -588,61 +416,54 @@
                material="color: #c8a96e; shader: flat"></a-plane>
     </a-entity>
 
-    <!-- European series wall placard -->
-    <a-entity position="-11.92 2.5 -6.5" rotation="0 90 0">
-      <a-text value="In 2017, I took my mother on her first trip to Europe — a journey through six countries over 21 days. For her, it was a trip of a lifetime. For me, it became one of my most treasured memories as her daughter. This series captures the moments, landscapes, and quiet in-betweens of a shared adventure that neither of us will ever forget."
-              align="left" anchor="left" baseline="top" color="#555" width="1.6" wrap-count="28" font="roboto" position="-0.8 0.5 0.01"></a-text>
-      <a-text value="— Tara-Lea McIlroy" align="left" anchor="left" color="#8a6d3b" width="1.4" font="roboto" position="-0.8 -0.72 0.01"></a-text>
-    </a-entity>
-
     <!-- Venice -->
     <a-entity id="photo-venice" position="-11.94 2.3 -4" rotation="0 90 0">
       <a-box position="0 0 -0.02" width="1.1" height="0.84" depth="0.04"
-             material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
-      <a-plane id="plane-venice" class="clickable art-chat" position="0 0 0.012" width="0.9" height="0.67"
-               material="src: #img-venice; roughness: 0.85; metalness: 0"></a-plane>
-      <a-text value="Venice" align="center" color="#8a6d3b" width="2.0" font="roboto" letter-spacing="2" position="0 -0.52 0.012"></a-text>
-      <a-text value="Click Painting to Learn More" align="center" color="#aaa" width="1.6" font="roboto" letter-spacing="1" position="0 -0.72 0.012"></a-text>
+             material="color: #1a1a1a; roughness: 0.4; metalness: 0.15"></a-box>
+      <a-plane position="0 0 0.006" width="1.02" height="0.76"
+               material="color: #f7f4ee; roughness: 0.95"></a-plane>
+      <a-image src="#img-venice" position="0 0 0.012" width="0.9" height="0.67"></a-image>
+      <a-text value="Venice" align="center" color="#777" width="1.8" font="roboto" position="0 -0.52 0.012"></a-text>
     </a-entity>
 
     <!-- Kerry -->
     <a-entity id="photo-kerry" position="-11.94 2.3 -1.5" rotation="0 90 0">
       <a-box position="0 0 -0.02" width="1.1" height="0.84" depth="0.04"
-             material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
-      <a-plane id="plane-kerry" class="clickable art-chat" position="0 0 0.012" width="0.88" height="0.67"
-               material="src: #img-kerry; roughness: 0.85; metalness: 0"></a-plane>
-      <a-text value="Kerry" align="center" color="#8a6d3b" width="2.0" font="roboto" letter-spacing="2" position="0 -0.52 0.012"></a-text>
-      <a-text value="Click Painting to Learn More" align="center" color="#aaa" width="1.6" font="roboto" letter-spacing="1" position="0 -0.72 0.012"></a-text>
+             material="color: #1a1a1a; roughness: 0.4; metalness: 0.15"></a-box>
+      <a-plane position="0 0 0.006" width="1.02" height="0.76"
+               material="color: #f7f4ee; roughness: 0.95"></a-plane>
+      <a-image src="#img-kerry" position="0 0 0.012" width="0.88" height="0.67"></a-image>
+      <a-text value="Kerry" align="center" color="#777" width="1.8" font="roboto" position="0 -0.52 0.012"></a-text>
     </a-entity>
 
     <!-- Roma (portrait) -->
     <a-entity id="photo-roma" position="-11.94 2.3 1" rotation="0 90 0">
       <a-box position="0 0 -0.02" width="0.84" height="1.1" depth="0.04"
-             material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
-      <a-plane id="plane-roma" class="clickable art-chat" position="0 0 0.012" width="0.6" height="0.78"
-               material="src: #img-roma; roughness: 0.85; metalness: 0"></a-plane>
-      <a-text value="Roma" align="center" color="#8a6d3b" width="2.0" font="roboto" letter-spacing="2" position="0 -0.65 0.012"></a-text>
-      <a-text value="Click Painting to Learn More" align="center" color="#aaa" width="1.6" font="roboto" letter-spacing="1" position="0 -0.85 0.012"></a-text>
+             material="color: #1a1a1a; roughness: 0.4; metalness: 0.15"></a-box>
+      <a-plane position="0 0 0.006" width="0.76" height="1.02"
+               material="color: #f7f4ee; roughness: 0.95"></a-plane>
+      <a-image src="#img-roma" position="0 0 0.012" width="0.6" height="0.78"></a-image>
+      <a-text value="Roma" align="center" color="#777" width="1.8" font="roboto" position="0 -0.65 0.012"></a-text>
     </a-entity>
 
     <!-- Positano -->
     <a-entity id="photo-positano" position="-11.94 2.3 3.5" rotation="0 90 0">
       <a-box position="0 0 -0.02" width="1.1" height="0.84" depth="0.04"
-             material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
-      <a-plane id="plane-positano" class="clickable art-chat" position="0 0 0.012" width="0.93" height="0.67"
-               material="src: #img-positano; roughness: 0.85; metalness: 0"></a-plane>
-      <a-text value="Positano" align="center" color="#8a6d3b" width="2.0" font="roboto" letter-spacing="2" position="0 -0.52 0.012"></a-text>
-      <a-text value="Click Painting to Learn More" align="center" color="#aaa" width="1.6" font="roboto" letter-spacing="1" position="0 -0.72 0.012"></a-text>
+             material="color: #1a1a1a; roughness: 0.4; metalness: 0.15"></a-box>
+      <a-plane position="0 0 0.006" width="1.02" height="0.76"
+               material="color: #f7f4ee; roughness: 0.95"></a-plane>
+      <a-image src="#img-positano" position="0 0 0.012" width="0.93" height="0.67"></a-image>
+      <a-text value="Positano" align="center" color="#777" width="1.8" font="roboto" position="0 -0.52 0.012"></a-text>
     </a-entity>
 
     <!-- Ring of Kerry -->
     <a-entity id="photo-ringofkerry" position="-11.94 2.3 6" rotation="0 90 0">
       <a-box position="0 0 -0.02" width="1.1" height="0.84" depth="0.04"
-             material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
-      <a-plane id="plane-ringofkerry" class="clickable art-chat" position="0 0 0.012" width="0.93" height="0.66"
-               material="src: #img-ringofkerry; roughness: 0.85; metalness: 0"></a-plane>
-      <a-text value="Ring of Kerry" align="center" color="#8a6d3b" width="2.0" font="roboto" letter-spacing="2" position="0 -0.52 0.012"></a-text>
-      <a-text value="Click Painting to Learn More" align="center" color="#aaa" width="1.6" font="roboto" letter-spacing="1" position="0 -0.72 0.012"></a-text>
+             material="color: #1a1a1a; roughness: 0.4; metalness: 0.15"></a-box>
+      <a-plane position="0 0 0.006" width="1.02" height="0.76"
+               material="color: #f7f4ee; roughness: 0.95"></a-plane>
+      <a-image src="#img-ringofkerry" position="0 0 0.012" width="0.93" height="0.66"></a-image>
+      <a-text value="Ring of Kerry" align="center" color="#777" width="1.8" font="roboto" position="0 -0.52 0.012"></a-text>
     </a-entity>
 
     <!-- ===================== STEPH'S WALL — right wall (x = 12) ===================== -->
@@ -658,7 +479,7 @@
     </a-entity>
 
     <!-- Wall-mounted artist bio (back end of the wall), Donatello-style two columns -->
-    <a-entity position="11.92 1.65 6.5" rotation="0 -90 0">
+    <a-entity position="11.92 2.95 6.5" rotation="0 -90 0">
       <a-text value="ABOUT THE ARTIST" align="center" color="#8a6d3b" width="2.2" font="roboto" letter-spacing="5" position="0 1.95 0"></a-text>
       <a-text value="Stephanie Camacho" align="center" color="#1f1f1f" width="3.2" font="roboto" letter-spacing="2" position="0 1.55 0"></a-text>
       <a-text value="Stephanie Camacho was born into rhythm. Raised in New Jersey with Caribbean roots, her childhood home pulsed with music, movement, and love expressed through celebration. The city streets taught her to see - as a child she sketched mountains she'd never touched and waterfronts she'd never stood before. She has always painted what is coming before it arrives."
@@ -669,44 +490,44 @@
 
     <!-- Steph_Art1 — portrait 1.5 × 2.0 -->
     <a-entity id="photo-steph1" position="11.94 2.6 -3.5" rotation="0 -90 0">
-      <a-box position="0  1.04 0" width="1.62" height="0.06" depth="0.06" material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
-      <a-box position="0 -1.04 0" width="1.62" height="0.06" depth="0.06" material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
-      <a-box position="-0.78 0 0" width="0.06" height="2.02" depth="0.06" material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
-      <a-box position="0.78 0 0"  width="0.06" height="2.02" depth="0.06" material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
+      <a-box position="0  1.04 0" width="1.62" height="0.06" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="0 -1.04 0" width="1.62" height="0.06" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="-0.78 0 0" width="0.06" height="2.02" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="0.78 0 0"  width="0.06" height="2.02" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
       <a-plane id="plane-steph1" class="clickable art-chat" position="0 0 0.01" width="1.5" height="2.0"
                material="src: #steph-art1; roughness: 0.85; metalness: 0"></a-plane>
     </a-entity>
     <a-entity position="11.92 1.28 -3.5" rotation="0 -90 0">
-      <a-text value="When She Lets Go" align="center" color="#8a6d3b" width="2.4" font="roboto" letter-spacing="2"></a-text>
-      <a-text value="Click Painting to Learn More" align="center" color="#aaa" width="1.6" font="roboto" letter-spacing="1" position="0 -0.2 0"></a-text>
+      <a-text value="When She Lets Go" align="center" color="#8a6d3b" width="2.0" font="roboto" letter-spacing="2"></a-text>
+      <a-text value="Stephanie Camacho - Acrylic &amp; marker, 18 x 24 in - $1,100 USD + shipping" align="center" color="#888" width="2.8" font="roboto" position="0 -0.16 0"></a-text>
     </a-entity>
 
     <!-- Steph_Art2 — landscape 2.0 × 1.5 -->
     <a-entity id="photo-steph2" position="11.94 2.35 0" rotation="0 -90 0">
-      <a-box position="0  0.79 0" width="2.12" height="0.06" depth="0.06" material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
-      <a-box position="0 -0.79 0" width="2.12" height="0.06" depth="0.06" material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
-      <a-box position="-1.04 0 0" width="0.06" height="1.52" depth="0.06" material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
-      <a-box position="1.04 0 0"  width="0.06" height="1.52" depth="0.06" material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
+      <a-box position="0  0.79 0" width="2.12" height="0.06" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="0 -0.79 0" width="2.12" height="0.06" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="-1.04 0 0" width="0.06" height="1.52" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="1.04 0 0"  width="0.06" height="1.52" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
       <a-plane id="plane-steph2" class="clickable art-chat" position="0 0 0.01" width="2.0" height="1.5"
                material="src: #steph-art2; roughness: 0.85; metalness: 0"></a-plane>
     </a-entity>
     <a-entity position="11.92 1.28 0" rotation="0 -90 0">
-      <a-text value="They Kept Rowing" align="center" color="#8a6d3b" width="2.4" font="roboto" letter-spacing="2"></a-text>
-      <a-text value="Click Painting to Learn More" align="center" color="#aaa" width="1.6" font="roboto" letter-spacing="1" position="0 -0.2 0"></a-text>
+      <a-text value="They Kept Rowing" align="center" color="#8a6d3b" width="2.0" font="roboto" letter-spacing="2"></a-text>
+      <a-text value="Stephanie Camacho - Acrylic on canvas, 30 x 40 in - $1,400 USD + shipping" align="center" color="#888" width="2.8" font="roboto" position="0 -0.16 0"></a-text>
     </a-entity>
 
     <!-- Steph_Art3 — ultra-wide 2.4 × 0.98 -->
     <a-entity id="photo-steph3" position="11.94 2.35 3.5" rotation="0 -90 0">
-      <a-box position="0  0.52 0" width="2.52" height="0.06" depth="0.06" material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
-      <a-box position="0 -0.52 0" width="2.52" height="0.06" depth="0.06" material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
-      <a-box position="-1.24 0 0" width="0.06" height="0.98" depth="0.06" material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
-      <a-box position="1.24 0 0"  width="0.06" height="0.98" depth="0.06" material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
+      <a-box position="0  0.52 0" width="2.52" height="0.06" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="0 -0.52 0" width="2.52" height="0.06" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="-1.24 0 0" width="0.06" height="0.98" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="1.24 0 0"  width="0.06" height="0.98" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
       <a-plane id="plane-steph3" class="clickable art-chat" position="0 0 0.01" width="2.4" height="0.98"
                material="src: #steph-art3; roughness: 0.85; metalness: 0"></a-plane>
     </a-entity>
     <a-entity position="11.92 1.56 3.5" rotation="0 -90 0">
-      <a-text value="Blood Memory" align="center" color="#8a6d3b" width="2.4" font="roboto" letter-spacing="2"></a-text>
-      <a-text value="Click Painting to Learn More" align="center" color="#aaa" width="1.6" font="roboto" letter-spacing="1" position="0 -0.2 0"></a-text>
+      <a-text value="Blood Memory" align="center" color="#8a6d3b" width="2.0" font="roboto" letter-spacing="2"></a-text>
+      <a-text value="Stephanie Camacho - Acrylic, collage &amp; marker, 16 x 40 in - $1,500 USD + shipping" align="center" color="#888" width="2.8" font="roboto" position="0 -0.16 0"></a-text>
     </a-entity>
 
     <!-- ===================== BACK WALL — Jajaira Berrios (z = +8) ===================== -->
@@ -736,7 +557,7 @@
     </a-entity>
 
     <!-- Wall-mounted artist bio (left of the paintings), Donatello-style two columns -->
-    <a-entity position="-9 1.85 7.88" rotation="0 180 0">
+    <a-entity position="-9 2.95 7.88" rotation="0 180 0">
       <a-text value="ABOUT THE ARTIST" align="center" color="#8a6d3b" width="2.6" font="roboto" letter-spacing="6" position="0 1.75 0"></a-text>
       <a-text value="Jajaira Berrios" align="center" color="#1f1f1f" width="3.6" font="roboto" letter-spacing="2" position="0 1.32 0"></a-text>
       <a-text value="Jajaira Berrios was born and raised in East Harlem. Art has always drawn her deeply. In elementary school her work was selected for a gallery, and soon after a children's doctor at Metropolitan Hospital wrote asking to purchase her artwork for his office - a letter she keeps to this day, the moment she realized she had a gift. She attended Art &amp; Design High School and later majored in Communication Design in college."
@@ -747,78 +568,45 @@
 
     <!-- LEFT: Intertwined — portrait 1.49 × 2.0 -->
     <a-entity id="artwork-intertwined" position="-5 2.6 7.92" rotation="0 180 0">
-      <a-box position="0  1.04 0" width="1.61" height="0.06" depth="0.06" material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
-      <a-box position="0 -1.04 0" width="1.61" height="0.06" depth="0.06" material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
-      <a-box position="-0.775 0 0" width="0.06" height="2.02" depth="0.06" material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
-      <a-box position="0.775 0 0"  width="0.06" height="2.02" depth="0.06" material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
+      <a-box position="0  1.04 0" width="1.61" height="0.06" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="0 -1.04 0" width="1.61" height="0.06" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="-0.775 0 0" width="0.06" height="2.02" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="0.775 0 0"  width="0.06" height="2.02" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
       <a-plane id="plane-intertwined" class="clickable art-chat" position="0 0 0.01" width="1.49" height="2.0"
                material="src: #intertwined; roughness: 0.85; metalness: 0"></a-plane>
     </a-entity>
     <a-entity position="-5 1.28 7.9" rotation="0 180 0">
-      <a-text value="Intertwined" align="center" color="#8a6d3b" width="2.4" font="roboto" letter-spacing="2"></a-text>
-      <a-text value="Click Painting to Learn More" align="center" color="#aaa" width="1.6" font="roboto" letter-spacing="1" position="0 -0.2 0"></a-text>
+      <a-text value="Intertwined" align="center" color="#8a6d3b" width="2.0" font="roboto" letter-spacing="2"></a-text>
+      <a-text value="Jajaira Berrios - Acrylic on canvas - 12 x 16 in" align="center" color="#888" width="2.8" font="roboto" position="0 -0.16 0"></a-text>
     </a-entity>
 
     <!-- CENTRE: Dia De Los Muertos — tall portrait 0.94 × 2.0 -->
     <!-- Dia De Los Muertos_2: 1404×2095 → 0.670:1 → w=1.34 h=2.0 -->
     <a-entity id="artwork-dia" position="0 2.6 7.92" rotation="0 180 0">
-      <a-box position="0  1.04 0" width="1.46" height="0.06" depth="0.06" material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
-      <a-box position="0 -1.04 0" width="1.46" height="0.06" depth="0.06" material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
-      <a-box position="-0.70 0 0" width="0.06" height="2.02" depth="0.06" material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
-      <a-box position="0.70 0 0"  width="0.06" height="2.02" depth="0.06" material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
+      <a-box position="0  1.04 0" width="1.46" height="0.06" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="0 -1.04 0" width="1.46" height="0.06" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="-0.70 0 0" width="0.06" height="2.02" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="0.70 0 0"  width="0.06" height="2.02" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
       <a-plane id="plane-dia" class="clickable art-chat" position="0 0 0.01" width="1.34" height="2.0"
                material="src: #dia; roughness: 0.85; metalness: 0"></a-plane>
     </a-entity>
     <a-entity position="0 1.28 7.9" rotation="0 180 0">
-      <a-text value="Dia De Los Muertos" align="center" color="#8a6d3b" width="2.4" font="roboto" letter-spacing="2"></a-text>
-      <a-text value="Click Painting to Learn More" align="center" color="#aaa" width="1.6" font="roboto" letter-spacing="1" position="0 -0.2 0"></a-text>
+      <a-text value="Dia De Los Muertos" align="center" color="#8a6d3b" width="2.0" font="roboto" letter-spacing="2"></a-text>
+      <a-text value="Jajaira Berrios - Pencil drawing, boxed frame - 12 x 16 in" align="center" color="#888" width="2.8" font="roboto" position="0 -0.16 0"></a-text>
     </a-entity>
 
     <!-- RIGHT: Unapologetic — portrait 1.10 × 1.8 -->
     <a-entity id="artwork-unapologetic" position="5 2.6 7.92" rotation="0 180 0">
-      <a-box position="0  0.94 0" width="1.22" height="0.06" depth="0.06" material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
-      <a-box position="0 -0.94 0" width="1.22" height="0.06" depth="0.06" material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
-      <a-box position="-0.58 0 0" width="0.06" height="1.82" depth="0.06" material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
-      <a-box position="0.58 0 0"  width="0.06" height="1.82" depth="0.06" material="color: #111; roughness: 0.7; metalness: 0.1"></a-box>
+      <a-box position="0  0.94 0" width="1.22" height="0.06" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="0 -0.94 0" width="1.22" height="0.06" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="-0.58 0 0" width="0.06" height="1.82" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
+      <a-box position="0.58 0 0"  width="0.06" height="1.82" depth="0.06" material="color: #c8a96e; roughness: 0.3; metalness: 0.7"></a-box>
       <a-plane id="plane-unapologetic" class="clickable art-chat" position="0 0 0.01" width="1.10" height="1.8"
                material="src: #unapologetic; roughness: 0.85; metalness: 0"></a-plane>
     </a-entity>
     <a-entity position="5 1.42 7.9" rotation="0 180 0">
-      <a-text value="Unapologetic" align="center" color="#8a6d3b" width="2.4" font="roboto" letter-spacing="2"></a-text>
-      <a-text value="Click Painting to Learn More" align="center" color="#aaa" width="1.6" font="roboto" letter-spacing="1" position="0 -0.2 0"></a-text>
-    </a-entity>
-
-    <!-- ===================== GUEST BOOK STAND ===================== -->
-    <!-- Positioned near the gallery entrance, right side — visible on entry -->
-    <a-entity position="9.2 0 5.6" rotation="0 -135 0">
-      <!-- Pedestal base -->
-      <a-cylinder radius="0.24" height="0.055" position="0 0.028 0"
-                  material="color: #1c1814; roughness: 0.5; metalness: 0.55"></a-cylinder>
-      <!-- Pedestal column -->
-      <a-cylinder radius="0.055" height="0.86" position="0 0.485 0"
-                  material="color: #1c1814; roughness: 0.5; metalness: 0.55"></a-cylinder>
-      <!-- Pedestal top cap -->
-      <a-cylinder radius="0.19" height="0.038" position="0 0.94 0"
-                  material="color: #1c1814; roughness: 0.5; metalness: 0.55"></a-cylinder>
-      <!-- Book body — dark leather -->
-      <a-box id="gb-book-click" class="clickable" width="0.3" height="0.038" depth="0.22"
-             position="0 0.978 0"
-             material="color: #0d0b09; roughness: 0.92; metalness: 0.04"></a-box>
-      <!-- Gold spine -->
-      <a-box width="0.007" height="0.042" depth="0.22" position="-0.148 0.978 0"
-             material="color: #c8a96e; roughness: 0.35; metalness: 0.65; shader: flat"></a-box>
-      <!-- Gold corner tabs -->
-      <a-box width="0.032" height="0.042" depth="0.007" position="-0.131 0.978  0.108"
-             material="color: #c8a96e; roughness: 0.35; metalness: 0.65"></a-box>
-      <a-box width="0.032" height="0.042" depth="0.007" position="-0.131 0.978 -0.108"
-             material="color: #c8a96e; roughness: 0.35; metalness: 0.65"></a-box>
-      <!-- Label above -->
-      <a-text value="GUEST BOOK" align="center" color="#c8a96e"
-              width="1.0" font="roboto" letter-spacing="5"
-              position="0 1.22 0" rotation="-6 0 0"></a-text>
-      <a-text value="Click to sign" align="center" color="#6a6458"
-              width="0.72" font="roboto" letter-spacing="1"
-              position="0 1.08 0.01" rotation="-6 0 0"></a-text>
+      <a-text value="Unapologetic" align="center" color="#8a6d3b" width="2.0" font="roboto" letter-spacing="2"></a-text>
+      <a-text value="Jajaira Berrios - Colored pencil &amp; marker - 5 x 8 in" align="center" color="#888" width="2.8" font="roboto" position="0 -0.16 0"></a-text>
     </a-entity>
 
     <!-- ===================== VISITOR ===================== -->
@@ -832,7 +620,6 @@
 
   <script>
     /* ---- Procedural polished concrete floor — LIGHT warm grey ---- */
-    if (!AFRAME.components['procedural-concrete'])
     AFRAME.registerComponent('procedural-concrete', {
       init: function () {
         var c = document.createElement('canvas');
@@ -929,7 +716,6 @@
     });
 
     /* ---- Room boundary collision ---- */
-    if (!AFRAME.components['room-bounds'])
     AFRAME.registerComponent('room-bounds', {
       schema: {
         xMin: { default: -11.2 }, xMax: { default: 11.2 },
@@ -944,66 +730,45 @@
       }
     });
 
-    /* ---- Playlist, Now Playing bar, entry screen, guest book gate ---- */
-    (function () {
-      var entry    = document.getElementById('entry-screen');
+    /* ---- Entry screen, ambient music, mute toggle ---- */
+    window.addEventListener('load', function () {
+      var entry = document.getElementById('entry-screen');
       var enterBtn = document.getElementById('enter-btn');
-      var camera   = document.getElementById('camera');
+      var muteBtn = document.getElementById('mute-btn');
+      var audio = document.getElementById('ambient-audio');
+      var camera = document.getElementById('camera');
 
-      /* ===== Playlist ===== */
-      var audio = document.getElementById('gallery-audio');
-      var nowPlaying = document.getElementById('now-playing');
-      var npTrack = document.getElementById('np-track');
-      var npPlay = document.getElementById('np-play');
-      var npPrev = document.getElementById('np-prev');
-      var npNext = document.getElementById('np-next');
-
-      // Tracks play in order; clean display names strip filename prefixes/numbers.
-      var PLAYLIST = [
-        { file: 'alex-morgan-smooth-jazz-lounge-relaxing-evening-537465.mp3', name: 'Smooth Jazz Lounge' },
-        { file: 'atlasaudio-jazz-519632.mp3',                                name: 'Jazz' },
-        { file: 'vibedepot-smooth-jazz-trailer-550879.mp3',                  name: 'Smooth Jazz Trailer' },
-        { file: 'waveloom-jazz-cafe-516774.mp3',                             name: 'Jazz Café' }
-      ];
-      var trackIndex = 0;
-
-      if (audio) audio.volume = 0.25;
-
-      function loadTrack(i, autoplay) {
-        trackIndex = (i + PLAYLIST.length) % PLAYLIST.length;
-        audio.src = PLAYLIST[trackIndex].file;
-        npTrack.textContent = PLAYLIST[trackIndex].name;
-        audio.load();
-        if (autoplay) tryStartMusic();
-      }
+      if (audio) { audio.volume = 0.25; audio.muted = false; audio.load(); }
 
       var musicStarted = false;
       function tryStartMusic() {
-        if (!audio) return;
+        if (!audio || musicStarted) return;
         var p = audio.play();
         if (p && p.then) {
-          p.then(function () { musicStarted = true; }).catch(function () { /* blocked — a gesture will retry */ });
+          p.then(function () {
+            musicStarted = true;
+            if (muteBtn) muteBtn.classList.remove('muted');
+          }).catch(function () { /* blocked — a later gesture will retry */ });
         } else {
           musicStarted = true;
         }
       }
 
-      // Auto-advance to the next track, looping back to track 1 after the last.
-      audio.addEventListener('ended', function () { loadTrack(trackIndex + 1, true); });
-      audio.addEventListener('play',  function () { npPlay.classList.add('playing'); });
-      audio.addEventListener('pause', function () { npPlay.classList.remove('playing'); });
-
-      npPlay.addEventListener('click', function () {
-        if (audio.paused) tryStartMusic(); else audio.pause();
+      // Fallback: the FIRST real user gesture anywhere unlocks audio, in case
+      // the browser blocked the Enter-Gallery click (autoplay policy varies).
+      function gestureUnlock() {
+        if (musicStarted || (audio && !audio.paused)) { removeGestureUnlock(); return; }
+        tryStartMusic();
+      }
+      function removeGestureUnlock() {
+        ['click', 'keydown', 'touchend', 'pointerdown'].forEach(function (evt) {
+          document.removeEventListener(evt, gestureUnlock, true);
+        });
+      }
+      ['click', 'keydown', 'touchend', 'pointerdown'].forEach(function (evt) {
+        document.addEventListener(evt, gestureUnlock, true);
       });
-      npPrev.addEventListener('click', function () { loadTrack(trackIndex - 1, true); });
-      npNext.addEventListener('click', function () { loadTrack(trackIndex + 1, true); });
 
-      // Load the first track (no autoplay) — music begins when Enter is clicked,
-      // which is a confirmed user gesture and is never blocked by browsers.
-      loadTrack(0, false);
-
-      /* ===== Scene controls locked until entry ===== */
       function setSceneControls(enabled) {
         if (!camera) return;
         camera.setAttribute('wasd-controls', 'enabled', enabled);
@@ -1011,7 +776,6 @@
       }
       setSceneControls(false);
 
-      /* ===== Enter the gallery ===== */
       if (enterBtn) {
         enterBtn.addEventListener('click', function () {
           // Start audio on this user gesture; retry shortly if the first play is blocked
@@ -1019,7 +783,7 @@
           setTimeout(tryStartMusic, 250);
 
           entry.classList.add('fade-out');
-          if (nowPlaying) nowPlaying.classList.add('visible');
+          muteBtn.classList.add('visible');
           setSceneControls(true);
           setTimeout(function () {
             var h = document.getElementById('hint');
@@ -1030,104 +794,45 @@
           }, 1600);
         });
       }
-    }());
 
-    /* ===================== GUEST BOOK MODAL ===================== */
-    (function () {
-      var modal      = document.getElementById('guestbook-modal');
-      var closeBtn   = document.getElementById('gb-modal-close');
-      var submitBtn  = document.getElementById('gb-modal-submit');
-      var nameInput  = document.getElementById('gb-modal-name');
-      var emailInput = document.getElementById('gb-modal-email');
-      var confirm    = document.getElementById('gb-modal-confirmation');
-      var camera     = document.getElementById('camera');
-
-      function setControls(enabled) {
-        if (!camera) return;
-        camera.setAttribute('wasd-controls', 'enabled', enabled);
-        camera.setAttribute('look-controls', 'enabled', enabled);
+      // Also try to unlock audio on any user interaction within the entry screen
+      if (entry && audio) {
+        entry.addEventListener('click', function () {
+          if (audio.paused) audio.play().catch(function () {});
+        }, { once: false });
+        entry.addEventListener('touchstart', function () {
+          if (audio.paused) audio.play().catch(function () {});
+        }, { once: false });
       }
 
-      function openGuestBookModal() {
-        modal.classList.add('open');
-        modal.setAttribute('aria-hidden', 'false');
-        if (confirm) confirm.style.display = 'none';
-        setControls(false);
-      }
-
-      function closeGuestBookModal() {
-        modal.classList.remove('open');
-        modal.setAttribute('aria-hidden', 'true');
-        setControls(true);
-      }
-
-      /* 3-D book click opens the modal */
-      var bookEl = document.getElementById('gb-book-click');
-      if (bookEl) bookEl.addEventListener('click', openGuestBookModal);
-
-      /* Close on ✕ button or click outside the card */
-      if (closeBtn) closeBtn.addEventListener('click', closeGuestBookModal);
-      if (modal) modal.addEventListener('click', function (e) {
-        if (e.target === modal) closeGuestBookModal();
-      });
-
-      /* ESC closes the modal */
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && modal.classList.contains('open')) closeGuestBookModal();
-      });
-
-      /* Submit */
-      if (submitBtn) {
-        submitBtn.addEventListener('click', function () {
-          var name  = nameInput  ? nameInput.value.trim()  : '';
-          var email = emailInput ? emailInput.value.trim() : '';
-          if (!name || !email) return;
-
-          var payload = {
-            firstName: name,
-            email: email,
-            timestamp: new Date().toISOString()
-          };
-
-          // ============================================================
-          // GOOGLE APPS SCRIPT SUBMISSION
-          // 1. Create a Google Apps Script Web App that accepts POST JSON.
-          // 2. Deploy it with "Anyone" access.
-          // 3. Paste the resulting /exec URL as the value below.
-          // ============================================================
-          var GOOGLE_APPS_SCRIPT_URL = ''; // <-- PASTE YOUR /exec URL HERE
-
-          if (GOOGLE_APPS_SCRIPT_URL) {
-            fetch(GOOGLE_APPS_SCRIPT_URL, {
-              method: 'POST',
-              mode: 'no-cors',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(payload)
-            }).catch(function () { /* fire-and-forget */ });
+      if (muteBtn) {
+        muteBtn.addEventListener('click', function () {
+          if (!audio) return;
+          if (audio.paused) {
+            audio.play().catch(function () {});
+            muteBtn.classList.remove('muted');
           } else {
-            console.log('Guest book entry:', payload);
+            audio.pause();
+            muteBtn.classList.add('muted');
           }
-
-          /* Show confirmation, then close */
-          submitBtn.style.display = 'none';
-          if (confirm) { confirm.style.display = 'block'; }
-          setTimeout(closeGuestBookModal, 2200);
-          setTimeout(function () {
-            if (submitBtn) submitBtn.style.display = '';
-            if (nameInput)  nameInput.value  = '';
-            if (emailInput) emailInput.value = '';
-          }, 2500);
         });
       }
-    }());
+    });
 
     /* ============================================================
-       ARTWORK INFORMATION — title, artist, and description for each
-       painting. Shown in the art info pop-up modal when a visitor
-       clicks a painting (keyed by the painting plane's element id).
-       ============================================================ */
+       PAINTING CHATBOTS — each painting opens a chat panel with its
+       own pre-loaded context, answered by Claude (claude-haiku-4-5)
+       via the Anthropic Messages API.
 
-    /* Artist bios — shared context referenced by each painting's info */
+       NOTE: Replace the placeholder below with a real key. Calling the
+       Anthropic API directly from the browser exposes the key to anyone
+       who views the page — for production, proxy this through a small
+       server endpoint instead.
+       ============================================================ */
+    var ANTHROPIC_API_KEY = "ANTHROPIC_API_KEY"; // <-- placeholder; insert your key here
+    var ANTHROPIC_MODEL = "claude-haiku-4-5";
+
+    /* Artist bios — shared context woven into each painting's persona */
     var BIO_STEPH = "Stephanie Camacho was born into rhythm. Raised in New Jersey with Caribbean roots, her childhood home pulsed with music, movement, and love expressed through celebration. The city streets taught her to see — as a child she sketched mountains she'd never touched and waterfronts she'd never stood before. She has always painted what is coming before it arrives. After studying Interior Design at FIT, she lived aboard a sailboat on the Hudson River, worked the Pacific waters of Hawaii, and stood in the silence of Nevada's Black Mountains — the same mountains she once drew on a city sidewalk. Her paintings are not decorative; they are devotional — a pouring of memory and lineage. She paints the way she loves: fully, without holding back, always following where God leads.";
     var BIO_JAJAIRA = "Jajaira Berrios was born and raised in East Harlem. Art has always drawn her deeply. In elementary school her work was selected for a gallery, and soon after a children's doctor at Metropolitan Hospital wrote asking to purchase her artwork for his office — a letter she keeps to this day, the moment she realized she had a gift. She attended Art & Design High School and later majored in Communication Design in college. Life took her off course for a while, but art always finds its way back to her — whether through art or dance, it is simply what lights her up. Today her creative expression takes many forms: acrylic paintings, drawings, digital art, and hand-crafted bookmarks. She doesn't confine herself to one medium; she follows whatever calls her. Her hope is that her work inspires others to follow their own calling. Instagram: @j.barecreation.";
     var BIO_TARA = "Tara-Lea McIlroy is a Toronto-based painter who works largely in oil and acrylic, leading with love. Her work moves between grief, memory, and the quiet beauty of everyday life, and she takes on commissions — including grief-inspired pieces.";
@@ -1136,20 +841,20 @@
        - card:  the full artwork placard shown immediately when the panel opens
        - info:  the same facts, fed to Claude as system context for follow-ups */
     var ART = {
-      “painting-plane”: {
-        name: “Tara-Lea McIlroy”, subtitle: “Always Here With You”,
-        card: “Always Here With You\nTara-Lea McIlroy\nOil on canvas · 4 × 4 ft\n\nThis piece is dedicated to dear friends who lost their mother in 2023. Created to honour her memory, it hangs in a property built to memorialize her in Progreso, Mexico. This is an exploration of grief and transformation, drawing on symbols of things she loved and freezing them in time as a lasting tribute.”,
-        info: “Painting: “Always Here With You” by Tara-Lea McIlroy. Oil on canvas, 4 ft × 4 ft. “ + BIO_TARA
+      "painting-plane": {
+        name: "Tara-Lea McIlroy", subtitle: "Always Here With You",
+        card: "Always Here With You\nTara-Lea McIlroy\nOil on canvas · 4 × 4 ft\n\nNot for sale — but Tara-Lea is taking commissions for similar grief-inspired pieces.",
+        info: "Painting: “Always Here With You” by Tara-Lea McIlroy. Oil on canvas, 4 ft × 4 ft. This piece is NOT for sale, but Tara-Lea is taking commissions for similar grief-inspired works. " + BIO_TARA
       },
-      “plane-tara2”: {
-        name: “Tara-Lea McIlroy”, subtitle: “Somewhere Out There”,
-        card: “Somewhere Out There\nTara-Lea McIlroy\nAcrylic on canvas · 1.5 × 3 ft\n\nAn experimental piece that stretches beyond a traditional paint-to-canvas style. Various textures and materials were used to create patterns and layered effects, resulting in a true abstract work that strays from a typical surrealist and pop-art approach. A fun exploration of broader techniques, this piece is intended to bring calm and tranquility to any space it inhabits.\n\nPrice: $750 USD + shipping”,
-        info: “Painting: “Somewhere Out There” by Tara-Lea McIlroy. Acrylic on canvas, 1.5 ft × 3 ft. Price: $750 USD plus shipping. “ + BIO_TARA
+      "plane-tara2": {
+        name: "Tara-Lea McIlroy", subtitle: "Somewhere Out There",
+        card: "Somewhere Out There\nTara-Lea McIlroy\nAcrylic on canvas · 1.5 × 3 ft\n\nPrice: $750 USD + shipping",
+        info: "Painting: “Somewhere Out There” by Tara-Lea McIlroy. Acrylic on canvas, 1.5 ft × 3 ft. Price: $750 USD plus shipping. " + BIO_TARA
       },
-      “plane-tara3”: {
-        name: “Tara-Lea McIlroy”, subtitle: “It Was All A Dream”,
-        card: “It Was All A Dream\nTara-Lea McIlroy\nAcrylic on canvas · 4 × 4 ft\n\nCreated during an experimental period in 2020 as an ode to 90s hip hop. Techniques include print transferring a large printout directly to canvas, abstract background painting, metallic stencil layering, and a final finish of epoxy resin. This piece represents a period of creative growth and skill-building.”,
-        info: “Painting: “It Was All A Dream” by Tara-Lea McIlroy. Acrylic on canvas, 4 ft × 4 ft. “ + BIO_TARA
+      "plane-tara3": {
+        name: "Tara-Lea McIlroy", subtitle: "It Was All A Dream",
+        card: "It Was All A Dream\nTara-Lea McIlroy\nAcrylic on canvas · 4 × 4 ft\n\nNot for sale — but Tara-Lea is taking orders for commissions.",
+        info: "Painting: “It Was All A Dream” by Tara-Lea McIlroy. Acrylic on canvas, 4 ft × 4 ft. This piece is NOT for sale, but Tara-Lea is taking orders for commissions. " + BIO_TARA
       },
       "plane-steph1": {
         name: "Stephanie Camacho", subtitle: "When She Lets Go",
@@ -1176,48 +881,34 @@
         card: "Dia De Los Muertos\nJajaira Berrios\nPencil drawing on heavyweight white art paper, in a boxed frame · 12 × 16 in\n\nInspired by the Day of the Dead, a Mexican holiday that celebrates death as a natural part of life. This piece honors the coexistence of death, beauty, spirit and memory. She wears both strength and softness without fear.\n\n“Soft and untouchable.”\n\nInstagram: @j.barecreation",
         info: "Drawing: “Dia De Los Muertos” by Jajaira Berrios. Inspired by the Day of the Dead, a Mexican holiday that celebrates death as a natural part of life. This piece honors the coexistence of death, beauty, spirit and memory. She wears both strength and softness without fear. Theme: “Soft and untouchable.” Material: Heavy weight white art paper, displayed in a boxed frame. Medium: Pencil Drawing. Size: 12 × 16 in. Instagram: @j.barecreation. " + BIO_JAJAIRA
       },
-      “plane-unapologetic”: {
-        name: “Jajaira Berrios”, subtitle: “Unapologetic”,
-        card: “Unapologetic\nJajaira Berrios\nColored pencils and black markers on mixed media paper with brown texture paper · 5 × 8 in\n\nA woman standing fully within her sensuality, untouched by shame. The words around her are not burdens — they are truths, desires, emotions, and freedoms she no longer hides from.\n\n”Own your own sensuality.”\n\nInstagram: @j.barecreation”,
-        info: “Drawing: “Unapologetic” by Jajaira Berrios. A woman standing fully within her sensuality, untouched by shame. The words around her are not burdens — they are truths, desires, emotions, and freedoms she no longer hides from. Theme: “Own your own sensuality.” Material: Sketchbook drawing on mixed media white paper with an added brown texture paper. Medium: Colored Pencils and Black markers. Size: 5″ × 8″. Instagram: @j.barecreation. “ + BIO_JAJAIRA
-      },
-
-      “plane-venice”: {
-        name: “Tara-Lea McIlroy”, subtitle: “Venice”,
-        card: “Venice\nTara-Lea McIlroy\nPhotography · Europe Series, 2017\n\nIn 2017, Tara-Lea took her mother on her first trip to Europe — a journey through six countries over 21 days. For her mother, it was a trip of a lifetime. For Tara-Lea, it became one of her most treasured memories as her daughter. This series captures the moments, landscapes, and quiet in-betweens of a shared adventure that neither of them will ever forget.”,
-        info: “Photography: Venice, from the Europe Series 2017 by Tara-Lea McIlroy.”
-      },
-      “plane-kerry”: {
-        name: “Tara-Lea McIlroy”, subtitle: “Kerry”,
-        card: “Kerry\nTara-Lea McIlroy\nPhotography · Europe Series, 2017\n\nIn 2017, Tara-Lea took her mother on her first trip to Europe — a journey through six countries over 21 days. For her mother, it was a trip of a lifetime. For Tara-Lea, it became one of her most treasured memories as her daughter. This series captures the moments, landscapes, and quiet in-betweens of a shared adventure that neither of them will ever forget.”,
-        info: “Photography: Kerry, from the Europe Series 2017 by Tara-Lea McIlroy.”
-      },
-      “plane-roma”: {
-        name: “Tara-Lea McIlroy”, subtitle: “Roma”,
-        card: “Roma\nTara-Lea McIlroy\nPhotography · Europe Series, 2017\n\nIn 2017, Tara-Lea took her mother on her first trip to Europe — a journey through six countries over 21 days. For her mother, it was a trip of a lifetime. For Tara-Lea, it became one of her most treasured memories as her daughter. This series captures the moments, landscapes, and quiet in-betweens of a shared adventure that neither of them will ever forget.”,
-        info: “Photography: Roma, from the Europe Series 2017 by Tara-Lea McIlroy.”
-      },
-      “plane-positano”: {
-        name: “Tara-Lea McIlroy”, subtitle: “Positano”,
-        card: “Positano\nTara-Lea McIlroy\nPhotography · Europe Series, 2017\n\nIn 2017, Tara-Lea took her mother on her first trip to Europe — a journey through six countries over 21 days. For her mother, it was a trip of a lifetime. For Tara-Lea, it became one of her most treasured memories as her daughter. This series captures the moments, landscapes, and quiet in-betweens of a shared adventure that neither of them will ever forget.”,
-        info: “Photography: Positano, from the Europe Series 2017 by Tara-Lea McIlroy.”
-      },
-      “plane-ringofkerry”: {
-        name: “Tara-Lea McIlroy”, subtitle: “Ring of Kerry”,
-        card: “Ring of Kerry\nTara-Lea McIlroy\nPhotography · Europe Series, 2017\n\nIn 2017, Tara-Lea took her mother on her first trip to Europe — a journey through six countries over 21 days. For her mother, it was a trip of a lifetime. For Tara-Lea, it became one of her most treasured memories as her daughter. This series captures the moments, landscapes, and quiet in-betweens of a shared adventure that neither of them will ever forget.”,
-        info: “Photography: Ring of Kerry, from the Europe Series 2017 by Tara-Lea McIlroy.”
+      "plane-unapologetic": {
+        name: "Jajaira Berrios", subtitle: "Unapologetic",
+        card: "Unapologetic\nJajaira Berrios\nColored pencils and black markers on mixed media paper with brown texture paper · 5 × 8 in\n\nA woman standing fully within her sensuality, untouched by shame. The words around her are not burdens — they are truths, desires, emotions, and freedoms she no longer hides from.\n\n“Own your own sensuality.”\n\nInstagram: @j.barecreation",
+        info: "Drawing: “Unapologetic” by Jajaira Berrios. A woman standing fully within her sensuality, untouched by shame. The words around her are not burdens — they are truths, desires, emotions, and freedoms she no longer hides from. Theme: “Own your own sensuality.” Material: Sketchbook drawing on mixed media white paper with an added brown texture paper. Medium: Colored Pencils and Black markers. Size: 5″ × 8″. Instagram: @j.barecreation. " + BIO_JAJAIRA
       }
     };
 
-    /* ---- Art info modal + double-click navigation ---- */
-    (function () {
-      var modal = document.getElementById('art-modal');
-      var modalClose = document.getElementById('art-modal-close');
-      var modalTitle = document.getElementById('art-modal-title');
-      var modalArtist = document.getElementById('art-modal-artist');
-      var modalBody = document.getElementById('art-modal-body');
+    function systemPromptFor(ctx) {
+      return "You are " + ctx.name + ", speaking in first person as an AI persona of the artist, talking with a visitor standing in front of your work “" + ctx.subtitle + "” in the Vizual Ninja Studios virtual gallery. Be warm, personal, and grounded. Keep replies concise — usually 2 to 4 sentences. Speak from the specific details below; never invent prices, dimensions, or facts not given. If asked about buying or commissions, share what you know and warmly invite them to reach out (via the gallery or the artist's Instagram if given). If asked something unrelated to your art or life as an artist, gently steer back to the work.\n\nEverything you know about this piece and yourself:\n" + ctx.info;
+    }
+
+    /* ---- Chat panel + painting chatbots + double-click navigation ---- */
+    window.addEventListener('load', function () {
+      var panel = document.getElementById('chat-panel');
+      var closeBtn = document.getElementById('chat-close');
+      var form = document.getElementById('chat-form');
+      var input = document.getElementById('chat-input');
+      var sendBtn = document.getElementById('chat-send');
+      var messagesEl = document.getElementById('chat-messages');
+      var typingEl = document.getElementById('chat-typing');
+      var nameEl = document.getElementById('chat-name');
+      var subEl = document.getElementById('chat-subtitle');
       var camera = document.getElementById('camera');
       var rig = document.getElementById('rig');
+
+      var current = null;      // active painting context
+      var history = [];        // [{role:'user'|'assistant', content}] — excludes greeting
+      var busy = false;
 
       function setControls(enabled) {
         if (!camera) return;
@@ -1225,40 +916,62 @@
         camera.setAttribute('look-controls', 'enabled', enabled);
       }
 
-      // The artwork's existing `card` text is "Title\nArtist\n…details…".
-      // Show the title and artist in their own fields, and the remaining
-      // lines (medium, story, price, etc.) as the description body.
-      function openModalFor(id) {
-        var ctx = ART[id];
-        if (!ctx) return;
-        modalTitle.textContent = ctx.subtitle;
-        modalArtist.textContent = ctx.name;
-        var lines = ctx.card.split('\n');
-        modalBody.textContent = lines.slice(2).join('\n').replace(/^\n+/, '');
-        modal.classList.add('open');
-        modal.setAttribute('aria-hidden', 'false');
-        setControls(false);
+      function renderMessage(role, text) {
+        var div = document.createElement('div');
+        div.className = 'msg ' + role;
+        div.textContent = text;
+        messagesEl.appendChild(div);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
       }
 
-      function closeModal() {
-        modal.classList.remove('open');
-        modal.setAttribute('aria-hidden', 'true');
+      // The opening placard: title on its own line, then artwork details.
+      function renderCard(text) {
+        var lines = text.split('\n');
+        var card = document.createElement('div');
+        card.className = 'art-card';
+        var title = document.createElement('div');
+        title.className = 'art-card-title';
+        title.textContent = lines[0];
+        card.appendChild(title);
+        var body = document.createElement('div');
+        body.className = 'art-card-body';
+        body.textContent = lines.slice(1).join('\n').replace(/^\n+/, '');
+        card.appendChild(body);
+        messagesEl.appendChild(card);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+      }
+
+      function openChatFor(id) {
+        var ctx = ART[id];
+        if (!ctx) return;
+        current = ctx;
+        history = [];
+        messagesEl.innerHTML = '';
+        nameEl.textContent = ctx.name;
+        subEl.textContent = ctx.subtitle;
+        input.placeholder = 'Ask ' + ctx.name.split(' ')[0].replace('-Lea', '') + ' about this work…';
+        // Show the complete artwork information immediately, before any input.
+        renderCard(ctx.card);
+        renderMessage('assistant', "I'm an AI version of " + ctx.name.split(' ')[0].replace('-Lea', '') + ". Ask me anything about this piece, the materials, the story behind it, or commissions.");
+        panel.classList.add('open');
+        panel.setAttribute('aria-hidden', 'false');
+        setControls(false);
+        setTimeout(function () { input.focus(); }, 450);
+      }
+
+      function closeChat() {
+        panel.classList.remove('open');
+        panel.setAttribute('aria-hidden', 'true');
         setControls(true);
       }
 
-      /* ---- Painting click → open that painting's info modal ---- */
+      /* ---- Painting click → open that painting's chat ---- */
       var planes = document.querySelectorAll('.art-chat');
       for (var i = 0; i < planes.length; i++) {
         (function (el) {
-          el.addEventListener('click', function () { openModalFor(el.id); });
+          el.addEventListener('click', function () { openChatFor(el.id); });
         })(planes[i]);
       }
-
-      /* ---- Modal closes on close button or click outside the card ---- */
-      if (modalClose) modalClose.addEventListener('click', closeModal);
-      if (modal) modal.addEventListener('click', function (e) {
-        if (e.target === modal) closeModal();
-      });
 
       /* ---- Floor double-click navigation ---- */
       var floor = document.getElementById('floor');
@@ -1315,12 +1028,52 @@
       }
 
       if (floor) floor.addEventListener('click', onFloorClick);
-
-      /* ---- ESC closes the open info modal ---- */
+      if (closeBtn) closeBtn.addEventListener('click', closeChat);
       document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+        if (e.key === 'Escape' && panel.classList.contains('open')) closeChat();
       });
-    }());
+
+      /* ---- Send a message to Claude ---- */
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (busy || !current) return;
+        var text = input.value.trim();
+        if (!text) return;
+        input.value = '';
+        history.push({ role: 'user', content: text });
+        renderMessage('user', text);
+        busy = true; sendBtn.disabled = true; typingEl.classList.add('show');
+
+        fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+            'x-api-key': ANTHROPIC_API_KEY,
+            'anthropic-version': '2023-06-01',
+            'anthropic-dangerous-direct-browser-access': 'true'
+          },
+          body: JSON.stringify({
+            model: ANTHROPIC_MODEL,
+            max_tokens: 512,
+            system: systemPromptFor(current),
+            messages: history
+          })
+        })
+        .then(function (res) { return res.json().then(function (data) { return { ok: res.ok, data: data }; }); })
+        .then(function (result) {
+          if (!result.ok) {
+            var em = result.data && result.data.error && result.data.error.message;
+            throw new Error(em || 'The studio could not be reached just now.');
+          }
+          var reply = result.data && result.data.content && result.data.content[0] && result.data.content[0].text;
+          if (!reply) throw new Error('No response.');
+          history.push({ role: 'assistant', content: reply });
+          renderMessage('assistant', reply);
+        })
+        .catch(function (err) { renderMessage('error', err.message || 'Sorry, I could not reach the studio just now.'); })
+        .finally(function () { busy = false; sendBtn.disabled = false; typingEl.classList.remove('show'); input.focus(); });
+      });
+    });
   </script>
 </body>
 </html>
