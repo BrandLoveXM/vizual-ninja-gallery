@@ -360,7 +360,7 @@
       <img id="intertwined"    src="Intertwined.jpg"       crossorigin="anonymous" />
       <img id="dia"            src="DiaDeLosMuertos2.png"   crossorigin="anonymous" />
       <img id="unapologetic"   src="Unapologetic.jpg"       crossorigin="anonymous" />
-      <img id="tara-bio"       src="Tara_bio_photo.png"     crossorigin="anonymous" />
+      <img id="tara-curator"   src="Tara_curator.png"       crossorigin="anonymous" />
     </a-assets>
 
     <!-- ===================== LIGHTING ===================== -->
@@ -578,15 +578,14 @@
     </a-entity>
 
     <!-- ===================== ABOUT THE CURATOR — far wall, above the guest book ===================== -->
-    <!-- Bio photo (8x10 portrait), black frame, positioned slightly to the left -->
-    <a-entity position="7.3 3.5 -7.88">
-      <a-box position="0 0 0" width="1.21" height="1.47" depth="0.04" material="color: #111111; roughness: 0.3; metalness: 0.3"></a-box>
-      <a-image src="#tara-bio" position="0 0 0.025" width="1.088" height="1.35"></a-image>
+    <!-- Curator photo (8x10 portrait) — frame is included in the image; nudged right, away from the painting -->
+    <a-entity position="7.55 3.5 -7.88">
+      <a-image src="#tara-curator" position="0 0 0.02" width="1.16" height="1.47"></a-image>
     </a-entity>
     <!-- Curator write-up, balanced to the right of the photo -->
     <a-entity position="9.65 3.5 -7.86">
-      <a-text value="About the Curator" align="center" color="#8a6d3b" width="2.2" letter-spacing="3" font="roboto" position="0 0.62 0"></a-text>
-      <a-text value="Tara-Lea McIlroy studied Art History at Queen's University, graduating in 2010. Once dreaming of curating art galleries, she chose instead to pursue entrepreneurship in marketing and events. This online space is an innovative reimagining of what her career in art curation could have been. The goal is to host regular events here, providing accessibility to artists and art lovers worldwide. Please enjoy this space, and thank you to Momentum Education and LT227 for inspiring this inaugural exhibit."
+      <a-text value="ABOUT THE CURATOR" align="center" color="#8a6d3b" width="2.6" letter-spacing="6" font="roboto" position="0 0.62 0"></a-text>
+      <a-text value="Tara-Lea McIlroy studied Art History at Queen's University, graduating in 2010. Once dreaming of curating art galleries, she chose instead to pursue entrepreneurship in marketing and events.&#10;&#10;This online space is an innovative reimagining of what her career in art curation could have been. The goal is to host regular events here, providing accessibility to artists and art lovers worldwide.&#10;&#10;Please enjoy this space, sign our Guest Book below, and share with friends. Thank you to Momentum Education and LT227 for inspiring this inaugural exhibit."
               align="left" anchor="left" baseline="top" color="#444" width="2.1" wrap-count="36" font="roboto" position="-1.05 0.46 0"></a-text>
     </a-entity>
 
