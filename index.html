@@ -47,7 +47,7 @@
     }
     #art-modal-close:hover { color: rgba(255,255,255,0.85); }
     .modal-art-title {
-      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
       font-size: 28px; font-weight: 400; letter-spacing: 0.02em;
       color: #ece8df; line-height: 1.12; margin: 0 0 8px;
     }
@@ -61,7 +61,7 @@
       letter-spacing: 0.08em; color: rgba(255,255,255,0.65); margin: 0 0 18px;
     }
     .modal-art-body {
-      font-family: 'Cormorant Garamond', Georgia, serif; font-size: 16px; font-weight: 300;
+      font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; font-size: 16px; font-weight: 300;
       line-height: 1.72; color: rgba(255,255,255,0.88);
     }
     .modal-art-price {
@@ -540,7 +540,7 @@
       <a-box position="-1.04 0 0" width="0.06" height="2.02" depth="0.06" material="color: #111111; roughness: 0.25; metalness: 0.35"></a-box>
       <a-box position="1.04 0 0"  width="0.06" height="2.02" depth="0.06" material="color: #111111; roughness: 0.25; metalness: 0.35"></a-box>
       <a-plane id="plane-tara3" class="clickable art-chat" position="0 0 0.01" width="2.02" height="2.02"
-               material="src: #tara-art3; roughness: 0.85; metalness: 0; repeat: 0.88 0.755; offset: 0.12 0.085"></a-plane>
+               material="src: #tara-art3; roughness: 0.85; metalness: 0; repeat: 0.760 0.710; offset: 0.130 0.120"></a-plane>
     </a-entity>
     <a-entity position="5 1.28 -7.9">
       <a-text value="It Was All A Dream" align="center" color="#8a6d3b" width="2.4" font="roboto" letter-spacing="2"></a-text>
@@ -548,28 +548,24 @@
     </a-entity>
 
     <!-- ===================== GUEST BOOK — far wall, right corner ===================== -->
-    <a-entity id="guest-book-wall" class="clickable" position="9 0.9 -7.78" rotation="-15 0 0">
+    <!-- Guest book pedestal — minimalist white museum plinth -->
+    <a-entity position="9 0 -7.6">
+      <a-box position="0 0.575 0" width="0.46" height="1.15" depth="0.46" material="color: #f4f3ef; roughness: 0.9; metalness: 0"></a-box>
+    </a-entity>
+    <!-- Guest book — rests on the plinth top, smaller than the surface; stays clickable -->
+    <a-entity id="guest-book-wall" class="clickable" position="9 1.37 -7.62" rotation="-15 0 0">
       <!-- Book body — clickable so raycaster registers the hit -->
-      <a-box class="clickable" width="0.44" height="0.60" depth="0.06" material="color: #1a1208; roughness: 0.75; metalness: 0"></a-box>
+      <a-box class="clickable" width="0.30" height="0.40" depth="0.05" material="color: #1a1208; roughness: 0.75; metalness: 0"></a-box>
       <!-- Gold spine -->
-      <a-box width="0.04" height="0.60" depth="0.09" position="-0.23 0 0" material="color: #c8a96e; roughness: 0.4; metalness: 0.6"></a-box>
+      <a-box width="0.03" height="0.40" depth="0.07" position="-0.155 0 0" material="color: #c8a96e; roughness: 0.4; metalness: 0.6"></a-box>
       <!-- Cover title -->
-      <a-text value="Guest&#10;Book" align="center" color="#c8a96e" width="0.32" font="roboto" position="0 0.06 0.04"></a-text>
+      <a-text value="Guest&#10;Book" align="center" color="#c8a96e" width="0.22" font="roboto" position="0 0.04 0.03"></a-text>
       <!-- Thin decorative rule on cover -->
-      <a-plane width="0.26" height="0.003" position="0 -0.1 0.04" material="color: #c8a96e; shader: flat"></a-plane>
+      <a-plane width="0.18" height="0.003" position="0 -0.07 0.03" material="color: #c8a96e; shader: flat"></a-plane>
     </a-entity>
-    <!-- Guest book pedestal — props the book on a surface (book entity above stays clickable) -->
-    <a-entity position="9 0 -7.55">
-      <!-- Column -->
-      <a-box position="0 0.275 0" width="0.40" height="0.55" depth="0.40" material="color: #1a1208; roughness: 0.7; metalness: 0.1"></a-box>
-      <!-- Table top slab -->
-      <a-box position="0 0.575 0" width="0.60" height="0.05" depth="0.52" material="color: #241a0f; roughness: 0.6; metalness: 0.12"></a-box>
-      <!-- Gold trim beneath the top, matching the gallery accents -->
-      <a-box position="0 0.545 0" width="0.44" height="0.012" depth="0.46" material="color: #c8a96e; roughness: 0.4; metalness: 0.6"></a-box>
-    </a-entity>
-    <!-- Guest book label below -->
-    <a-entity position="9 0.42 -7.88">
-      <a-text value="Sign the Guest Book" align="center" color="#8a6d3b" width="2.0" font="roboto" letter-spacing="2"></a-text>
+    <!-- Guest book label — larger, on the wall above the plinth and book -->
+    <a-entity position="9 2.0 -7.86">
+      <a-text value="Sign the Guest Book" align="center" color="#8a6d3b" width="2.8" font="roboto" letter-spacing="2"></a-text>
     </a-entity>
 
     <!-- ===================== EUROPEAN SERIES — left wall (x = -12) ===================== -->
