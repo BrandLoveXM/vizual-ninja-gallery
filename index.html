@@ -576,12 +576,14 @@
       <a-text value="European Moments: Captured in Time" align="center" color="#1f1f1f" width="6.2" font="roboto" letter-spacing="2"></a-text>
     </a-entity>
 
-    <!-- European series artist statement placard -->
+    <!-- European series write-up: title + statement placard -->
     <a-entity position="-11.85 1.92 -6.5" rotation="0 90 0">
-      <a-plane width="2.5" height="1.6" material="color: #f0ede8; roughness: 0.95; metalness: 0"></a-plane>
-      <a-plane width="2.2" height="0.004" position="0 0.64 0.002" material="color: #c8a96e; shader: flat"></a-plane>
-      <a-text value="In 2017, I took my mother on her first trip to Europe — a journey through six countries over 21 days. For her, it was a trip of a lifetime. For me, it became one of my most treasured memories as her daughter. This series captures the moments, landscapes, and quiet in-betweens of a shared adventure that neither of us will ever forget."
-              align="left" anchor="left" baseline="top" color="#444" width="2.1" wrap-count="36" font="roboto" position="-1.05 0.58 0.01"></a-text>
+      <a-plane width="2.5" height="2.2" position="0 -0.30 0" material="color: #f0ede8; roughness: 0.95; metalness: 0"></a-plane>
+      <!-- Title 'Trip of a Lifetime' — top aligned with the top edge of the leftmost photo frame (world y 2.72) -->
+      <a-text value="Trip of a Lifetime" align="center" baseline="top" color="#1f1f1f" width="2.6" letter-spacing="2" font="roboto" position="0 0.80 0.01"></a-text>
+      <a-plane width="2.2" height="0.004" position="0 0.52 0.002" material="color: #c8a96e; shader: flat"></a-plane>
+      <a-text value="In 2017, Tara took her mother on her first trip to Europe, a journey through six countries over 21 days. It was a trip of a lifetime for both of them: her mother's first time in Europe, and Tara's first time seeing in person the masterworks and places she had only ever studied in textbooks as an art history major. This series captures the moments, landscapes, and quiet in-betweens of a shared adventure that neither of them will ever forget."
+              align="left" anchor="left" baseline="top" color="#444" width="2.2" wrap-count="40" font="roboto" position="-1.1 0.42 0.01"></a-text>
     </a-entity>
 
     <!-- Venice -->
@@ -590,7 +592,7 @@
              material="color: #1a1a1a; roughness: 0.4; metalness: 0.15"></a-box>
       <a-plane position="0 0 0.006" width="1.02" height="0.76"
                material="color: #f7f4ee; roughness: 0.95"></a-plane>
-      <a-image src="#img-venice" position="0 0 0.012" width="0.9" height="0.67"></a-image>
+      <a-image id="photo-venice-plane" class="clickable art-chat" src="#img-venice" position="0 0 0.012" width="0.9" height="0.67"></a-image>
       <a-text value="Venice" align="center" color="#777" width="1.8" font="roboto" position="0 -0.52 0.012"></a-text>
     </a-entity>
 
@@ -600,7 +602,7 @@
              material="color: #1a1a1a; roughness: 0.4; metalness: 0.15"></a-box>
       <a-plane position="0 0 0.006" width="1.02" height="0.76"
                material="color: #f7f4ee; roughness: 0.95"></a-plane>
-      <a-image src="#img-kerry" position="0 0 0.012" width="0.88" height="0.67"></a-image>
+      <a-image id="photo-kerry-plane" class="clickable art-chat" src="#img-kerry" position="0 0 0.012" width="0.88" height="0.67"></a-image>
       <a-text value="Kerry" align="center" color="#777" width="1.8" font="roboto" position="0 -0.52 0.012"></a-text>
     </a-entity>
 
@@ -610,7 +612,7 @@
              material="color: #1a1a1a; roughness: 0.4; metalness: 0.15"></a-box>
       <a-plane position="0 0 0.006" width="0.76" height="1.02"
                material="color: #f7f4ee; roughness: 0.95"></a-plane>
-      <a-image src="#img-roma" position="0 0 0.012" width="0.6" height="0.78"></a-image>
+      <a-image id="photo-roma-plane" class="clickable art-chat" src="#img-roma" position="0 0 0.012" width="0.6" height="0.78"></a-image>
       <a-text value="Roma" align="center" color="#777" width="1.8" font="roboto" position="0 -0.65 0.012"></a-text>
     </a-entity>
 
@@ -620,7 +622,7 @@
              material="color: #1a1a1a; roughness: 0.4; metalness: 0.15"></a-box>
       <a-plane position="0 0 0.006" width="1.02" height="0.76"
                material="color: #f7f4ee; roughness: 0.95"></a-plane>
-      <a-image src="#img-positano" position="0 0 0.012" width="0.93" height="0.67"></a-image>
+      <a-image id="photo-positano-plane" class="clickable art-chat" src="#img-positano" position="0 0 0.012" width="0.93" height="0.67"></a-image>
       <a-text value="Positano" align="center" color="#777" width="1.8" font="roboto" position="0 -0.52 0.012"></a-text>
     </a-entity>
 
@@ -630,7 +632,7 @@
              material="color: #1a1a1a; roughness: 0.4; metalness: 0.15"></a-box>
       <a-plane position="0 0 0.006" width="1.02" height="0.76"
                material="color: #f7f4ee; roughness: 0.95"></a-plane>
-      <a-image src="#img-ringofkerry" position="0 0 0.012" width="0.93" height="0.66"></a-image>
+      <a-image id="photo-ringofkerry-plane" class="clickable art-chat" src="#img-ringofkerry" position="0 0 0.012" width="0.93" height="0.66"></a-image>
       <a-text value="Ring of Kerry" align="center" color="#777" width="1.8" font="roboto" position="0 -0.52 0.012"></a-text>
     </a-entity>
 
@@ -1035,6 +1037,31 @@
         name: "Jajaira Berrios", subtitle: "Unapologetic",
         card: "Unapologetic\nJajaira Berrios\nColored pencils and black markers on mixed media paper with brown texture paper · 5 × 8 in\n\nA woman standing fully within her sensuality, untouched by shame. The words around her are not burdens — they are truths, desires, emotions, and freedoms she no longer hides from.\n\n“Own your own sensuality.”\n\nInstagram: @j.barecreation",
         info: "Drawing: “Unapologetic” by Jajaira Berrios. A woman standing fully within her sensuality, untouched by shame. The words around her are not burdens — they are truths, desires, emotions, and freedoms she no longer hides from. Theme: “Own your own sensuality.” Material: Sketchbook drawing on mixed media white paper with an added brown texture paper. Medium: Colored Pencils and Black markers. Size: 5″ × 8″. Instagram: @j.barecreation. " + BIO_JAJAIRA
+      },
+      "photo-ringofkerry-plane": {
+        name: "European Moments", subtitle: "Ring of Kerry",
+        card: "Ring of Kerry\n2017\nPhotographed on iPhone\nPrints available for order",
+        info: "European Moments photograph: Ring of Kerry, 2017. Photographed on iPhone. Prints available for order."
+      },
+      "photo-positano-plane": {
+        name: "European Moments", subtitle: "Positano",
+        card: "Positano\n2017\nPhotographed on iPhone\nPrints available for order",
+        info: "European Moments photograph: Positano, 2017. Photographed on iPhone. Prints available for order."
+      },
+      "photo-roma-plane": {
+        name: "European Moments", subtitle: "Roma",
+        card: "Roma\n2017\nPhotographed on iPhone\nPrints available for order",
+        info: "European Moments photograph: Roma, 2017. Photographed on iPhone. Prints available for order."
+      },
+      "photo-kerry-plane": {
+        name: "European Moments", subtitle: "Kerry",
+        card: "Kerry\n2017\nPhotographed on iPhone\nPrints available for order",
+        info: "European Moments photograph: Kerry, 2017. Photographed on iPhone. Prints available for order."
+      },
+      "photo-venice-plane": {
+        name: "European Moments", subtitle: "Venice",
+        card: "Venice\n2017\nPhotographed on iPhone\nPrints available for order",
+        info: "European Moments photograph: Venice, 2017. Photographed on iPhone. Prints available for order."
       }
     };
 
