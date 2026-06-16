@@ -572,9 +572,10 @@
       <!-- Thin decorative rule on cover -->
       <a-plane width="0.18" height="0.003" position="0 -0.07 0.03" material="color: #c8a96e; shader: flat"></a-plane>
     </a-entity>
-    <!-- Guest book label — larger, on the wall; lowered for more space below the curator text -->
-    <a-entity position="9 1.8 -7.86">
-      <a-text value="Sign the Guest Book" align="center" color="#8a6d3b" width="2.8" font="roboto" letter-spacing="2"></a-text>
+    <!-- Guest book label — centred directly above the pedestal and book, below the curator photo -->
+    <a-entity position="7.95 1.95 -7.86">
+      <a-text value="Guest Book" align="center" color="#8a6d3b" width="2.8" font="roboto" letter-spacing="2" position="0 0.08 0"></a-text>
+      <a-text value="Please Sign" align="center" color="#000000" width="2.4" font="roboto" letter-spacing="1" position="0 -0.09 0"></a-text>
     </a-entity>
 
     <!-- ===================== ABOUT THE CURATOR — far wall, above the guest book ===================== -->
@@ -584,7 +585,7 @@
     </a-entity>
     <!-- Curator write-up, balanced to the right of the photo -->
     <a-entity position="10.05 3.5 -7.86">
-      <a-text value="ABOUT THE CURATOR" align="center" color="#8a6d3b" width="2.6" letter-spacing="6" font="roboto" position="0 0.62 0"></a-text>
+      <a-text value="ABOUT THE CURATOR" align="center" color="#8a6d3b" width="2.6" letter-spacing="6" font="roboto" position="0 0.74 0"></a-text>
       <a-text value="Tara-Lea McIlroy studied Art History at Queen's University, graduating in 2010. Once dreaming of curating art galleries, she chose instead to pursue entrepreneurship in marketing and events.&#10;&#10;This online space is an innovative reimagining of what her career in art curation could have been. The goal is to host regular events here, providing accessibility to artists and art lovers worldwide.&#10;&#10;Please enjoy this space, sign our Guest Book below, and share with friends. Thank you to Momentum Education and LT227 for inspiring this inaugural exhibit."
               align="left" anchor="left" baseline="top" color="#444" width="2.1" wrap-count="36" font="roboto" position="-1.05 0.46 0"></a-text>
     </a-entity>
