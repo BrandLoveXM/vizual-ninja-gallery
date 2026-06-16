@@ -557,12 +557,12 @@
     </a-entity>
 
     <!-- ===================== GUEST BOOK — far wall, right corner ===================== -->
-    <!-- Guest book pedestal — minimalist white museum plinth -->
-    <a-entity position="9 0 -7.6">
+    <!-- Guest book pedestal — minimalist white museum plinth, centred under the curator photo -->
+    <a-entity position="7.95 0 -7.6">
       <a-box position="0 0.575 0" width="0.46" height="1.15" depth="0.46" material="color: #f4f3ef; roughness: 0.9; metalness: 0"></a-box>
     </a-entity>
     <!-- Guest book — rests on the plinth top, smaller than the surface; stays clickable -->
-    <a-entity id="guest-book-wall" class="clickable" position="9 1.37 -7.62" rotation="-15 0 0">
+    <a-entity id="guest-book-wall" class="clickable" position="7.95 1.37 -7.62" rotation="-15 0 0">
       <!-- Book body — clickable so raycaster registers the hit -->
       <a-box class="clickable" width="0.30" height="0.40" depth="0.05" material="color: #1a1208; roughness: 0.75; metalness: 0"></a-box>
       <!-- Gold spine -->
@@ -572,18 +572,18 @@
       <!-- Thin decorative rule on cover -->
       <a-plane width="0.18" height="0.003" position="0 -0.07 0.03" material="color: #c8a96e; shader: flat"></a-plane>
     </a-entity>
-    <!-- Guest book label — larger, on the wall above the plinth and book -->
-    <a-entity position="9 2.0 -7.86">
+    <!-- Guest book label — larger, on the wall; lowered for more space below the curator text -->
+    <a-entity position="9 1.8 -7.86">
       <a-text value="Sign the Guest Book" align="center" color="#8a6d3b" width="2.8" font="roboto" letter-spacing="2"></a-text>
     </a-entity>
 
     <!-- ===================== ABOUT THE CURATOR — far wall, above the guest book ===================== -->
-    <!-- Curator photo (8x10 portrait) — frame is included in the image; nudged right, away from the painting -->
-    <a-entity position="7.55 3.5 -7.88">
+    <!-- Curator photo (8x10 portrait) — frame is included in the image; shifted right, frame top aligned to body text top -->
+    <a-entity position="7.95 3.225 -7.88">
       <a-image src="#tara-curator" position="0 0 0.02" width="1.16" height="1.47"></a-image>
     </a-entity>
     <!-- Curator write-up, balanced to the right of the photo -->
-    <a-entity position="9.65 3.5 -7.86">
+    <a-entity position="10.05 3.5 -7.86">
       <a-text value="ABOUT THE CURATOR" align="center" color="#8a6d3b" width="2.6" letter-spacing="6" font="roboto" position="0 0.62 0"></a-text>
       <a-text value="Tara-Lea McIlroy studied Art History at Queen's University, graduating in 2010. Once dreaming of curating art galleries, she chose instead to pursue entrepreneurship in marketing and events.&#10;&#10;This online space is an innovative reimagining of what her career in art curation could have been. The goal is to host regular events here, providing accessibility to artists and art lovers worldwide.&#10;&#10;Please enjoy this space, sign our Guest Book below, and share with friends. Thank you to Momentum Education and LT227 for inspiring this inaugural exhibit."
               align="left" anchor="left" baseline="top" color="#444" width="2.1" wrap-count="36" font="roboto" position="-1.05 0.46 0"></a-text>
