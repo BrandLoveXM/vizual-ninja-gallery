@@ -1133,8 +1133,8 @@
       });
 
       /* ---- Guest book ---- */
-      // REPLACE THIS URL with your Google Apps Script Web App URL to send submissions to Google Sheets
-      var GB_SCRIPT_URL = '';
+      // Google Apps Script Web App endpoint that records submissions to Google Sheets
+      var GB_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby53_CPloAd6it9IMZK0rNr-X21hePrj24R3_JOnpXeyvMEed0gnOLMqzm2Jk26dGK_/exec';
 
       var gbModal = document.getElementById('gb-modal');
       var gbForm = document.getElementById('gb-form');
@@ -1164,9 +1164,9 @@
         var message = document.getElementById('gb-message').value.trim();
         var submitBtn = document.getElementById('gb-submit');
         submitBtn.disabled = true; submitBtn.textContent = 'Submitting…';
-        function showThankyou() { gbForm.style.display = 'none'; if (gbThankyou) gbThankyou.style.display = 'block'; }
+        function showThankyou() { gbForm.reset(); gbForm.style.display = 'none'; if (gbThankyou) gbThankyou.style.display = 'block'; }
         if (GB_SCRIPT_URL) {
-          fetch(GB_SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: name, email: email, message: message }) })
+          fetch(GB_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: name, email: email, comment: message }) })
             .then(showThankyou).catch(showThankyou);
         } else { showThankyou(); }
       });
