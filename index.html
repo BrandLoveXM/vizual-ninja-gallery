@@ -896,7 +896,7 @@
     window.addEventListener('load', function () {
       var entry = document.getElementById('entry-screen');
       var enterBtn = document.getElementById('enter-btn');
-      var muteBtn = document.getElementById('mute-btn'); // kept in DOM; CSS keeps it hidden
+// mute button removed
       var camera = document.getElementById('camera');
 
       var TRACKS = [
@@ -955,7 +955,6 @@
           tryStartMusic();
           setTimeout(tryStartMusic, 250);
           entry.classList.add('fade-out');
-          muteBtn.classList.add('visible');
           setSceneControls(true);
           setTimeout(function () {
             var h = document.getElementById('hint');
