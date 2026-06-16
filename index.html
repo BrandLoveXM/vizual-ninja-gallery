@@ -989,20 +989,20 @@
        - card:  the full artwork placard shown immediately when the panel opens
        - info:  the same facts, fed to Claude as system context for follow-ups */
     var ART = {
-      “painting-plane”: {
-        name: “Tara-Lea McIlroy”, subtitle: “Always Here With You”,
-        card: “Always Here With You\nTara-Lea McIlroy\nOil on canvas · 4 × 4 ft\n\nThis piece is dedicated to dear friends who lost their mother in 2023. Created to honour her memory, it hangs in a property built to memorialize her in Progreso, Mexico. This is an exploration of grief and transformation, drawing on symbols of things she loved and freezing them in time as a lasting tribute.\n\nNot for sale — but Tara-Lea is taking commissions for similar grief-inspired pieces.”,
+      "painting-plane": {
+        name: "Tara-Lea McIlroy", subtitle: "Always Here With You",
+        card: "Always Here With You\nTara-Lea McIlroy\nOil on canvas · 4 × 4 ft\n\nThis piece is dedicated to dear friends who lost their mother in 2023. Created to honour her memory, it hangs in a property built to memorialize her in Progreso, Mexico. This is an exploration of grief and transformation, drawing on symbols of things she loved and freezing them in time as a lasting tribute.\n\nNot for sale — but Tara-Lea is taking commissions for similar grief-inspired pieces.",
         info: "Painting: “Always Here With You” by Tara-Lea McIlroy. Oil on canvas, 4 ft × 4 ft. This piece is dedicated to dear friends who lost their mother in 2023. Created to honour her memory, it hangs in a property built to memorialize her in Progreso, Mexico. This is an exploration of grief and transformation, drawing on symbols of things she loved and freezing them in time as a lasting tribute. This piece is NOT for sale, but Tara-Lea is taking commissions for similar grief-inspired works. " + BIO_TARA
       },
-      “plane-tara2”: {
-        name: “Tara-Lea McIlroy”, subtitle: “Somewhere Out There”,
-        card: “Somewhere Out There\nTara-Lea McIlroy\nAcrylic on canvas · 1.5 × 3 ft\n\nAn experimental piece that stretches beyond a traditional paint-to-canvas style. Various textures and materials were used to create patterns and layered effects, resulting in a true abstract work that strays from a typical surrealist and pop-art approach. A fun exploration of broader techniques, this piece is intended to bring calm and tranquility to any space it inhabits.\n\nPrice: $750 USD + shipping”,
-        info: “Painting: “Somewhere Out There” by Tara-Lea McIlroy. Acrylic on canvas, 1.5 ft × 3 ft. An experimental piece that stretches beyond a traditional paint-to-canvas style. Various textures and materials were used to create patterns and layered effects, resulting in a true abstract work that strays from a typical surrealist and pop-art approach. A fun exploration of broader techniques, this piece is intended to bring calm and tranquility to any space it inhabits. Price: $750 USD plus shipping. “ + BIO_TARA
+      "plane-tara2": {
+        name: "Tara-Lea McIlroy", subtitle: "Somewhere Out There",
+        card: "Somewhere Out There\nTara-Lea McIlroy\nAcrylic on canvas · 1.5 × 3 ft\n\nAn experimental piece that stretches beyond a traditional paint-to-canvas style. Various textures and materials were used to create patterns and layered effects, resulting in a true abstract work that strays from a typical surrealist and pop-art approach. A fun exploration of broader techniques, this piece is intended to bring calm and tranquility to any space it inhabits.\n\nPrice: $750 USD + shipping",
+        info: "Painting: “Somewhere Out There” by Tara-Lea McIlroy. Acrylic on canvas, 1.5 ft × 3 ft. An experimental piece that stretches beyond a traditional paint-to-canvas style. Various textures and materials were used to create patterns and layered effects, resulting in a true abstract work that strays from a typical surrealist and pop-art approach. A fun exploration of broader techniques, this piece is intended to bring calm and tranquility to any space it inhabits. Price: $750 USD plus shipping. " + BIO_TARA
       },
-      “plane-tara3”: {
-        name: “Tara-Lea McIlroy”, subtitle: “It Was All A Dream”,
-        card: “It Was All A Dream\nTara-Lea McIlroy\nAcrylic on canvas · 4 × 4 ft\n\nCreated during an experimental period in 2020 as an ode to 90s hip hop. Techniques include print transferring a large printout directly to canvas, abstract background painting, metallic stencil layering, and a final finish of epoxy resin. This piece represents a period of creative growth and skill-building.\n\nNot for sale — but Tara-Lea is taking orders for commissions.”,
-        info: “Painting: “It Was All A Dream” by Tara-Lea McIlroy. Acrylic on canvas, 4 ft × 4 ft. Created during an experimental period in 2020 as an ode to 90s hip hop. Techniques include print transferring a large printout directly to canvas, abstract background painting, metallic stencil layering, and a final finish of epoxy resin. This piece represents a period of creative growth and skill-building. This piece is NOT for sale, but Tara-Lea is taking orders for commissions. “ + BIO_TARA
+      "plane-tara3": {
+        name: "Tara-Lea McIlroy", subtitle: "It Was All A Dream",
+        card: "It Was All A Dream\nTara-Lea McIlroy\nAcrylic on canvas · 4 × 4 ft\n\nCreated during an experimental period in 2020 as an ode to 90s hip hop. Techniques include print transferring a large printout directly to canvas, abstract background painting, metallic stencil layering, and a final finish of epoxy resin. This piece represents a period of creative growth and skill-building.\n\nNot for sale — but Tara-Lea is taking orders for commissions.",
+        info: "Painting: “It Was All A Dream” by Tara-Lea McIlroy. Acrylic on canvas, 4 ft × 4 ft. Created during an experimental period in 2020 as an ode to 90s hip hop. Techniques include print transferring a large printout directly to canvas, abstract background painting, metallic stencil layering, and a final finish of epoxy resin. This piece represents a period of creative growth and skill-building. This piece is NOT for sale, but Tara-Lea is taking orders for commissions. " + BIO_TARA
       },
       "plane-steph1": {
         name: "Stephanie Camacho", subtitle: "When She Lets Go",
@@ -1068,12 +1068,12 @@
           else bodyLines.push(l);
         });
         var body = bodyLines.join('\n').replace(/^\n+|\n+$/g, '');
-        var html = '<div class=”modal-art-title”>' + esc(title) + '</div>';
-        html += '<div class=”modal-art-artist”>' + esc(artist) + '</div>';
-        html += '<div class=”modal-art-rule”></div>';
-        if (medium) html += '<div class=”modal-art-medium”>' + esc(medium) + '</div>';
-        if (body)   html += '<div class=”modal-art-body”>' + esc(body).replace(/\n/g, '<br>') + '</div>';
-        if (priceLine) html += '<div class=”modal-art-price”>' + esc(priceLine) + '</div>';
+        var html = '<div class="modal-art-title">' + esc(title) + '</div>';
+        html += '<div class="modal-art-artist">' + esc(artist) + '</div>';
+        html += '<div class="modal-art-rule"></div>';
+        if (medium) html += '<div class="modal-art-medium">' + esc(medium) + '</div>';
+        if (body)   html += '<div class="modal-art-body">' + esc(body).replace(/\n/g, '<br>') + '</div>';
+        if (priceLine) html += '<div class="modal-art-price">' + esc(priceLine) + '</div>';
         artModalContent.innerHTML = html;
         artModal.classList.add('open');
         artModal.setAttribute('aria-hidden', 'false');
