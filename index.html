@@ -226,6 +226,11 @@
       font-size: clamp(14px, 2.0vw, 20px); font-weight: 300;
       letter-spacing: 0.06em; color: #c8b890; margin: 30px 0 0;
     }
+    .entry-dates {
+      font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 300;
+      letter-spacing: 0.32em; text-transform: uppercase; color: #807a6e;
+      margin: 14px 0 0;
+    }
     .entry-curator {
       font-family: 'Cormorant Garamond', Georgia, serif;
       font-size: clamp(13px, 1.5vw, 16px); font-weight: 300; font-style: italic;
@@ -325,7 +330,8 @@
       <div class="entry-eyebrow"><em>Introducing</em></div>
       <h1 class="entry-title">VIZUAL&nbsp;NINJA&nbsp;STUDIOS</h1>
       <p class="entry-subhead">Opening Exhibit</p>
-      <p class="entry-subtitle">Leading with Love: An LT227 Artist Showcase</p>
+      <p class="entry-subtitle">Leading with Love: An exploration of self, memory, and unapologetic truth.</p>
+      <p class="entry-dates">June 19 &ndash; September 19, 2026</p>
       <p class="entry-curator">Curated by Tara-Lea McIlroy</p>
       <button id="enter-btn" type="button">Enter</button>
       <p class="entry-gb-note">Please sign our Guest Book inside the studio to register your visit.</p>
@@ -414,7 +420,7 @@
 
     <!-- Floor decal — exhibition title inlaid into the floor -->
     <a-entity rotation="-90 0 0" position="0 0.012 2">
-      <a-text value="Leading with Love: An LT227 Artist Showcase"
+      <a-text value="Leading with Love: An Artist Showcase"
               align="center" color="#a09050" width="12" font="roboto"
               letter-spacing="4"></a-text>
     </a-entity>
@@ -595,7 +601,7 @@
     <!-- Curator write-up, balanced to the right of the photo -->
     <a-entity position="10.05 3.5 -7.86">
       <a-text value="ABOUT THE CURATOR" align="center" color="#8a6d3b" width="2.6" letter-spacing="6" font="roboto" position="0 0.74 0"></a-text>
-      <a-text value="Tara-Lea McIlroy studied Art History at Queen's University, graduating in 2010. Once dreaming of curating art galleries, she chose instead to pursue entrepreneurship in marketing and events.&#10;&#10;This online space is an innovative reimagining of what her career in art curation could have been. The goal is to host regular events here, providing accessibility to artists and art lovers worldwide.&#10;&#10;Please enjoy this space, sign our Guest Book below, and share with friends. Thank you to Momentum Education and LT227 for inspiring this inaugural exhibit."
+      <a-text value="Tara-Lea McIlroy studied Art History at Queen's University, graduating in 2010. Once dreaming of curating art galleries, she chose instead to pursue entrepreneurship in marketing and events.&#10;&#10;This online space is an innovative reimagining of what her career in art curation could have been. The goal is to host regular events here, providing accessibility to artists and art lovers worldwide.&#10;&#10;Please enjoy this space, sign our Guest Book below, and share with friends. Thank you to Momentum Education for inspiring this inaugural exhibit."
               align="left" anchor="left" baseline="top" color="#444" width="2.1" wrap-count="36" font="roboto" position="-1.05 0.46 0"></a-text>
     </a-entity>
 
@@ -808,10 +814,10 @@
     <!-- Museum-style wall text filling the empty area between 'Unapologetic' and the corner; left-aligned, vertically centred, balanced margins -->
     <a-entity position="11.1 3.4 7.88" rotation="0 180 0">
       <a-text value="Leading with Love" align="left" anchor="left" baseline="top" color="#8a6d3b" width="4.3" wrap-count="22" letter-spacing="2" font="roboto" position="0 1.675 0"></a-text>
-      <a-text value="An LT227 Artist Showcase" align="left" anchor="left" baseline="top" color="#1f1f1f" width="4.3" wrap-count="38" letter-spacing="3" font="roboto" position="0 1.275 0"></a-text>
-      <a-text value="This exhibit is dedicated to LT227 and our journey to return to ourselves."
+      <a-text value="An Artist Showcase" align="left" anchor="left" baseline="top" color="#1f1f1f" width="4.3" wrap-count="38" letter-spacing="3" font="roboto" position="0 1.275 0"></a-text>
+      <a-text value="The work in this room shares a single thread: the courage to be seen without a mask."
               align="left" anchor="left" baseline="top" color="#333333" width="3.2" wrap-count="36" font="roboto" position="0 0.925 0"></a-text>
-      <a-text value="We have always been enough. This was never about becoming someone different. It was about returning to self, remembering who we are and what we deserve. It was about stripping off the masks and the expectations of who we thought we were “supposed” to be, the versions shaped to meet the demands of society and others. Now, we give ourselves permission to simply...“be”.&#10;&#10;We, LT227, are Bold, Passionate, Authentic, Visionary Leaders, committed to creating a Loving, Trusting, Connected, and Inclusive world now.&#10;&#10;Leading with Love,&#10;&#10;~Tara"
+      <a-text value="Across these paintings, drawings, and photographs, three artists explore love as an act of return — to memory, to lineage, to the self we sometimes hide. Some pieces hold grief and turn it into tribute. Some carry ancestral roots that speak through the hand before the mind can explain them. Some simply stand unguarded, sensuality and softness and strength held in the same breath, refusing shame.&#10;&#10;This is what leading with love looks like: showing up fully, without apology, and letting that truth become the art.&#10;&#10;Leading with Love,&#10;&#10;~Tara"
               align="left" anchor="left" baseline="top" color="#333333" width="3.2" wrap-count="42" font="roboto" position="0 0.40 0"></a-text>
     </a-entity>
     <!-- Thin gold keyline dividing the statement from the Jajaira Berrios exhibit space -->
