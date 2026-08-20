@@ -172,6 +172,60 @@
       color: rgba(255,255,255,0.68);
     }
 
+    /* ===================== HELP BUTTON + INSTRUCTIONS MODAL ===================== */
+    #help-btn {
+      position: fixed; bottom: 62px; right: 24px; z-index: 16;
+      width: 32px; height: 32px; border-radius: 50%;
+      background: rgba(8,8,8,0.82); backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,0.22);
+      color: rgba(255,255,255,0.75);
+      font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 400;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all 0.25s ease;
+    }
+    #help-btn:hover { border-color: rgba(200,169,110,0.7); color: #ece8df; background: rgba(8,8,8,0.92); }
+    #help-modal {
+      position: fixed; inset: 0; z-index: 25;
+      display: none; align-items: center; justify-content: center;
+      background: rgba(0,0,0,0.72); backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    #help-modal.open { display: flex; }
+    #help-modal-inner {
+      background: #111; border: 1px solid rgba(255,255,255,0.09);
+      max-width: 420px; width: 92vw; padding: 36px 32px; position: relative;
+      box-shadow: 0 32px 96px rgba(0,0,0,0.88);
+    }
+    #help-modal-close {
+      position: absolute; top: 14px; right: 18px;
+      background: none; border: none; color: rgba(255,255,255,0.35);
+      font-size: 24px; cursor: pointer; line-height: 1; padding: 0;
+      transition: color 0.2s;
+    }
+    #help-modal-close:hover { color: rgba(255,255,255,0.85); }
+    #help-modal-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px; font-weight: 400; letter-spacing: 0.3em; text-transform: uppercase;
+      color: #c8b890; margin: 0 0 24px;
+    }
+    #help-modal-list {
+      list-style: none; counter-reset: help-count; margin: 0; padding: 0; text-align: left;
+    }
+    #help-modal-list li {
+      counter-increment: help-count;
+      font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 300;
+      letter-spacing: 0.02em; color: rgba(255,255,255,0.78); line-height: 1.5;
+      padding: 10px 0; display: flex; gap: 16px; align-items: baseline;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    #help-modal-list li:first-child { border-top: none; }
+    #help-modal-list li::before {
+      content: counter(help-count) ".";
+      flex: none; color: #8a6d3b; font-size: 10px;
+      letter-spacing: 0.06em; min-width: 14px; text-align: right;
+    }
+
     /* ===================== ENTRY SCREEN ===================== */
     #entry-screen {
       position: fixed; inset: 0; z-index: 40;
@@ -292,6 +346,22 @@
       <div id="gb-thankyou" style="display:none">
         <p>Thank you for signing the Guest Book.<br>Your visit has been recorded.</p>
       </div>
+    </div>
+  </div>
+
+  <!-- Instructions button + modal -->
+  <button id="help-btn" aria-label="How to navigate this space" type="button">?</button>
+  <div id="help-modal" aria-hidden="true">
+    <div id="help-modal-inner">
+      <button id="help-modal-close" aria-label="Close">&times;</button>
+      <p id="help-modal-title">How to Navigate This Space</p>
+      <ol id="help-modal-list">
+        <li>Double-click to move forward into the space</li>
+        <li>Click and drag to look around</li>
+        <li>Click any painting to view artwork details</li>
+        <li>Use arrow keys to move around</li>
+        <li>Press ESC to close any open panel</li>
+      </ol>
     </div>
   </div>
 
@@ -1228,11 +1298,32 @@
         } else { showThankyou(); }
       });
 
+      /* ---- Help / instructions ---- */
+      var helpBtn = document.getElementById('help-btn');
+      var helpModal = document.getElementById('help-modal');
+      var helpClose = document.getElementById('help-modal-close');
+
+      function openHelp() {
+        if (!helpModal) return;
+        helpModal.classList.add('open'); helpModal.setAttribute('aria-hidden', 'false');
+        setControls(false);
+      }
+      function closeHelp() {
+        if (!helpModal) return;
+        helpModal.classList.remove('open'); helpModal.setAttribute('aria-hidden', 'true');
+        setControls(true);
+      }
+
+      if (helpBtn) helpBtn.addEventListener('click', openHelp);
+      if (helpClose) helpClose.addEventListener('click', closeHelp);
+      if (helpModal) helpModal.addEventListener('click', function (e) { if (e.target === helpModal) closeHelp(); });
+
       /* ---- Global ESC key ---- */
       document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape') {
           if (artModal && artModal.classList.contains('open')) closeArtModal();
           if (gbModal && gbModal.classList.contains('open')) closeGuestBook();
+          if (helpModal && helpModal.classList.contains('open')) closeHelp();
         }
       });
     });
