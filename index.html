@@ -15,7 +15,7 @@
   <title>Vizual Ninja Studios — Gallery Room 1</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap" rel="stylesheet">
   <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
   <style>
     html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #0a0a0a; font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; }
@@ -129,8 +129,8 @@
     }
     #gb-modal-close:hover { color: rgba(255,255,255,0.85); }
     #gb-modal-title {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 26px; font-weight: 400; letter-spacing: 0.04em;
+      font-family: 'Inter', sans-serif;
+      font-size: 20px; font-weight: 300; letter-spacing: 0.08em;
       color: #ece8df; margin: 0 0 6px;
     }
     #gb-modal-sub {
@@ -167,8 +167,8 @@
     #gb-submit:disabled { opacity: 0.4; cursor: default; }
     #gb-thankyou {
       text-align: center; padding: 20px 0 8px;
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 18px; font-weight: 300; line-height: 1.7;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px; font-weight: 300; line-height: 1.7;
       color: rgba(255,255,255,0.68);
     }
 
@@ -194,67 +194,67 @@
     @keyframes entryRise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 
     .entry-eyebrow {
-      font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 300;
-      letter-spacing: 0.55em; color: #807a6e; text-transform: uppercase;
-      margin-bottom: 34px; padding-left: 0.5em;
+      font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 400;
+      letter-spacing: 0.5em; color: #6f6a5f; text-transform: uppercase;
+      margin-bottom: 22px; padding-left: 0.5em;
     }
     .entry-title {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: clamp(24px, 4vw, 44px); font-weight: 300;
-      letter-spacing: 0.2em; margin: 0 auto; line-height: 1.08;
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(22px, 3.6vw, 38px); font-weight: 300;
+      letter-spacing: 0.22em; margin: 0 auto; line-height: 1.15;
       color: #ece8df; text-align: center; white-space: nowrap; display: block;
       position: relative; left: 50%; transform: translateX(-50%);
       width: max-content; max-width: 96vw;
     }
-    .entry-rule { width: 48px; height: 1px; background: #6a6354; margin: 42px auto 46px; }
+    .entry-rule { width: 36px; height: 1px; background: #4a4538; margin: 32px auto; }
     #enter-btn {
       font-family: 'Inter', sans-serif; background: transparent;
       border: 1px solid rgba(185, 168, 132, 0.4); color: #c8c0b2;
-      padding: 14px 42px; font-size: 10px; font-weight: 300;
-      letter-spacing: 0.38em; text-transform: uppercase; cursor: pointer;
+      padding: 14px 42px; font-size: 10px; font-weight: 400;
+      letter-spacing: 0.32em; text-transform: uppercase; cursor: pointer;
       transition: all 0.4s ease; display: block; margin: 0 auto;
     }
     #enter-btn:hover { background: rgba(185, 168, 132, 0.12); color: #ece8df; border-color: rgba(185, 168, 132, 0.7); }
 
     .entry-subhead {
-      font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 300;
-      letter-spacing: 0.5em; text-transform: uppercase; color: #807a6e;
-      margin: 28px 0 0; padding-left: 0.5em;
+      font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 400;
+      letter-spacing: 0.4em; text-transform: uppercase; color: #6f6a5f;
+      margin: 24px 0 0;
     }
     .entry-subtitle {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: clamp(14px, 2.0vw, 20px); font-weight: 300;
-      letter-spacing: 0.06em; color: #c8b890; margin: 30px 0 0;
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(13px, 1.6vw, 16px); font-weight: 300;
+      letter-spacing: 0.01em; line-height: 1.6; color: #c8b890; margin: 12px 0 0;
+      max-width: 420px; margin-left: auto; margin-right: auto;
     }
     .entry-dates {
-      font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 300;
-      letter-spacing: 0.32em; text-transform: uppercase; color: #807a6e;
+      font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 400;
+      letter-spacing: 0.28em; text-transform: uppercase; color: #6f6a5f;
       margin: 14px 0 0;
     }
     .entry-curator {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: clamp(13px, 1.5vw, 16px); font-weight: 300; font-style: italic;
-      letter-spacing: 0.1em; color: #c8b890; margin: 30px 0 30px;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px; font-weight: 400;
+      letter-spacing: 0.18em; text-transform: uppercase; color: #8f8874; margin: 22px 0 0;
     }
     .entry-gb-note {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 13px; font-weight: 300; font-style: italic;
-      letter-spacing: 0.04em; color: #807a6e; margin: 32px 0 0;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px; font-weight: 300;
+      letter-spacing: 0.01em; color: #6f6a5f; margin: 26px 0 0;
     }
     .entry-nav-heading {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: clamp(13px, 1.5vw, 16px); font-weight: 300;
-      letter-spacing: 0.1em; color: #c8b890; margin: 36px 0 0;
+      font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 400;
+      letter-spacing: 0.3em; text-transform: uppercase; color: #8f8874; margin: 30px 0 0;
     }
     .entry-nav-list {
       list-style: none; counter-reset: nav-count;
-      margin: 16px auto 0; padding: 0; max-width: 380px; text-align: left;
+      margin: 14px auto 0; padding: 0; max-width: 360px; text-align: left;
     }
     .entry-nav-list li {
       counter-increment: nav-count;
       font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 300;
-      letter-spacing: 0.03em; color: #a8a294; line-height: 1.6;
-      padding: 8px 0; display: flex; gap: 14px; align-items: baseline;
+      letter-spacing: 0.02em; color: #a8a294; line-height: 1.5;
+      padding: 7px 0; display: flex; gap: 14px; align-items: baseline;
       border-top: 1px solid rgba(255,255,255,0.04);
     }
     .entry-nav-list li:first-child { border-top: none; }
@@ -327,7 +327,7 @@
 
   <div id="entry-screen">
     <div class="entry-content">
-      <div class="entry-eyebrow"><em>Introducing</em></div>
+      <div class="entry-eyebrow">Introducing</div>
       <h1 class="entry-title">VIZUAL&nbsp;NINJA&nbsp;STUDIOS</h1>
       <p class="entry-subhead">Opening Exhibit</p>
       <p class="entry-subtitle">Leading with Love: An exploration of self, memory, and unapologetic truth.</p>
